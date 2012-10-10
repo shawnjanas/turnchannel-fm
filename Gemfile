@@ -8,6 +8,8 @@ gem 'mysql2'
 gem 'httparty'
 gem 'oauth2'
 
+gem 'soundcloud'
+
 group :development, :test do
   gem 'rspec-rails', '2.9.0'
   gem 'capistrano'
