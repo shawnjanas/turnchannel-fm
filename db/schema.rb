@@ -30,6 +30,8 @@ ActiveRecord::Schema.define(:version => 20121010015950) do
   add_index "categories_tracks", ["track_id"], :name => "index_categories_tracks_on_track_id"
 
   create_table "tracks", :force => true do |t|
+    t.string   "title"
+    t.string   "artist"
     t.integer  "source"
     t.text     "metadata"
     t.integer  "user_id"

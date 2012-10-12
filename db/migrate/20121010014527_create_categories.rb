@@ -6,7 +6,8 @@ class CreateCategories < ActiveRecord::Migration
       t.timestamps
     end
 
-    Category.create :title => "dubstep"
-    Category.create :title => "house"
+    Category.create :title => "Dubstep"
+    Category.create :title => "Progressive House"
+    Category.create :title => "Chill Out"
   end
 end

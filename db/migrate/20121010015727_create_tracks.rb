@@ -1,6 +1,8 @@
 class CreateTracks < ActiveRecord::Migration
   def change
     create_table :tracks do |t|
+      t.string :title
+      t.string :artist
       t.integer :source
       t.text :metadata
 

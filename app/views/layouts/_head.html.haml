@@ -1,0 +1,6 @@
+%title= "Omnia Media - #{yield(:title)}"
+= stylesheet_link_tag   'application', :media => 'all'
+= javascript_include_tag 'application'
+%script{:src=>"http://connect.soundcloud.com/sdk.js"}
+= csrf_meta_tags
+= render :partial => 'layouts/shim'

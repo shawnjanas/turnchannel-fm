@@ -1,0 +1,15 @@
+!!!
+%html{:lang => 'en'}
+  %head
+    = render :partial => 'layouts/head'
+
+  %body
+    = render :partial => 'layouts/topbar'
+    .landing-background
+    #main-content
+      - flash.each do |key, value|
+        .alert{:class => "alert-#{key}"}
+          = value
+          %a.close{:href => '#'} &times;
+      = yield
+    = render :partial => 'layouts/player'
