@@ -10,7 +10,7 @@ class Track < ActiveRecord::Base
   SOURCE = {:soundcloud => 0}
 
   def self.recent(genre)
-    client = Soundcloud.new :client_id => Network[:soundcloud][:client_id]
+    client = Soundcloud.new :client_id => 'e3216af75bcd70ee4e5d91a6b9f1d302'
 
     tracks = []
     page_size = 100
