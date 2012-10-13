@@ -188,7 +188,7 @@ $(document).ready(function() {
 
   $('#player-minus').click(function() {
     $('#queue-wrapper').hide();
-    $('footer').css('height', '68px');
+    $('footer').css('height', '69px');
 
     $(this).hide();
     $('#player-plus').show();

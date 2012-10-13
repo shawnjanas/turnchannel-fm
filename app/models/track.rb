@@ -15,7 +15,7 @@ class Track < ActiveRecord::Base
     tracks = []
     page_size = 100
 
-    (0..4).to_a.each do |i|
+    (0..0).to_a.each do |i|
       offset = i * page_size
       tracks += client.get('/users/3158948/tracks', :order => 'created_at', :offset => offset, :limit => page_size)
     end
