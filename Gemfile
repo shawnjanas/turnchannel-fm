@@ -3,10 +3,10 @@ source 'https://rubygems.org'
 gem 'rails', '3.2.8'
 gem 'bootstrap-sass', '2.0.0'
 gem 'bcrypt-ruby', '3.0.1'
-gem 'mysql2'
+gem 'pg'
 
-gem 'httparty'
-gem 'oauth2'
+#gem 'httparty'
+#gem 'oauth2'
 
 gem 'soundcloud'
 
