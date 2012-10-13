@@ -3,14 +3,73 @@ $(document).ready(function() {
   var track_index = 0;
 
   var sound;
+  var genre = 'dubstep';
 
-  $.getJSON('/tracks/genre/dubstep', function(data) {
-    console.log(data);
-    track_list = data;
+  var loading = false;
 
-    init();
-    play();
+  $('#submit-tracks-link').click(function() {
+    $('#main-wrapper').find('.selected').hide();
+    $('#main-wrapper').find('.selected').removeClass('selected');
+
+    $('#submit-tracks').addClass('selected');
+    $('#submit-tracks').fadeToggle();
+    e.preventDefault();
   });
+  $('#submit-art-link').click(function() {
+    $('#main-wrapper').find('.selected').hide();
+    $('#main-wrapper').find('.selected').removeClass('selected');
+
+    $('#submit-art').addClass('selected');
+    $('#submit-art').fadeToggle();
+    e.preventDefault();
+  });
+  $('#contact-link').click(function() {
+    $('#main-wrapper').find('.selected').hide();
+    $('#main-wrapper').find('.selected').removeClass('selected');
+
+    $('#contact').addClass('selected');
+    $('#contact').fadeToggle();
+    e.preventDefault();
+  });
+
+  $('.page .close').click(function() {
+    $('#main-wrapper').find('.selected').fadeOut();
+    $('#main-wrapper').find('.selected').removeClass('selected');
+    e.preventDefault();
+  });
+
+
+  $('.genre-link').click(function() {
+    if(loading) return false;
+
+    var genre_id = $(this).attr('id');
+
+    $(this).parent().parent().find('.active').removeClass('active');
+    $(this).parent().addClass('active');
+
+    if(genre != genre_id) {
+      genre = genre_id;
+      load_playlist();
+    }
+  });
+
+  $('#player-shuffle').click(function() {
+    if(loading) return false;
+
+    load_playlist();
+  });
+
+  function load_playlist() {
+    loading = true;
+    reset_player();
+
+    $.getJSON('/tracks/genre/'+genre, function(data) {
+      track_list = data;
+
+      init();
+      play();
+    });
+  }
 
   function init() {
     SC.initialize({
@@ -26,7 +85,6 @@ $(document).ready(function() {
 
       $('#queue').append(track_html);
     }
-    console.log(track_list.length);
     $('#queue').css('width', (track_list.length*101)+'px');
   }
 
@@ -44,6 +102,8 @@ $(document).ready(function() {
         $('#track-title').html('<a href="'+track.permalink_url+'" target="_blank">'+track.title + '</a> - ');
         $('.playing').removeClass('playing');
         $('#track-'+id).addClass('playing');
+
+        loading = false;
       },
       onerror: function(e) {
         alert('Error: '+e);
@@ -59,8 +119,37 @@ $(document).ready(function() {
       var seconds = (sound.durationEstimate / 1000) - (minutes * 60);
 
       $('#player-duration').html();
+
+      $('#player-pause').show();
+      $('#player-play').hide();
     });
   }
+
+  function stop() {
+    if(typeof sound === 'object') {
+      sound.stop();
+    }
+  }
+
+  function reset_player() {
+    stop();
+
+    $('#track-title').html('Loading...');
+    $('#track-comments').html('');
+
+    $('#player-pause').hide();
+    $('#player-play').show();
+
+    $('#player-elapsed').html('00:00');
+    $('#player-duration').html('00:00');
+
+    $('#player-progress-bar-meter').css('width','0');
+
+    $('#queue').html('');
+  }
+
+  load_playlist();
+
 
 
   var bg_list = ['http://www.superbwallpapers.com/wallpapers/girls/abigail-clancy-3728-1920x1080.jpg', 'http://www.superbwallpapers.com/wallpapers/girls/petra-cubonova-13070-1920x1080.jpg', 'http://www.superbwallpapers.com/wallpapers/girls/adriana-lima-3933-1920x1200.jpg', 'http://www.superbwallpapers.com/wallpapers/music/headphones-14936-1920x1080.jpg', 'http://www.superbwallpapers.com/wallpapers/music/music-14219-1920x1080.jpg', 'http://www.superbwallpapers.com/wallpapers/music/headphones-14798-1920x1080.jpg', 'http://www.superbwallpapers.com/wallpapers/girls/abbey-lee-kershaw-13519-1440x900.jpg', 'http://www.superbwallpapers.com/wallpapers/girls/lorena-garcia-14046-1920x1080.jpg', 'http://www.superbwallpapers.com/wallpapers/celebrities/kimbra-lee-johnson-14235-1920x1080.jpg', 'http://good-wallpapers.com/wallpapers/16996/dubstep-wallpaper.jpg', 'http://1.bp.blogspot.com/-D_7XVbi42rs/TkKmfPhD-SI/AAAAAAAAAFU/6Ij9g2G3exs/s1600/lovely-girls-wallpaper.jpg', 'http://fc01.deviantart.net/fs71/f/2010/282/3/5/dubstep_wallpaper_by_rob_c-d2e50xs.jpg', 'http://2.bp.blogspot.com/-FEAVPqC_xz4/T4sbSYWgBuI/AAAAAAAACyc/VVp-q9Ox3N8/s1600/Hot_Girls_0005+B&W.jpg', 'http://fc06.deviantart.net/fs71/f/2011/219/d/7/dubstep_wallpaper_white_by_thegregeth-d45s4th.jpg', 'http://www.funonclick.com/fun/Uploaded/Hot%20Girls%20-%20121-20269.jpg', 'http://www.artswallpapers.com/GirlsWallpapers/images/Hot%20Girls%20Wallpaper%2005.jpg', 'http://www.superbwallpapers.com/wallpapers/girls/adriana-lima-3833-1920x1200.jpg'];
@@ -87,7 +176,7 @@ $(document).ready(function() {
   }, 10000);
 
   setInterval(function() {
-    if(typeof sound === 'object') {
+    if(typeof sound === 'object' || !loading) {
       // Elapsed time
       var position = sound.position;
       var duration_est = sound.durationEstimate;
@@ -118,9 +207,8 @@ $(document).ready(function() {
     return minutes+':'+seconds
   }
 
-
   $('#player-play').click(function() {
-    if(typeof sound !== 'object') {
+    if(typeof sound !== 'object' || loading) {
       return false;
     }
 
@@ -131,7 +219,7 @@ $(document).ready(function() {
   });
 
   $('#player-pause').click(function() {
-    if(typeof sound !== 'object') {
+    if(typeof sound !== 'object' || loading) {
       return false;
     }
 
@@ -142,7 +230,7 @@ $(document).ready(function() {
   });
 
   $('#player-step-forward').click(function() {
-    if(typeof sound !== 'object') {
+    if(typeof sound !== 'object' || loading) {
       return false;
     }
 
@@ -152,7 +240,7 @@ $(document).ready(function() {
   });
 
   $('#player-step-backward').click(function() {
-    if(typeof sound !== 'object') {
+    if(typeof sound !== 'object' || loading) {
       return false;
     }
 
@@ -167,21 +255,21 @@ $(document).ready(function() {
   });
 
   $('#player-volume-up').click(function() {
-    if(typeof sound !== 'object') {
+    if(typeof sound !== 'object' || loading) {
       return false;
     }
     sound.mute();
-    
+
     $(this).hide();
     $('#player-volume-off').show();
   });
 
   $('#player-volume-off').click(function() {
-    if(typeof sound !== 'object') {
+    if(typeof sound !== 'object' || loading) {
       return false;
     }
     sound.unmute();
-    
+
     $(this).hide();
     $('#player-volume-up').show();
   });

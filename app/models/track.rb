@@ -10,6 +10,16 @@ class Track < ActiveRecord::Base
   SOURCE = {:soundcloud => 0}
 
   def self.recent(genre)
+    if genre == 'dubstep'
+      sc_id = 3158948
+    elsif genre == 'dnb'
+      sc_id = 12104873
+    elsif genre == 'electro'
+      sc_id = 5614319
+    else
+      sc_id = 3158948 #dupstep
+    end
+
     client = Soundcloud.new :client_id => 'e3216af75bcd70ee4e5d91a6b9f1d302'
 
     tracks = []
@@ -17,12 +27,14 @@ class Track < ActiveRecord::Base
 
     (0..0).to_a.each do |i|
       offset = i * page_size
-      tracks += client.get('/users/3158948/tracks', :order => 'created_at', :offset => offset, :limit => page_size)
+      tracks += client.get("/users/#{sc_id}/tracks", :order => 'created_at', :offset => offset, :limit => page_size)
     end
 
-    tracks.find_all do |track|
+    final_tracks = tracks.find_all do |track|
       track.streamable && track.duration < 600000
     end
+
+    final_tracks.shuffle
   end
 
 private

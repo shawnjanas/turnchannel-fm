@@ -19,6 +19,46 @@ a {
   }
 }
 
+.navbar .nav > li > a {
+  &:hover {
+    color: #5BB75B;
+  }
+}
+
+#main-wrapper {
+  position: fixed;
+  left: 50%;
+  top: 100px;
+}
+.page {
+  width: 400px;
+  margin: 0 0 0 -200px;
+  padding: 10px 10px 10px 20px;
+
+  background: #F8F8F8;
+  opacity: 0.8;
+  border: 1px solid #D4D4D4;
+
+  h2 {
+    color: #5BB75B;
+  }
+  p {
+    margin-right: 10px;
+    span {
+      color: #5BB75B;
+    }
+  }
+}
+#submit-tracks {
+  display: none;
+}
+#submit-art {
+  display: none;
+}
+#contact {
+  display: none;
+}
+
 .icon-zoom {
   zoom: 1.5;
 }
