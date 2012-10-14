@@ -25,6 +25,15 @@ a {
   }
 }
 
+#social-links {
+  float: right;
+  width: 300px;
+  .social {
+    float: right;
+    padding: 10px 0 0 20px;
+  }
+}
+
 #main-wrapper {
   position: fixed;
   left: 50%;
