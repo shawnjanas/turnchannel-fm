@@ -120,6 +120,8 @@ $(document).ready(function() {
     var track = track_list[track_index];
     var id = track.id;
 
+    $('head title').html('► '+track.title+'|'+genre+'|'+'TurnChannel');
+
     SC.stream("/tracks/"+id, {
       autoPlay: true,
       ontimedcomments: function(comments) {
@@ -128,6 +130,7 @@ $(document).ready(function() {
       },
       onplay: function(s) {
         $('#track-title').html('<a href="'+track.permalink_url+'" target="_blank">'+track.title + '</a> - ');
+
         $('.playing').removeClass('playing');
         $('#track-'+id).addClass('playing');
 
