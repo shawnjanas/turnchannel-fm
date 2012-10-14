@@ -8,6 +8,8 @@ $(document).ready(function() {
   var loading = false;
 
   $('#submit-tracks-link').click(function() {
+    mixpanel.track("submit tracks link clicked");
+
     $('#main-wrapper').find('.selected').hide();
     $('#main-wrapper').find('.selected').removeClass('selected');
 
@@ -16,6 +18,8 @@ $(document).ready(function() {
     e.preventDefault();
   });
   $('#submit-art-link').click(function() {
+    mixpanel.track("submit art link clicked");
+
     $('#main-wrapper').find('.selected').hide();
     $('#main-wrapper').find('.selected').removeClass('selected');
 
@@ -24,6 +28,8 @@ $(document).ready(function() {
     e.preventDefault();
   });
   $('#contact-link').click(function() {
+    mixpanel.track("contact link clicked");
+
     $('#main-wrapper').find('.selected').hide();
     $('#main-wrapper').find('.selected').removeClass('selected');
 
@@ -44,6 +50,10 @@ $(document).ready(function() {
 
     var genre_id = $(this).attr('id');
 
+    mixpanel.track("play genre", {
+      "genre": genre_id
+    });
+
     $(this).parent().parent().find('.active').removeClass('active');
     $(this).parent().addClass('active');
 
@@ -56,6 +66,12 @@ $(document).ready(function() {
   $('#player-shuffle').click(function() {
     if(loading) return false;
 
+    mixpanel.track("shuffled playlist", {
+      "genre": genre,
+      "track": track_list[track_index].id,
+      "elapsed": $('#player-elapsed').html(),
+      "duration": $('#player-duration').html()
+    });
     load_playlist();
   });
 
@@ -109,6 +125,11 @@ $(document).ready(function() {
         alert('Error: '+e);
       },
       onfinish: function() {
+        mixpanel.track("track finished", {
+          "genre": genre,
+          "track": track_list[track_index].id
+        });
+
         track_index = (track_index+1) % track_list.length;
         play();
       }
@@ -152,20 +173,19 @@ $(document).ready(function() {
 
 
 
-  var bg_list = ['http://www.superbwallpapers.com/wallpapers/girls/abigail-clancy-3728-1920x1080.jpg', 'http://www.superbwallpapers.com/wallpapers/girls/petra-cubonova-13070-1920x1080.jpg', 'http://www.superbwallpapers.com/wallpapers/girls/adriana-lima-3933-1920x1200.jpg', 'http://www.superbwallpapers.com/wallpapers/music/headphones-14936-1920x1080.jpg', 'http://www.superbwallpapers.com/wallpapers/music/music-14219-1920x1080.jpg', 'http://www.superbwallpapers.com/wallpapers/music/headphones-14798-1920x1080.jpg', 'http://www.superbwallpapers.com/wallpapers/girls/abbey-lee-kershaw-13519-1440x900.jpg', 'http://www.superbwallpapers.com/wallpapers/girls/lorena-garcia-14046-1920x1080.jpg', 'http://www.superbwallpapers.com/wallpapers/celebrities/kimbra-lee-johnson-14235-1920x1080.jpg', 'http://good-wallpapers.com/wallpapers/16996/dubstep-wallpaper.jpg', 'http://1.bp.blogspot.com/-D_7XVbi42rs/TkKmfPhD-SI/AAAAAAAAAFU/6Ij9g2G3exs/s1600/lovely-girls-wallpaper.jpg', 'http://fc01.deviantart.net/fs71/f/2010/282/3/5/dubstep_wallpaper_by_rob_c-d2e50xs.jpg', 'http://2.bp.blogspot.com/-FEAVPqC_xz4/T4sbSYWgBuI/AAAAAAAACyc/VVp-q9Ox3N8/s1600/Hot_Girls_0005+B&W.jpg', 'http://fc06.deviantart.net/fs71/f/2011/219/d/7/dubstep_wallpaper_white_by_thegregeth-d45s4th.jpg', 'http://www.funonclick.com/fun/Uploaded/Hot%20Girls%20-%20121-20269.jpg', 'http://www.artswallpapers.com/GirlsWallpapers/images/Hot%20Girls%20Wallpaper%2005.jpg', 'http://www.superbwallpapers.com/wallpapers/girls/adriana-lima-3833-1920x1200.jpg'];
   var bg_index = 0;
+  var bg_length = $('.landing-background img').length;
 
-  for(var i = 0; i < bg_list.length; i++) {
-    var bg = bg_list[i];
-
-    $('.landing-background').append('<img id="bg-'+i+'" style="display:none;" src="'+bg+'">');
-  }
-  $($('.landing-background img')[0]).show();
+  setTimeout(function() {
+    for(var i = 1; i < bg_length; i++) {
+      $('.landing-background #bg-'+i).hide();
+    }
+  }, 1000);
 
   // Sideshow
   function bg_next() {
     var bg_active = $('.landing-background #bg-'+bg_index);
-    bg_index = (bg_index+1) % bg_list.length;
+    bg_index = (bg_index+1) % bg_length;
 
     $('.landing-background #bg-'+bg_index).show();
     bg_active.hide();
@@ -212,10 +232,13 @@ $(document).ready(function() {
       return false;
     }
 
-    sound.play();
-
-    $(this).hide();
-    $('#player-pause').show();
+    mixpanel.track("play control click", {
+      "genre": genre,
+      "track": track_list[track_index].id,
+      "elapsed": $('#player-elapsed').html(),
+      "duration": $('#player-duration').html()
+    });
+    play_player();
   });
 
   $('#player-pause').click(function() {
@@ -223,16 +246,40 @@ $(document).ready(function() {
       return false;
     }
 
+    mixpanel.track("pause control click", {
+      "genre": genre,
+      "track": track_list[track_index].id,
+      "elapsed": $('#player-elapsed').html(),
+      "duration": $('#player-duration').html()
+    });
+    pause_player();
+  });
+
+  function play_player() {
+    sound.play();
+
+    $(this).hide();
+    $('#player-pause').show();
+  }
+
+  function pause_player() {
     sound.pause();
 
     $(this).hide();
     $('#player-play').show();
-  });
+  }
 
   $('#player-step-forward').click(function() {
     if(typeof sound !== 'object' || loading) {
       return false;
     }
+
+    mixpanel.track("next track click", {
+      "genre": genre,
+      "track": track_list[track_index].id,
+      "elapsed": $('#player-elapsed').html(),
+      "duration": $('#player-duration').html()
+    });
 
     sound.pause();
     track_index = (track_index+1) % track_list.length;
@@ -243,6 +290,13 @@ $(document).ready(function() {
     if(typeof sound !== 'object' || loading) {
       return false;
     }
+
+    mixpanel.track("previous track click", {
+      "genre": genre,
+      "track": track_list[track_index].id,
+      "elapsed": $('#player-elapsed').html(),
+      "duration": $('#player-duration').html()
+    });
 
     sound.pause();
 
@@ -258,6 +312,12 @@ $(document).ready(function() {
     if(typeof sound !== 'object' || loading) {
       return false;
     }
+    mixpanel.track("unmute track", {
+      "genre": genre,
+      "track": track_list[track_index].id,
+      "elapsed": $('#player-elapsed').html(),
+      "duration": $('#player-duration').html()
+    });
     sound.mute();
 
     $(this).hide();
@@ -268,6 +328,12 @@ $(document).ready(function() {
     if(typeof sound !== 'object' || loading) {
       return false;
     }
+    mixpanel.track("mute track", {
+      "genre": genre,
+      "track": track_list[track_index].id,
+      "elapsed": $('#player-elapsed').html(),
+      "duration": $('#player-duration').html()
+    });
     sound.unmute();
 
     $(this).hide();
@@ -275,6 +341,13 @@ $(document).ready(function() {
   });
 
   $('#player-minus').click(function() {
+    mixpanel.track("hide playlist queue", {
+      "genre": genre,
+      "track": track_list[track_index].id,
+      "elapsed": $('#player-elapsed').html(),
+      "duration": $('#player-duration').html()
+    });
+
     $('#queue-wrapper').hide();
     $('footer').css('height', '69px');
 
@@ -283,6 +356,13 @@ $(document).ready(function() {
   });
 
   $('#player-plus').click(function() {
+    mixpanel.track("show playlist queue", {
+      "genre": genre,
+      "track": track_list[track_index].id,
+      "elapsed": $('#player-elapsed').html(),
+      "duration": $('#player-duration').html()
+    });
+
     $('#queue-wrapper').show();
     $('footer').css('height', '205px');
 
@@ -299,21 +379,29 @@ $(document).ready(function() {
     }
   });
   $('.track').live('click', function() {
-    var track_id = $(this).attr('id').split('-')[1];
+    if(loading) return false;
 
+    var track_id = $(this).attr('id').split('-')[1];
     for(var i = 0; i < track_list.length; i++) {
       var track = track_list[i];
 
       if(track.id == track_id) {
         if(track_index == i) {
           if(sound.paused) {
-            $('#player-play').click();
+            play_player();
           } else {
-            $('#player-pause').click();
+            pause_player();
           }
         } else {
-          sound.pause();
+          mixpanel.track("play custom track", {
+            "genre": genre,
+            "new_track": track_list[i].id,
+            "track": track_list[track_index].id,
+            "elapsed": $('#player-elapsed').html(),
+            "duration": $('#player-duration').html()
+          });
 
+          sound.pause();
           track_index = i;
           play();
         }
