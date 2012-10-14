@@ -69,6 +69,8 @@ $(document).ready(function() {
 
     if(genre != genre_id) {
       genre = genre_id;
+      track_index = 0;
+
       load_playlist();
     }
   });
