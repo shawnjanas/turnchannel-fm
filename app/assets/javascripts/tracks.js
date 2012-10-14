@@ -1,4 +1,6 @@
 $(document).ready(function() {
+  var track_actions = true;
+
   var track_list = [];
   var track_index = 0;
 
@@ -8,7 +10,9 @@ $(document).ready(function() {
   var loading = false;
 
   $('#submit-tracks-link').click(function() {
-    mixpanel.track("submit tracks link clicked");
+    if(track_actions) {
+      mixpanel.track("submit tracks link clicked");
+    }
 
     $('#main-wrapper').find('.selected').hide();
     $('#main-wrapper').find('.selected').removeClass('selected');
@@ -18,7 +22,9 @@ $(document).ready(function() {
     e.preventDefault();
   });
   $('#submit-art-link').click(function() {
-    mixpanel.track("submit art link clicked");
+    if(track_actions) {
+      mixpanel.track("submit art link clicked");
+    }
 
     $('#main-wrapper').find('.selected').hide();
     $('#main-wrapper').find('.selected').removeClass('selected');
@@ -28,7 +34,9 @@ $(document).ready(function() {
     e.preventDefault();
   });
   $('#contact-link').click(function() {
-    mixpanel.track("contact link clicked");
+    if(track_actions) {
+      mixpanel.track("contact link clicked");
+    }
 
     $('#main-wrapper').find('.selected').hide();
     $('#main-wrapper').find('.selected').removeClass('selected');
@@ -50,9 +58,11 @@ $(document).ready(function() {
 
     var genre_id = $(this).attr('id');
 
-    mixpanel.track("play genre", {
-      "genre": genre_id
-    });
+    if(track_actions) {
+      mixpanel.track("play genre", {
+        "genre": genre_id
+      });
+    }
 
     $(this).parent().parent().find('.active').removeClass('active');
     $(this).parent().addClass('active');
@@ -66,12 +76,14 @@ $(document).ready(function() {
   $('#player-shuffle').click(function() {
     if(loading) return false;
 
-    mixpanel.track("shuffled playlist", {
-      "genre": genre,
-      "track": track_list[track_index].id,
-      "elapsed": $('#player-elapsed').html(),
-      "duration": $('#player-duration').html()
-    });
+    if(track_actions) {
+      mixpanel.track("shuffled playlist", {
+        "genre": genre,
+        "track": track_list[track_index].id,
+        "elapsed": $('#player-elapsed').html(),
+        "duration": $('#player-duration').html()
+      });
+    }
     load_playlist();
   });
 
@@ -125,10 +137,12 @@ $(document).ready(function() {
         alert('Error: '+e);
       },
       onfinish: function() {
-        mixpanel.track("track finished", {
-          "genre": genre,
-          "track": track_list[track_index].id
-        });
+        if(track_actions) {
+          mixpanel.track("track finished", {
+            "genre": genre,
+            "track": track_list[track_index].id
+          });
+        }
 
         track_index = (track_index+1) % track_list.length;
         play();
@@ -232,12 +246,14 @@ $(document).ready(function() {
       return false;
     }
 
-    mixpanel.track("play control click", {
-      "genre": genre,
-      "track": track_list[track_index].id,
-      "elapsed": $('#player-elapsed').html(),
-      "duration": $('#player-duration').html()
-    });
+    if(track_actions) {
+      mixpanel.track("play control click", {
+        "genre": genre,
+        "track": track_list[track_index].id,
+        "elapsed": $('#player-elapsed').html(),
+        "duration": $('#player-duration').html()
+      });
+    }
     play_player();
   });
 
@@ -246,26 +262,28 @@ $(document).ready(function() {
       return false;
     }
 
-    mixpanel.track("pause control click", {
-      "genre": genre,
-      "track": track_list[track_index].id,
-      "elapsed": $('#player-elapsed').html(),
-      "duration": $('#player-duration').html()
-    });
+    if(track_actions) {
+      mixpanel.track("pause control click", {
+        "genre": genre,
+        "track": track_list[track_index].id,
+        "elapsed": $('#player-elapsed').html(),
+        "duration": $('#player-duration').html()
+      });
+    }
     pause_player();
   });
 
   function play_player() {
     sound.play();
 
-    $(this).hide();
+    $('#player-play').hide();
     $('#player-pause').show();
   }
 
   function pause_player() {
     sound.pause();
 
-    $(this).hide();
+    $('#player-pause').hide();
     $('#player-play').show();
   }
 
@@ -274,12 +292,14 @@ $(document).ready(function() {
       return false;
     }
 
-    mixpanel.track("next track click", {
-      "genre": genre,
-      "track": track_list[track_index].id,
-      "elapsed": $('#player-elapsed').html(),
-      "duration": $('#player-duration').html()
-    });
+    if(track_actions) {
+      mixpanel.track("next track click", {
+        "genre": genre,
+        "track": track_list[track_index].id,
+        "elapsed": $('#player-elapsed').html(),
+        "duration": $('#player-duration').html()
+      });
+    }
 
     sound.pause();
     track_index = (track_index+1) % track_list.length;
@@ -291,12 +311,14 @@ $(document).ready(function() {
       return false;
     }
 
-    mixpanel.track("previous track click", {
-      "genre": genre,
-      "track": track_list[track_index].id,
-      "elapsed": $('#player-elapsed').html(),
-      "duration": $('#player-duration').html()
-    });
+    if(track_actions) {
+      mixpanel.track("previous track click", {
+        "genre": genre,
+        "track": track_list[track_index].id,
+        "elapsed": $('#player-elapsed').html(),
+        "duration": $('#player-duration').html()
+      });
+    }
 
     sound.pause();
 
@@ -312,12 +334,14 @@ $(document).ready(function() {
     if(typeof sound !== 'object' || loading) {
       return false;
     }
-    mixpanel.track("unmute track", {
-      "genre": genre,
-      "track": track_list[track_index].id,
-      "elapsed": $('#player-elapsed').html(),
-      "duration": $('#player-duration').html()
-    });
+    if(track_actions) {
+      mixpanel.track("unmute track", {
+        "genre": genre,
+        "track": track_list[track_index].id,
+        "elapsed": $('#player-elapsed').html(),
+        "duration": $('#player-duration').html()
+      });
+    }
     sound.mute();
 
     $(this).hide();
@@ -328,12 +352,14 @@ $(document).ready(function() {
     if(typeof sound !== 'object' || loading) {
       return false;
     }
-    mixpanel.track("mute track", {
-      "genre": genre,
-      "track": track_list[track_index].id,
-      "elapsed": $('#player-elapsed').html(),
-      "duration": $('#player-duration').html()
-    });
+    if(track_actions) {
+      mixpanel.track("mute track", {
+        "genre": genre,
+        "track": track_list[track_index].id,
+        "elapsed": $('#player-elapsed').html(),
+        "duration": $('#player-duration').html()
+      });
+    }
     sound.unmute();
 
     $(this).hide();
@@ -341,12 +367,14 @@ $(document).ready(function() {
   });
 
   $('#player-minus').click(function() {
-    mixpanel.track("hide playlist queue", {
-      "genre": genre,
-      "track": track_list[track_index].id,
-      "elapsed": $('#player-elapsed').html(),
-      "duration": $('#player-duration').html()
-    });
+    if(track_actions) {
+      mixpanel.track("hide playlist queue", {
+        "genre": genre,
+        "track": track_list[track_index].id,
+        "elapsed": $('#player-elapsed').html(),
+        "duration": $('#player-duration').html()
+      });
+    }
 
     $('#queue-wrapper').hide();
     $('footer').css('height', '69px');
@@ -356,12 +384,14 @@ $(document).ready(function() {
   });
 
   $('#player-plus').click(function() {
-    mixpanel.track("show playlist queue", {
-      "genre": genre,
-      "track": track_list[track_index].id,
-      "elapsed": $('#player-elapsed').html(),
-      "duration": $('#player-duration').html()
-    });
+    if(track_actions) {
+      mixpanel.track("show playlist queue", {
+        "genre": genre,
+        "track": track_list[track_index].id,
+        "elapsed": $('#player-elapsed').html(),
+        "duration": $('#player-duration').html()
+      });
+    }
 
     $('#queue-wrapper').show();
     $('footer').css('height', '205px');
@@ -393,13 +423,15 @@ $(document).ready(function() {
             pause_player();
           }
         } else {
-          mixpanel.track("play custom track", {
-            "genre": genre,
-            "new_track": track_list[i].id,
-            "track": track_list[track_index].id,
-            "elapsed": $('#player-elapsed').html(),
-            "duration": $('#player-duration').html()
-          });
+          if(track_actions) {
+            mixpanel.track("play custom track", {
+              "genre": genre,
+              "new_track": track_list[i].id,
+              "track": track_list[track_index].id,
+              "elapsed": $('#player-elapsed').html(),
+              "duration": $('#player-duration').html()
+            });
+          }
 
           sound.pause();
           track_index = i;
