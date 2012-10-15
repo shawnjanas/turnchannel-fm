@@ -30,11 +30,9 @@ class Track < ActiveRecord::Base
       tracks += client.get("/users/#{sc_id}/tracks", :order => 'created_at', :offset => offset, :limit => page_size)
     end
 
-    final_tracks = tracks.find_all do |track|
+    tracks.find_all do |track|
       track.streamable && track.duration < 600000
     end
-
-    final_tracks.shuffle
   end
 
 private
