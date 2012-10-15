@@ -5,7 +5,7 @@ $(document).ready(function() {
   var track_index = 0;
 
   var sound;
-  var genre = 'dubstep';
+  var genre = 'house';
 
   var loading = false;
 
@@ -405,14 +405,6 @@ $(document).ready(function() {
     $('#player-minus').show();
   });
 
-  $('.track').live({
-    mouseenter: function() {
-      $(this).find('.track-play').show();
-    },
-    mouseleave: function() {
-      $(this).find('.track-play').hide();
-    }
-  });
   $('.track').live('click', function() {
     if(loading) return false;
 
