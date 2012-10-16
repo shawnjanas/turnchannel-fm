@@ -467,14 +467,9 @@ $(document).ready(function() {
     if(loading) return false;
 
     var _tracks = tracks[genres[genre_index]];
-    console.log(_tracks);
     var track_id = $(this).attr('id').split('-')[1];
-    console.log(track_id);
     for(var i = 0; i < _tracks.length; i++) {
       var track = _tracks[i];
-
-      console.log(track);
-      console.log(track.id);
 
       if(track.id == track_id) {
         if(track_index == i) {
