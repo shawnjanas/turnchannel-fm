@@ -9,6 +9,12 @@ class Track < ActiveRecord::Base
 
   SOURCE = {:soundcloud => 0}
 
+  GENRES = [:house, :dubstep, :dnb]
+
+  def self.genres
+    GENRES
+  end
+
   def self.recent(genre)
     sc_id = 5614319 #house
 
@@ -18,8 +24,6 @@ class Track < ActiveRecord::Base
       sc_id = 3158948
     elsif genre == 'dnb'
       sc_id = 12104873
-    elsif genre == 'electro'
-      sc_id = 5614319
     end
 
     client = Soundcloud.new :client_id => 'e3216af75bcd70ee4e5d91a6b9f1d302'

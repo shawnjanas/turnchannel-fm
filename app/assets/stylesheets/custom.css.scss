@@ -6,6 +6,7 @@ body {
   font-size: 12px;
   line-height: 18px;
   color: #333;
+  background: #F7F5F5 url(http://passets-ec.pinterest.com/images/paper.jpg) repeat;
 }
 
 body.padded {
@@ -19,25 +20,91 @@ a {
   }
 }
 
-.navbar .nav > li > a {
-  &:hover {
-    color: #5BB75B;
+.navbar .nav {
+  margin: 0 10px 0 6px;
+
+  & > li > a {
+    color: #333;
+    &:hover {
+      color: #5BB75B;
+    }
   }
 }
 
 #social-links {
-  float: right;
-  width: 300px;
-  .social {
+  position: fixed;
+  bottom: 70px;
+  width: 100%;
+
+  .container .social {
     float: right;
-    padding: 10px 0 0 20px;
+    padding: 10px 10px 0 0;
   }
 }
 
+#queue-wrapper {
+  width: 100%;
+
+  #queue {
+    .track {
+      float: left;
+      height: 135px;
+      width: 100px;
+      background: #FFF;
+      border: #DDD solid 1px;
+      padding: 5px;
+      margin: 0 5px 5px 0;
+
+      &:hover {
+        cursor: pointer;
+      }
+      &.playing {
+        background: #ccf7cc;
+      }
+      .artwork {
+        height: 100px;
+        overflow: hidden;
+        .track-play, .track-pause {
+          display: none;
+          position: absolute;
+          margin: 33px 0 0 33px;
+
+          width: 30px;
+          height: 30px;
+
+          -webkit-border-radius: 15px;
+          -moz-border-radius: 15px;
+          border-radius: 15px;
+
+          background: #000;
+          border: white solid 2px;
+
+          i {
+            margin: 6px 0 0 8px;
+          }
+        }
+      }
+      .title {
+        .artist {
+          height: 18px;
+          overflow: hidden;
+          font-weight: bold;
+        }
+        .title {
+          height: 18px;
+          overflow: hidden;
+        }
+      }
+    }
+  }
+}
 #main-wrapper {
   position: fixed;
   left: 50%;
   top: 100px;
+}
+#main-content {
+  margin: 50px 0 77px 0;
 }
 .page {
   width: 400px;
@@ -68,16 +135,16 @@ a {
 }
 
 .icon-zoom {
-  zoom: 1.5;
+  zoom: 150%;
+  -moz-transform: scale(1.5);
 }
 
 footer {
-  height: 205px;
+  height: 68px;
   width: 100%;
   position: fixed;
   bottom: 0;
-  background: #F8F8F8;
-
+  background: white;
 
   border: 1px solid #D4D4D4;
   filter: progid:dximagetransform.microsoft.gradient(startColorstr='#ffffffff',endColorstr='#fff2f2f2',GradientType=0);
@@ -97,9 +164,21 @@ footer {
       #track-detail-wrapper {
         float: left;
         width: 900px;
+        #track-title {
+          font-weight: lighter;
+          a span {
+            font-weight: bold;
+          }
+        }
         #track-comments {
           font-weight: lighter;
           line-height: 22px;
+        }
+        #track-artwork img{
+          width: 16px;
+          height: 16px;
+          padding-right: 5px;
+          vertical-align: middle
         }
       }
       #player-minus {
@@ -115,78 +194,19 @@ footer {
         padding-right: 5px;
       }
     }
-    #queue-wrapper {
-      width: 100%;
-      overflow-x: scroll;
-
-      #queue {
-        height: 135px;
-
-        border-top: #DDD solid 1px;
-        background-color: #FAFAFA;
-        background-image: -moz-linear-gradient(bottom,white,#F2F2F2);
-        background-image: -webkit-gradient(linear,0 0,0 100%,to(#F2F2F2),from(white));
-        background-image: -webkit-linear-gradient(bottom,white,#F2F2F2);
-        background-image: -o-linear-gradient(bottom,white,#F2F2F2);
-        background-image: linear-gradient(to top,white,#F2F2F2);
-        background-repeat: repeat-x;
-
-        .track {
-          float: left;
-          height: 125px;
-          width: 90px;
-          background: #FFF;
-          border-right: #DDD solid 1px;
-          padding: 5px;
-
-          &:hover {
-            cursor: pointer;
-          }
-          &.playing {
-            background: #ccf7cc;
-          }
-          .artwork {
-            height: 90px;
-            overflow: hidden;
-            .track-play {
-              display: none;
-              position: absolute;
-              margin: 28px 0 0 28px;
-
-              width: 30px;
-              height: 30px;
-              -webkit-border-radius: 15px;
-              -moz-border-radius: 15px;
-              background: #000;
-              border: white solid 2px;
-
-              i {
-                zoom: 1.5;
-                margin: 3px 0 0 4px;
-              }
-            }
-          }
-          .title {
-            height: 40px;
-            overflow: hidden;
-          }
-        }
-      }
-    }
   }
   #player {
     padding: 10px 5px;
     height: 20px;
     background: #FFF;
-    border-top: #DDD solid 1px;
 
     #player-play {
       float: left;
       padding: 0 5px;
       cursor: pointer;
-      display: none;
     }
     #player-pause {
+      display: none;
       float: left;
       padding: 0 5px;
       cursor: pointer;
@@ -213,8 +233,9 @@ footer {
     }
     #player-seek {
       float: left;
-      width: 800px;
-      padding: 10px 5px 0 5px;
+      width: 685px;
+      margin: 10px 5px 0 5px;
+      cursor: pointer;
 
       #player-progress-bar {
         height: 3px;
@@ -279,6 +300,7 @@ footer {
 
 .navbar .brand {
   color: #5BB75B;
+  margin-left: 175px;
 }
 
 .leftbar {
@@ -286,7 +308,7 @@ footer {
   width: 150px;
   color: #333;
   background: #f8f8f8;
-  border: #333 solid 1px;
+  border-right: #333 solid 1px;
 }
 
 /* Jumbotrons

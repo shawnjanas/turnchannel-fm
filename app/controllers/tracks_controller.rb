@@ -2,6 +2,12 @@ class TracksController < ApplicationController
   # GET /tracks
   # GET /tracks.json
   def index
+    if params[:genre].blank?
+      @genre = Track.genres.first
+    else
+      @genre = params[:genre].to_sym if Track.genres.include? params[:genre].to_sym
+      @genre ||= Track.genres.first
+    end
   end
 
   def genre

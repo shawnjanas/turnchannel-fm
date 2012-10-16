@@ -15,10 +15,6 @@
       }(document, 'script', 'facebook-jssdk'));
 
     = render :partial => 'layouts/topbar'
-    .landing-background
-      - bg_list = ['http://www.superbwallpapers.com/wallpapers/music/headphones-14936-1920x1080.jpg', 'http://www.superbwallpapers.com/wallpapers/music/music-14219-1920x1080.jpg', 'http://www.superbwallpapers.com/wallpapers/music/headphones-14798-1920x1080.jpg', 'http://www.superbwallpapers.com/wallpapers/music/music-box-14789-1920x1080.jpg', 'http://good-wallpapers.com/wallpapers/16996/dubstep-wallpaper.jpg', 'http://fc01.deviantart.net/fs71/f/2010/282/3/5/dubstep_wallpaper_by_rob_c-d2e50xs.jpg', 'http://fc06.deviantart.net/fs71/f/2011/219/d/7/dubstep_wallpaper_white_by_thegregeth-d45s4th.jpg', 'http://www.superbwallpapers.com/wallpapers/music/vinyl-record-14440-1920x1080.jpg', 'http://www.superbwallpapers.com/wallpapers/abstract/vinyl-3268-1920x1080.jpg', 'http://www.superbwallpapers.com/wallpapers/music/deadmau5-12257-1920x1080.jpg', 'http://www.hdwallpapersarena.com/wp-content/uploads/2012/09/headphones_music_desktop_1280x1024_hd-wallpaper-399911.jpg'].shuffle;
-      - bg_list.each_with_index do |bg, i|
-        = image_tag bg, :id => "bg-#{i}"
     #main-content
       - flash.each do |key, value|
         .alert{:class => "alert-#{key}"}

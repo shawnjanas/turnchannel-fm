@@ -1,35 +1,41 @@
+#social-links
+  .container
+    .social
+      %a{:href=>"https://twitter.com/share", :class=>"twitter-share-button", :'data-via'=>"TurnChannel", :'data-lang'=>"no", :'data-related'=>"turnchannel", :'data-hashtags'=>"turnchannel"} Tweet
+    .social
+      .fb-like{:'data-href'=>"http://www.facebook.com/TurnChannel", :'data-send'=>"false", :'data-layout'=>"button_count", :'data-width'=>"450", :'data-show-faces'=>"false"}
+
+    :javascript
+      !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+
 %footer
-  #player-queue
-    #player-details
-      #track-detail-wrapper
-        %span#track-title Loading...
-        %span#track-comments
-      #player-minus
-        %i.icon-minus
-      #player-plus
-        %i.icon-plus
-    #queue-wrapper
-      #queue
-  #player
-    #player-play
-      %i.icon-play.icon-zoom
-    #player-pause
-      %i.icon-pause.icon-zoom
-    #player-step-backward
-      %i.icon-step-backward.icon-zoom
-    #player-step-forward
-      %i.icon-step-forward.icon-zoom
-    #player-times
-      %span#player-elapsed 00:00
-      = '/'
-      %span#player-duration 00:00
-    #player-seek
-      #player-progress-bar
-        #player-progress-bar-meter
-    #player-sound
-      #player-volume-up
-        %i.icon-volume-up.icon-zoom
-      #player-volume-off
-        %i.icon-volume-off.icon-zoom
-    #player-shuffle
-      %i.icon-random.icon-zoom
+  .container
+    #player-queue
+      #player-details
+        #track-detail-wrapper
+          %span#track-artwork
+          %span#track-title No track selected
+          %span#track-comments
+    #player
+      #player-play
+        %i.icon-play.icon-zoom
+      #player-pause
+        %i.icon-pause.icon-zoom
+      #player-step-backward
+        %i.icon-step-backward.icon-zoom
+      #player-step-forward
+        %i.icon-step-forward.icon-zoom
+      #player-times
+        %span#player-elapsed 00:00
+        = '/'
+        %span#player-duration 00:00
+      #player-seek
+        #player-progress-bar
+          #player-progress-bar-meter
+      #player-sound
+        #player-volume-up
+          %i.icon-volume-up.icon-zoom
+        #player-volume-off
+          %i.icon-volume-off.icon-zoom
+      #player-shuffle
+        %i.icon-random.icon-zoom
