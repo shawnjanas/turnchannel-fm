@@ -182,20 +182,6 @@ $(document).ready(function() {
     $(this).css('opacity', 1);
   });
 
-  $('#player-shuffle').click(function() {
-    if(loading) return false;
-
-    if(track_actions) {
-      mixpanel.track("shuffled playlist", {
-        "genre": genre,
-        "track": track_list[track_index].id,
-        "elapsed": $('#player-elapsed').html(),
-        "duration": $('#player-duration').html()
-      });
-    }
-    shuffle(track_list);
-  });
-
   function play() {
     var track = track_list[track_index];
     var id = track.id;
@@ -297,6 +283,21 @@ $(document).ready(function() {
     return minutes+':'+seconds
   }
 
+  $('#player-shuffle').click(function() {
+    if(typeof sound !== 'object' || loading) {
+      return false;
+    }
+
+    if(track_actions) {
+      mixpanel.track("shuffled playlist", {
+        "genre": genre,
+        "track": track_list[track_index].id,
+        "elapsed": $('#player-elapsed').html(),
+        "duration": $('#player-duration').html()
+      });
+    }
+    shuffle(track_list);
+  });
   $('#player-play').click(function() {
     if(typeof sound !== 'object' || loading) {
       return false;
@@ -350,6 +351,10 @@ $(document).ready(function() {
   }
 
   $('#track-title').click(function() {
+    if(typeof sound !== 'object' || loading) {
+      return false;
+    }
+
     if(track_actions) {
       mixpanel.track("track sc link click", {
         "genre": genre,
@@ -361,6 +366,10 @@ $(document).ready(function() {
   });
 
   $('#player-seek').click(function() {
+    if(typeof sound !== 'object' || loading) {
+      return false;
+    }
+
     if(track_actions) {
       mixpanel.track("seek bar click", {
         "genre": genre,
@@ -485,16 +494,6 @@ $(document).ready(function() {
             $(this).find('.track-play').show();
           }
         } else {
-          if(track_actions) {
-            mixpanel.track("play custom track", {
-              "genre": genre,
-              "new_track": track_list[i].id,
-              "track": track_list[track_index].id,
-              "elapsed": $('#player-elapsed').html(),
-              "duration": $('#player-duration').html()
-            });
-          }
-
           if(typeof sound === 'object') {
             sound.pause();
           }
@@ -503,9 +502,28 @@ $(document).ready(function() {
           track_index = i;
           play();
 
-
           $(this).find('.track-pause').show();
           $(this).find('.track-play').hide();
+
+          if(track_actions) {
+            if(typeof sound !== 'object') {
+              mixpanel.track("play custom track", {
+                "genre": genre,
+                "new_track": track_list[i].id,
+                "track": -1,
+                "elapsed": -1,
+                "duration": -1
+              });
+            } else {
+              mixpanel.track("play custom track", {
+                "genre": genre,
+                "new_track": track_list[i].id,
+                "track": track_list[track_index].id,
+                "elapsed": $('#player-elapsed').html(),
+                "duration": $('#player-duration').html()
+              });
+            }
+          }
         }
         break;
       }
