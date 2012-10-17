@@ -234,7 +234,8 @@ footer {
     #player-seek {
       float: left;
       width: 685px;
-      margin: 10px 5px 0 5px;
+      margin: 5px 5px 0 0;
+      padding: 5px 0;
       cursor: pointer;
 
       #player-progress-bar {
@@ -294,13 +295,14 @@ footer {
     -webkit-transition: all .2s ease-in-out;
        -moz-transition: all .2s ease-in-out;
             transition: all .2s ease-in-out;
-    
   }
 }
 
 .navbar .brand {
   color: #5BB75B;
-  margin-left: 175px;
+  margin-left: -95px;
+  position: fixed;
+  left: 50%;
 }
 
 .leftbar {
@@ -468,5 +470,30 @@ footer {
     -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.065);
     -moz-box-shadow: 0 1px 4px rgba(0,0,0,0.065);
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.065);
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    width: 481px;
+  }
+  footer #player #player-seek {
+    width: 225px;
+  }
+}
+@media (min-width: 769px) and (max-width: 980px) {
+  .container {
+    width: 724px;
+  }
+  footer #player #player-seek {
+    width: 465px;
+  }
+}
+@media (min-width: 1200px) {
+  .container {
+    width: 1170px;
+  }
+  footer #player #player-seek {
+    width: 910px;
   }
 }

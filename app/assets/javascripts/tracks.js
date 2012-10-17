@@ -28,7 +28,6 @@ $(document).ready(function() {
   var loading = false;
   var loaded = false;
 
-
   SC.initialize({
     client_id: 'e3216af75bcd70ee4e5d91a6b9f1d302'
   });
@@ -119,12 +118,35 @@ $(document).ready(function() {
       tracks[genre] = _tracks;
 
       if(genre == genres[genre_index]) {
+        track_index = 0;
+        track_list = _tracks;
+        var track = _tracks[0];
+
         show_tracks(genre);
+        play(false);
       }
+
       if(--load_genre_callbacks == 0) {
         loaded = true;
       }
     });
+  }
+
+  function load_track() {
+    var track = track_list[track_index];
+    var id = track.id;
+
+    var track_art = track.artwork_url || 'http://images.grooveshark.com/static/albums/70_album.png';
+
+    var _title = track.title.split(' by ');
+    var title = _title[0];
+    var artist = _title[1];
+
+    $('#track-artwork').html('<img src="'+track_art+'" />');
+    $('#track-title').html('<a href="'+track.permalink_url+'" target="_blank"><span>'+title+'</span> by <span>'+artist+'</span></a> - ');
+
+    $('.playing').removeClass('playing');
+    $('#track-'+id).addClass('playing');
   }
 
   function show_tracks(genre) {
@@ -182,30 +204,25 @@ $(document).ready(function() {
     $(this).css('opacity', 1);
   });
 
-  function play() {
+  function play(autoPlay) {
+    if(typeof autoPlay === 'undefined') {
+      autoPlay = true;
+    }
     var track = track_list[track_index];
     var id = track.id;
 
     $('head title').html('► '+track.title+'|'+genres[genre_index]+'|'+'TurnChannel');
 
     SC.stream("/tracks/"+id, {
-      autoPlay: true,
+      autoPlay: autoPlay,
+      useHTML5Audio: true,
       ontimedcomments: function(comments) {
         var comment = comments[0].body;
         $('#track-comments').html(comment);
       },
       onplay: function(s) {
-        var track_art = track.artwork_url || 'http://images.grooveshark.com/static/albums/70_album.png';
-
-        var _title = track.title.split(' by ');
-        var title = _title[0];
-        var artist = _title[1];
-
-        $('#track-artwork').html('<img src="'+track_art+'" />');
-        $('#track-title').html('<a href="'+track.permalink_url+'" target="_blank"><span>'+title+'</span> by <span>'+artist+'</span></a> - ');
-
-        $('.playing').removeClass('playing');
-        $('#track-'+id).addClass('playing');
+        $('#player-pause').show();
+        $('#player-play').hide();
 
         loading = false;
       },
@@ -225,14 +242,7 @@ $(document).ready(function() {
       }
     }, function(s) {
       sound = s;
-
-      var minutes = sound.durationEstimate / 1000 / 60;
-      var seconds = (sound.durationEstimate / 1000) - (minutes * 60);
-
-      $('#player-duration').html();
-
-      $('#player-pause').show();
-      $('#player-play').hide();
+      load_track();
     });
   }
 
@@ -258,11 +268,11 @@ $(document).ready(function() {
       var duration_est = sound.durationEstimate;
 
       var loaded_ratio = position / duration_est;
-      var seek_width = Math.floor(loaded_ratio * 685);
+      var seek_width = loaded_ratio * 100;
 
       $('#player-elapsed').html(to_time(position));
       $('#player-duration').html(to_time(duration_est));
-      $('#player-progress-bar-meter').css('width', seek_width+'px');
+      $('#player-progress-bar-meter').css('width', seek_width+'%');
     }
   }, 500);
 
@@ -365,10 +375,16 @@ $(document).ready(function() {
     }
   });
 
-  $('#player-seek').click(function() {
+  $('#player-seek').click(function(e) {
     if(typeof sound !== 'object' || loading) {
       return false;
     }
+
+    var x = e.offsetX;
+    var seek_width = $('#player-seek').width();
+    var per_seek = (x/seek_width);
+
+    sound.setPosition(per_seek * sound.durationEstimate);
 
     if(track_actions) {
       mixpanel.track("seek bar click", {
@@ -461,7 +477,7 @@ $(document).ready(function() {
 
   $('.track').live({
     mouseenter: function() {
-      if($(this).hasClass('playing') && (typeof sound !== 'object' || (typeof sound === 'object' && !sound.paused))) {
+      if($(this).hasClass('playing') && (typeof sound !== 'object' || (typeof sound === 'object' && (!sound.paused && sound.playState != 0) ))) {
         $(this).find('.track-pause').show();
       } else {
         $(this).find('.track-play').show();
@@ -482,7 +498,7 @@ $(document).ready(function() {
 
       if(track.id == track_id) {
         if(track_index == i) {
-          if(sound.paused) {
+          if(sound.paused || sound.playState == 0) {
             play_player();
 
             $(this).find('.track-pause').show();

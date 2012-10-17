@@ -1,7 +1,7 @@
 %title= "TurnChannel"
 = stylesheet_link_tag   'application', :media => 'all'
+%script{:src=>"//ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js"}
 = javascript_include_tag 'application'
-%script{:src=>"http://connect.soundcloud.com/sdk.js"}
 = csrf_meta_tags
 = render :partial => 'layouts/shim'
 
@@ -16,6 +16,8 @@
 
 %meta{:content=>'242371292554988', :property=>'fb:app_id'}
 %meta{:content=>'shawn.janas.9', :property=>'fb:admins'}
+
+%meta{:name=>"viewport", :content=>"width=device-width, initial-scale=1.0"}
 
 :javascript
   function woopraReady(tracker) {
