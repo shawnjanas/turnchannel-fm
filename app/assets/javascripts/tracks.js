@@ -1,5 +1,5 @@
 $(document).ready(function() {
-  var track_actions = false;
+  var track_actions = true;
 
   var sound;
 
