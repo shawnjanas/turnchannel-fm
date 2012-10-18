@@ -55,15 +55,15 @@ a {
       padding: 5px;
       margin: 0 5px 5px 0;
 
-      &:hover {
-        cursor: pointer;
-      }
       &.playing {
         background: #ccf7cc;
       }
       .artwork {
         height: 100px;
         overflow: hidden;
+        &:hover {
+          cursor: pointer;
+        }
         .track-play, .track-pause {
           display: none;
           position: absolute;
@@ -89,6 +89,7 @@ a {
           height: 18px;
           overflow: hidden;
           font-weight: bold;
+          color: #5BB75B;
         }
         .title {
           height: 18px;
@@ -97,6 +98,8 @@ a {
       }
     }
   }
+}
+.popover {
 }
 #main-wrapper {
   position: fixed;

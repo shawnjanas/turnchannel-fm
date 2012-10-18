@@ -1,5 +1,5 @@
 $(document).ready(function() {
-  var track_actions = true;
+  var track_actions = false;
 
   var sound;
 
@@ -167,7 +167,7 @@ $(document).ready(function() {
         c = 'track playing';
       }
 
-      var track_html = '<div id="track-'+track_id+'" class="'+c+'"><div class="artwork"><div class="track-play"><i class="icon-play icon-white"></i></div><div class="track-pause"><i class="icon-pause icon-white"></i></div><img src="'+track_art+'" height="100px" width="100px" /></div><div class="title"><div class="artist">'+artist+'</div><div class="title">'+title+'</div></div></div>';
+      var track_html = '<article id="track-'+track_id+'" class="'+c+'"><div class="artwork"><div class="track-play"><i class="icon-play icon-white"></i></div><div class="track-pause"><i class="icon-pause icon-white"></i></div><img src="'+track_art+'" height="100px" width="100px" /></div><div class="title"><div class="artist"><a href="'+track.permalink_url+'" target="_blank">'+artist+'</a></div><div class="title">'+title+'</div></div></article>';
 
       $('#queue').append(track_html);
     }
@@ -211,7 +211,12 @@ $(document).ready(function() {
     var track = track_list[track_index];
     var id = track.id;
 
-    $('head title').html('► '+track.title+'|'+genres[genre_index]+'|'+'TurnChannel');
+    if(autoPlay) {
+      $('head title').html('► '+track.title+'|'+genres[genre_index]+'|'+'TurnChannel');
+    } else {
+      $('head title').html(track.title+'|'+genres[genre_index]+'|'+'TurnChannel');
+    }
+
 
     SC.stream("/tracks/"+id, {
       autoPlay: autoPlay,
@@ -475,24 +480,27 @@ $(document).ready(function() {
     $('#player-volume-up').show();
   });
 
-  $('.track').live({
+  $('.track .artwork').live({
     mouseenter: function() {
       if($(this).hasClass('playing') && (typeof sound !== 'object' || (typeof sound === 'object' && (!sound.paused && sound.playState != 0) ))) {
         $(this).find('.track-pause').show();
       } else {
         $(this).find('.track-play').show();
       }
+      $(this).find('.share span').show();
+      $(this).find('.share').hide();
     },
     mouseleave: function() {
       $(this).find('.track-pause').hide();
       $(this).find('.track-play').hide();
+      $(this).find('.share').show();
     }
   });
-  $('.track').live('click', function() {
+  $('.track .artwork').live('click', function() {
     if(loading) return false;
 
     var _tracks = tracks[genres[genre_index]];
-    var track_id = $(this).attr('id').split('-')[1];
+    var track_id = $(this).parent().attr('id').split('-')[1];
     for(var i = 0; i < _tracks.length; i++) {
       var track = _tracks[i];
 
