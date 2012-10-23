@@ -1,0 +1,17 @@
+%h1 Listing tracks
+
+%table
+  %tr
+    %th
+    %th
+    %th
+
+  - @tracks.each do |track|
+    %tr
+      %td= link_to 'Show', track
+      %td= link_to 'Edit', edit_track_path(track)
+      %td= link_to 'Destroy', track, method: :delete, data: { confirm: 'Are you sure?' }
+
+%br
+
+= link_to 'New Track', new_track_path
