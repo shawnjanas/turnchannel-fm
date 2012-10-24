@@ -5,6 +5,8 @@ gem 'rails', '3.2.8'
 gem 'resque', "~> 1.22.0"
 gem 'resque-scheduler'
 
+gem 'soundcloud'
+
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
@@ -12,6 +14,10 @@ gem 'pg'
 gem 'unicorn'
 
 gem 'newrelic_rpm'
+
+group :development, :test do
+  gem 'rspec-rails', '2.9.0'
+end
 
 # Gems used only for assets and not required
 # in production environments by default.

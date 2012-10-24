@@ -1,6 +1,9 @@
 Turnchannelfm::Application.routes.draw do
-  root :to => "tracks#index"
+  resources :forums
+  resources :users
   resources :tracks
+
+  root :to => "tracks#index"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
