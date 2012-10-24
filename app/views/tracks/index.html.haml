@@ -1,17 +1,49 @@
-%h1 Listing tracks
+.playlist
+  .playlist-header
+    .playlist-avatar
+      = image_tag 'http://i1.sndcdn.com/artworks-000030199044-gfc69w-badge.jpg?3eb3856'
+      = image_tag 'http://i1.sndcdn.com/artworks-000030209114-rjhe9h-badge.jpg?3eb3856'
+      = image_tag 'http://i1.sndcdn.com/artworks-000030189185-5lbb4v-badge.jpg?3eb3856'
+      = image_tag 'http://i1.sndcdn.com/artworks-000030176667-uoqz23-badge.jpg?3eb3856'
+      = image_tag 'http://i1.sndcdn.com/artworks-000030199044-gfc69w-badge.jpg?3eb3856'
+      = image_tag 'http://i1.sndcdn.com/artworks-000030209114-rjhe9h-badge.jpg?3eb3856'
+      = image_tag 'http://i1.sndcdn.com/artworks-000030189185-5lbb4v-badge.jpg?3eb3856'
+      = image_tag 'http://i1.sndcdn.com/artworks-000030176667-uoqz23-badge.jpg?3eb3856'
+      = image_tag 'http://i1.sndcdn.com/artworks-000030176667-uoqz23-badge.jpg?3eb3856'
+    .playlist-title
+      %h2 Popular Playlist
+  .playlist-tracks
+    .playlist-tracks-header.navbar-inner.no-border-radius
+      .play-column
+      .star-column
+      .title-column Title
+      .plays-column Plays
+      .duration-column Duration
+      .artist-column Artist
+    .playlist-tracks-content
+      %table
+        %thead
+          %th Play
+          %th Star
+          %th{:width => '50%'} Title
+          %th{:width => '50%'} Artist
+          %th Duration
+          %th Plays
+        %tbody
+          - @tracks.each do |track|
 
-%table
-  %tr
-    %th
-    %th
-    %th
+            - minutes = (track.duration / (60*1000)).floor
+            - seconds = ((track.duration - minutes*60*1000) / 1000).floor
+            - if seconds < 10
+              - duration = "#{minutes}:0#{seconds}"
+            - else
+              - duration = "#{minutes}:#{seconds}"
 
-  - @tracks.each do |track|
-    %tr
-      %td= link_to 'Show', track
-      %td= link_to 'Edit', edit_track_path(track)
-      %td= link_to 'Destroy', track, method: :delete, data: { confirm: 'Are you sure?' }
+            %tr
+              %td.play-column
+              %td.star-column
+              %td.plays-column= track.title
+              %td.artist-column= track.artist
+              %td.duration-column= duration
+              %td.artist-column= track.plays
 
-%br
-
-= link_to 'New Track', new_track_path

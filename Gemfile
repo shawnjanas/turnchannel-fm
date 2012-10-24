@@ -7,9 +7,6 @@ gem 'resque-scheduler'
 
 gem 'soundcloud'
 
-# Bundle edge Rails instead:
-# gem 'rails', :git => 'git://github.com/rails/rails.git'
-
 gem 'pg'
 gem 'unicorn'
 
@@ -22,6 +19,7 @@ end
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
+  gem 'bootstrap-sass', '2.0.0'
   gem 'sass-rails',   '~> 3.2.3'
 
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
@@ -31,7 +29,6 @@ group :assets do
 end
 
 gem 'haml-rails'
-
 gem 'jquery-rails'
 
 # To use ActiveModel has_secure_password

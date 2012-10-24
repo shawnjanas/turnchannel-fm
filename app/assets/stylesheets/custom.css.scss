@@ -1,0 +1,266 @@
+@import "bootstrap";
+
+body {
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  font-weight: 300;
+  font-size: 12px;
+  line-height: 18px;
+  color: #333;
+  background: #F7F5F5 url(http://passets-ec.pinterest.com/images/paper.jpg) repeat;
+}
+
+#topbar {
+  height: 40px;
+  #topbar-nav {
+    margin-left: 93px;
+  }
+}
+
+.leftbar {
+  width: 270px;
+  position: fixed;
+  left: 0;
+  top: 40px;
+  bottom: 350px;
+  background: #f8f8f8;
+  border-right: #CCC solid 1px;
+}
+
+.main-container {
+  position: fixed;
+  left: 271px;
+  top: 40px;
+  bottom: 40px;
+  right: 0;
+}
+
+
+.playlist {
+  width: 100%;
+  .playlist-header {
+    width: 100%;
+    float: left;
+    padding: 10px;
+    border-bottom: #CCC solid 1px;
+    .playlist-avatar {
+      width: 141px;
+      height: 141px;
+      float: left;
+      img {
+        float: left;
+      }
+    }
+    .playlist-title {
+      float:left;
+      margin-left: 10px;
+    }
+  }
+  .playlist-tracks {
+    .playlist-tracks-header {
+      position: fixed;
+      top: 201px;
+      left: 271px;
+      right: 0;
+
+      color: white;
+      font-weight: bold;
+      font-size: 13px;
+      padding-top: 5px;
+
+      z-index: 20;
+
+      .play-column {
+        width: 40px;
+        float:left;
+        height: 25px;
+      }
+      .star-column {
+        width: 40px;
+        float:left;
+        height: 25px;
+      }
+      .title-column {
+        width: 49px;
+        float:left;
+        height: 25px;
+      }
+      .artist-column {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        right: 50%;
+        height: 25px;
+        float: left;
+        margin-left: -26px;
+        margin-top: 5px;
+      }
+      .duration-column {
+        width: 73px;
+        float:right;
+        height: 25px;
+      }
+      .plays-column {
+        width: 50px;
+        float:right;
+        height: 25px;
+      }
+    }
+    .playlist-tracks-content {
+      position: fixed;
+      top: 201px;
+      left: 271px;
+      bottom: 40px;
+      right: 0;
+
+      background: white;
+
+      overflow-y: scroll;
+      th {
+        color: white;
+      }
+      tr {
+        &.odd {
+          background: #f8f8f8;
+        }
+        border-bottom: #CCC solid 1px;
+        height: 25px;
+        overflow: hidden;
+      }
+      thead {
+        height: 0;
+      }
+      th, td {
+        text-align: left;
+        padding: 5px;
+      }
+      .play-column {
+        width: 40px;
+      }
+      .star-column {
+        width: 40px;
+      }
+      .title-column {
+      }
+      .artist-column {
+      }
+      .duration-column {
+        width: 73px;
+      }
+      .plays-column {
+        width: 50px;
+      }
+    }
+  }
+}
+
+footer {
+  height: 40px;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  left: 270px;
+  color: white;
+
+  .control {
+    float: left;
+    margin: 10px 0 0 10px;
+    &:hover {
+      opacity: 0.7;
+      cursor: pointer;
+      cursor: hand;
+    }
+  }
+
+  #player-details {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+
+    border-right: #222 solid 1px;
+
+    #player-heading {
+      height: 40px;
+
+      #player-artist {
+        text-align: center;
+      }
+      #player-title {
+        text-align: center;
+      }
+    }
+    #player-artwork {
+      width: 270px;
+      height: 270px;
+    }
+    #player-controls {
+      height: 40px;
+
+      #player-step-backward {
+      }
+      #player-play {
+      }
+      #player-pause {
+        display: none;
+      }
+      #player-step-forward {
+      }
+      #player-volume-control {
+        float: right;
+        #player-volume-off {
+          display: none;
+        }
+      }
+      #player-shuffle {
+        float: right;
+        padding-right: 10px;
+      }
+    }
+  }
+
+  #player-seekbar {
+    height: 40px;
+    #player-elapsed {
+    }
+    #player-duration {
+    }
+    #player-seek {
+      width: 585px;
+      margin-top: 13px;
+      padding: 5px 0;
+      cursor: pointer;
+
+      #player-progress-bar {
+        height: 3px;
+        padding: 0;
+        background-repeat: no-repeat;
+        background: #B3B3B3;
+
+        #player-progress-bar-meter {
+          -webkit-transition: width 1s linear;
+          -moz-transition: width 1s linear;
+          -ms-transition: width 1s linear;
+          -o-transition: width 1s linear;
+          transition: width 1s linear;
+          -webkit-opacity: .99;
+          height: 3px;
+          width: 0;
+          background: #111;
+        }
+      }
+    }
+  }
+}
+
+.no-border-radius {
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.icon-zoom {
+  zoom: 150%;
+  -moz-transform: scale(1.5);
+}

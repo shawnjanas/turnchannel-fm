@@ -1,0 +1,31 @@
+%footer
+  #player-details
+    #player-heading.navbar-inner.no-border-radius
+      #player-artist
+        Esic
+      #player-title
+        Obsession
+    #player-artwork
+      = image_tag "http://i1.sndcdn.com/artworks-000030209114-rjhe9h-t300x300.jpg?3eb3856"
+    #player-controls.navbar-inner.no-border-radius
+      #player-step-backward.control
+        %i.icon-step-backward.icon-zoom.icon-white
+      #player-play.control
+        %i.icon-play.icon-zoom.icon-white
+      #player-pause.control
+        %i.icon-pause.icon-zoom.icon-white
+      #player-step-forward.control
+        %i.icon-step-forward.icon-zoom.icon-white
+      #player-shuffle.control
+        %i.icon-random.icon-zoom.icon-white
+      #player-volume-control.control
+        #player-volume-up
+          %i.icon-volume-up.icon-zoom.icon-white
+        #player-volume-off
+          %i.icon-volume-off.icon-zoom.icon-white
+  #player-seekbar.navbar-inner.no-border-radius
+    %span#player-elapsed.control 00:00
+    #player-seek.control
+      #player-progress-bar
+        #player-progress-bar-meter
+    %span#player-duration.control 00:00
