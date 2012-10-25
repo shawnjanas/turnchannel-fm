@@ -2,7 +2,7 @@ class TracksController < ApplicationController
   # GET /tracks
   # GET /tracks.json
   def index
-    @tracks = Track.all.reverse!
+    @tracks = Track.all.reverse![0..100]
 
     respond_to do |format|
       format.html # index.html.erb

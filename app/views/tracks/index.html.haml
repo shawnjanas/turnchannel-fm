@@ -1,36 +1,32 @@
 .playlist
   .playlist-header
     .playlist-avatar
-      = image_tag 'http://i1.sndcdn.com/artworks-000030199044-gfc69w-badge.jpg?3eb3856'
-      = image_tag 'http://i1.sndcdn.com/artworks-000030209114-rjhe9h-badge.jpg?3eb3856'
-      = image_tag 'http://i1.sndcdn.com/artworks-000030189185-5lbb4v-badge.jpg?3eb3856'
-      = image_tag 'http://i1.sndcdn.com/artworks-000030176667-uoqz23-badge.jpg?3eb3856'
-      = image_tag 'http://i1.sndcdn.com/artworks-000030199044-gfc69w-badge.jpg?3eb3856'
-      = image_tag 'http://i1.sndcdn.com/artworks-000030209114-rjhe9h-badge.jpg?3eb3856'
-      = image_tag 'http://i1.sndcdn.com/artworks-000030189185-5lbb4v-badge.jpg?3eb3856'
-      = image_tag 'http://i1.sndcdn.com/artworks-000030176667-uoqz23-badge.jpg?3eb3856'
-      = image_tag 'http://i1.sndcdn.com/artworks-000030176667-uoqz23-badge.jpg?3eb3856'
+      - @tracks[0..8].each do |track|
+        = image_tag track.artwork_url.gsub('large','badge')
     .playlist-title
-      %h2 Popular Playlist
+      %h2 Newest Playlist
   .playlist-tracks
     .playlist-tracks-header.navbar-inner.no-border-radius
       .play-column
       .star-column
-      .title-column Title
+      .title-column Track
       .plays-column Plays
+      .duration-column Added
       .duration-column Duration
       .artist-column Artist
     .playlist-tracks-content
       %table
         %thead
-          %th Play
-          %th Star
+          %th
+          %th
           %th{:width => '50%'} Title
+          %th
           %th{:width => '50%'} Artist
+          %th Added
           %th Duration
-          %th Plays
+          %th Playsss
         %tbody
-          - @tracks.each do |track|
+          - @tracks.each_with_index do |track, i|
 
             - minutes = (track.duration / (60*1000)).floor
             - seconds = ((track.duration - minutes*60*1000) / 1000).floor
@@ -39,11 +35,33 @@
             - else
               - duration = "#{minutes}:#{seconds}"
 
-            %tr
-              %td.play-column
-              %td.star-column
-              %td.plays-column= track.title
-              %td.artist-column= track.artist
-              %td.duration-column= duration
-              %td.artist-column= track.plays
-
+            - if i % 2 == 0
+              %tr.track{:'track-id' => track.id}
+                %td.play-column
+                  %i.icon-play{:title => 'Play'}
+                %td.star-column
+                  %i.icon-star-empty{:title => 'Favorite'}
+                %td.title-column= link_to track.title, '#'
+                %td.buy-column
+                  - unless track.purchase_url.blank?
+                    %a{:href => track.purchase_url, :title => 'Purchase', :target => '_blank'}
+                      %i.icon-shopping-cart
+                %td.artist-column= link_to track.artist, '#'
+                %td.duration-column= duration
+                %td.added-column= time_ago_in_words(track.created_at).gsub('about ', '')
+                %td.plays-column= track.plays
+            - else
+              %tr.track.odd{:'track-id' => track.id}
+                %td.play-column
+                  %i.icon-play{:title => 'Play'}
+                %td.star-column
+                  %i.icon-star-empty{:title => 'Favorite'}
+                %td.title-column= link_to track.title, '#'
+                %td.buy-column
+                  - unless track.purchase_url.blank?
+                    %a{:href => track.purchase_url, :title => 'Purchase', :target => '_blank'}
+                      %i.icon-shopping-cart
+                %td.artist-column= link_to track.artist, '#'
+                %td.duration-column= duration
+                %td.added-column= time_ago_in_words(track.created_at).gsub('about ', '')
+                %td.plays-column= track.plays

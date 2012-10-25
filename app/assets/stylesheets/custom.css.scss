@@ -12,7 +12,7 @@ body {
 #topbar {
   height: 40px;
   #topbar-nav {
-    margin-left: 93px;
+    margin-left: 102px;
   }
 }
 
@@ -43,11 +43,12 @@ body {
     padding: 10px;
     border-bottom: #CCC solid 1px;
     .playlist-avatar {
-      width: 141px;
-      height: 141px;
+      width: 144px;
+      height: 144px;
       float: left;
       img {
         float: left;
+        margin: 0 1px 1px 0;
       }
     }
     .playlist-title {
@@ -70,12 +71,22 @@ body {
       z-index: 20;
 
       .play-column {
-        width: 40px;
+        width: 25px;
         float:left;
         height: 25px;
       }
       .star-column {
-        width: 40px;
+        width: 25px;
+        float:left;
+        height: 25px;
+      }
+      .buy-column {
+        width: 25px;
+        float:left;
+        height: 25px;
+      }
+      .artwork-column {
+        width: 32px;
         float:left;
         height: 25px;
       }
@@ -99,6 +110,11 @@ body {
         float:right;
         height: 25px;
       }
+      .added-column {
+        width: 73px;
+        float:right;
+        height: 25px;
+      }
       .plays-column {
         width: 50px;
         float:right;
@@ -107,7 +123,7 @@ body {
     }
     .playlist-tracks-content {
       position: fixed;
-      top: 201px;
+      top: 206px;
       left: 271px;
       bottom: 40px;
       right: 0;
@@ -123,31 +139,84 @@ body {
           background: #f8f8f8;
         }
         border-bottom: #CCC solid 1px;
-        height: 25px;
+        height: 14px;
         overflow: hidden;
+        &.playing {
+          background: #ccf7cc;
+        }
       }
       thead {
         height: 0;
       }
       th, td {
         text-align: left;
-        padding: 5px;
+        padding: 3px 5px;
+      }
+      a {
+        color: #000;
+        &:hover {
+          color: #000;
+          text-decoration: underline;
+        }
       }
       .play-column {
-        width: 40px;
+        width: 20px;
+        margin-top: 2px;
+        border-right: #ccc solid 1px;
+        &:hover {
+          cursor: pointer;
+          i {
+            opacity: 0.6;
+          }
+        }
       }
       .star-column {
-        width: 40px;
+        width: 20px;
+        margin-top: 2px;
+        border-right: #ccc solid 1px;
+        &:hover {
+          cursor: pointer;
+          i {
+            opacity: 0.6;
+          }
+        }
+      }
+      .buy-column {
+        width: 20px;
+        margin-top: 2px;
+        border-right: #ccc solid 1px;
+        &:hover {
+          cursor: pointer;
+          i {
+            opacity: 0.6;
+          }
+        }
       }
       .title-column {
+        height: 13px;
+        overflow: hidden;
+        line-height: 13px;
+        border-right: #ccc solid 1px;
       }
       .artist-column {
+        height: 13px;
+        overflow: hidden;
+        line-height: 13px;
+        border-right: #ccc solid 1px;
+      }
+      .added-column {
+        width: 73px;
+        border-right: #ccc solid 1px;
+        text-align: right;
       }
       .duration-column {
         width: 73px;
+        border-right: #ccc solid 1px;
+        text-align: right;
       }
       .plays-column {
         width: 50px;
+        text-align: right;
       }
     }
   }
@@ -164,11 +233,6 @@ footer {
   .control {
     float: left;
     margin: 10px 0 0 10px;
-    &:hover {
-      opacity: 0.7;
-      cursor: pointer;
-      cursor: hand;
-    }
   }
 
   #player-details {
@@ -178,19 +242,41 @@ footer {
 
     border-right: #222 solid 1px;
 
-    #player-heading {
-      height: 40px;
+    .control {
+      float: left;
+      margin: 10px 0 0 10px;
+      &:hover {
+        opacity: 0.7;
+        cursor: pointer;
+        cursor: hand;
+      }
+    }
 
+    #player-heading {
+      height: 45px;
+      width: 270px;
+      overflow: hidden;
+
+      #player-title {
+        margin-top: 5px;
+        text-align: center;
+        font-weight: bold;
+        font-size: 13px;
+      }
       #player-artist {
         text-align: center;
-      }
-      #player-title {
-        text-align: center;
+        color: #999;
+
+        font-size: 12px;
       }
     }
     #player-artwork {
       width: 270px;
       height: 270px;
+      img {
+        width: 270px;
+        height: 270px;
+      }
     }
     #player-controls {
       height: 40px;
@@ -222,9 +308,13 @@ footer {
     #player-elapsed {
     }
     #player-duration {
+      float: right;
+      margin-right: 10px;
     }
     #player-seek {
-      width: 585px;
+      left: 50px;
+      right: 60px;
+      position: absolute;
       margin-top: 13px;
       padding: 5px 0;
       cursor: pointer;
@@ -244,7 +334,7 @@ footer {
           -webkit-opacity: .99;
           height: 3px;
           width: 0;
-          background: #111;
+          background: #5BB75B;
         }
       }
     }
@@ -263,4 +353,8 @@ footer {
 .icon-zoom {
   zoom: 150%;
   -moz-transform: scale(1.5);
+}
+
+.navbar .brand {
+  margin-left: -10px;
 }

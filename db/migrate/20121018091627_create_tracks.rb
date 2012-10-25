@@ -6,6 +6,7 @@ class CreateTracks < ActiveRecord::Migration
       t.string :artist
 
       t.string :sc_url
+      t.integer :sc_id
       t.string :artwork_url
       t.string :purchase_url
 
@@ -13,7 +14,6 @@ class CreateTracks < ActiveRecord::Migration
       t.integer :duration
       t.string :label_name
 
-      t.text :raw_data
       t.integer :plays
 
       t.integer :genre_id
