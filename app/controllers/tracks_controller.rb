@@ -7,7 +7,7 @@ class TracksController < ApplicationController
   # GET /tracks/1.json
   def show
     @track = Track.find(params[:id])
-    @tracks = Track.all.shuffle
+    @tracks = @track.tags.first.tracks.shuffle
 
     #if params[:v].blank?
     #  respond_to do |format|

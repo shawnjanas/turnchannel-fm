@@ -82,6 +82,12 @@ h3 span {
     right: 15px;
     text-shadow: .1em .1em .2em #333;
   }
+  .track-tags {
+    position: absolute;
+    top: 10px;
+    left: 15px;
+    text-shadow: .1em .1em .2em #333;
+  }
 }
 
 .track-info {
@@ -163,7 +169,7 @@ h3 span {
   text-shadow: .1em .1em .2em #333;
 }
 .player-details {
-  height: 70px;
+  height: 55px;
   margin-top: 10px;
   a {
     margin: 0 10px;

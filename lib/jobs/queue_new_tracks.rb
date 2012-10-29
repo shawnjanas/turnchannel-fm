@@ -8,7 +8,7 @@ class QueueNewTracks
       tracks = QueueNewTracks.fetch_tracks(user, forum)
 
       tracks.reverse.each do |track|
-        user.submit_track(forum.playlists, track)
+        user.submit_track(forum.tag, track)
       end
 
       forum.last_fetch = Time.now

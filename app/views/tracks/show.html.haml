@@ -7,6 +7,9 @@
         = @track.artist
       .player-title
         = @track.title
+      .player-tags
+        - @track.tags.each do |tag|
+          %span.label.label-info= tag.name
       .player-details
         ►
         = @track.plays
@@ -53,6 +56,9 @@
           .track-plays
             ►
             = track.plays
+          .track-tags
+            - track.tags.each do |tag|
+              %span.label.label-info= tag.name
         .track-info
           .track-artist
             = track.artist

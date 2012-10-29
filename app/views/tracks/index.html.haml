@@ -1,4 +1,13 @@
 .tracks-container
+  .track-filters
+    .dropdown
+      %a{:class=>"dropdown-toggle", :id=>"dLabel", :role=>"button", :'data-toggle'=>"dropdown", :'data-target'=>"#", :href=>"/page.html"}
+        All Genres
+        %b.caret
+      %ul.dropdown-menu{:role=>"menu", :'aria-labelledby'=>"dLabel"}
+        %li{:genre => 'all'}= link_to 'All Genres', '#'
+        - Tag.all.each do |tag|
+          %li{:genre => tag.name.downcase}= link_to tag.name, "#"
   - @tracks.each_with_index do |track, i|
     - style = ''
     - if i % 3 == 2
@@ -10,6 +19,9 @@
           .track-plays
             ►
             = track.plays
+          .track-tags
+            - track.tags.each do |tag|
+              %span.label.label-info= tag.name
         .track-info
           .track-artist
             = track.artist
