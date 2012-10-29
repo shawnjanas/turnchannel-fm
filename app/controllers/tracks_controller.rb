@@ -1,20 +1,22 @@
 class TracksController < ApplicationController
   def index
+    @tracks = Track.all.reverse!
   end
 
   # GET /tracks/1
   # GET /tracks/1.json
   def show
     @track = Track.find(params[:id])
+    @tracks = Track.all.shuffle
 
-    if params[:v].blank?
-      respond_to do |format|
-        format.html # show.html.erb
-        format.json { render json: @track }
-      end
-    else
-      render :layout => false
-    end
+    #if params[:v].blank?
+    #  respond_to do |format|
+    #   format.html # show.html.erb
+    #   format.json { render json: @track }
+    # end
+    #else
+    #  render :layout => false
+    #end
   end
 
   # GET /tracks/new

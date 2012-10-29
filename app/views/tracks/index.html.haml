@@ -1,67 +1,17 @@
-.playlist-container
-  .playlist-header
-    .playlist-avatar
-      - @tracks[0..8].each do |track|
-        = image_tag track.artwork_url.gsub('large','badge')
-    .playlist-title
-      %h2 Newest Playlist
-  .playlist-tracks
-    .playlist-tracks-header.navbar-inner.no-border-radius
-      .play-column
-      .star-column
-      .title-column Track
-      .plays-column Plays
-      .duration-column Added
-      .duration-column Duration
-      .artist-column Artist
-    .playlist-tracks-content
-      %table
-        %thead
-          %th
-          %th
-          %th{:width => '50%'} Title
-          %th
-          %th{:width => '50%'} Artist
-          %th Added
-          %th Duration
-          %th Playsss
-        %tbody
-          - @tracks.each_with_index do |track, i|
-
-            - minutes = (track.duration / (60*1000)).floor
-            - seconds = ((track.duration - minutes*60*1000) / 1000).floor
-            - if seconds < 10
-              - duration = "#{minutes}:0#{seconds}"
-            - else
-              - duration = "#{minutes}:#{seconds}"
-
-            - if i % 2 == 0
-              %tr.track{:'track-id' => track.id}
-                %td.play-column
-                  %i.icon-play{:title => 'Play'}
-                %td.star-column
-                  %i.icon-star-empty{:title => 'Favorite'}
-                %td.title-column= link_to track.title, '#'
-                %td.buy-column
-                  - unless track.purchase_url.blank?
-                    %a{:href => track.purchase_url, :title => 'Purchase', :target => '_blank'}
-                      %i.icon-shopping-cart
-                %td.artist-column= link_to track.artist, '#'
-                %td.duration-column= duration
-                %td.added-column= time_ago_in_words(track.created_at).gsub('about ', '')
-                %td.plays-column= track.plays
-            - else
-              %tr.track.odd{:'track-id' => track.id}
-                %td.play-column
-                  %i.icon-play{:title => 'Play'}
-                %td.star-column
-                  %i.icon-star-empty{:title => 'Favorite'}
-                %td.title-column= link_to track.title, '#'
-                %td.buy-column
-                  - unless track.purchase_url.blank?
-                    %a{:href => track.purchase_url, :title => 'Purchase', :target => '_blank'}
-                      %i.icon-shopping-cart
-                %td.artist-column= link_to track.artist, '#'
-                %td.duration-column= duration
-                %td.added-column= time_ago_in_words(track.created_at).gsub('about ', '')
-                %td.plays-column= track.plays
+.tracks-container
+  - @tracks.each_with_index do |track, i|
+    - style = ''
+    - if i % 3 == 2
+      - style = 'margin-right: 0;'
+    .track{:style => style}
+      %a{:href => track_url(track.id)}
+        = image_tag track.artwork_url.gsub('large','t300x300')
+        .track-stats
+          .track-plays
+            ►
+            = track.plays
+        .track-info
+          .track-artist
+            = track.artist
+          .track-title
+            = track.title

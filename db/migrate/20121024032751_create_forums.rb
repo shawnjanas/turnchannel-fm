@@ -5,16 +5,13 @@ class CreateForums < ActiveRecord::Migration
       t.string :remote_id
       t.datetime :last_fetch
 
+      t.integer :tag_id
+
       t.timestamps
     end
 
-    forum1 = Forum.create(:remote_id => 3158948)
-    ForumPlaylistAssignment.create(:forum_id => forum1.id, :playlist_id => Playlist.where(:title => "New Dubstep").first.id)
-
-    forum2 = Forum.create(:remote_id => 5614319)
-    ForumPlaylistAssignment.create(:forum_id => forum2.id, :playlist_id => Playlist.where(:title => "New House").first.id)
-
-    forum3 = Forum.create(:remote_id => 12104873)
-    ForumPlaylistAssignment.create(:forum_id => forum3.id, :playlist_id => Playlist.where(:title => "New DrumNBass").first.id)
+    Forum.create(:remote_id => 3158948, :tag_id => Tag.where(:name => "Dubstep").first.id)
+    Forum.create(:remote_id => 5614319, :tag_id => Tag.where(:name => "House").first.id)
+    Forum.create(:remote_id => 12104873, :tag_id => Tag.where(:name => "DrumNBass").first.id)
   end
 end

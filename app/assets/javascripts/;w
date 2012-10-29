@@ -31,7 +31,7 @@ Player.prototype.playTrack = function(track_id, callback) {
     ontimedcomments: this._ontimedcomments,
     onplay: this._onplay,
     onerror: this._onerror,
-    onfinish: that._onfinish
+    onfinish: this._onfinish
   }, function(s) {
     that._destroy_sound();
     that.sound = s;

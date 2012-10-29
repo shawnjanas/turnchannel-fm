@@ -1,37 +1,60 @@
-.track-container
-  .track-header
-    .track-avatar
+.player{:'track-id' => @track.sc_id, :'track-next' => track_url(@track.next_track), :'track-previous' => track_url(@track.pre_track)}
+  .player-container
+    .player-avatar
       = image_tag @track.artwork_url.gsub('large','t300x300')
-    .track-title
-      %h3
+    .player-header
+      .player-artist
+        = @track.artist
+      .player-title
         = @track.title
-        %span
-          by
-          = @track.artist
-      .track-details
+      .player-details
+        ►
+        = @track.plays
+        plays
         - unless @track.label_name.blank?
-          Label:
+          Label
           = @track.label_name
         - unless @track.purchase_url.blank?
           %a{:href => @track.purchase_url, :title => 'Purchase', :target => '_blank'}
-            %i.icon-shopping-cart
-      .track-options
-        %button#track-play.btn{:'track-id' => @track.id}
-          %i.icon-play
-          Play
-        %button#track-share.btn{:'track-id' => @track.id}
+            %i.icon-zoom.icon-shopping-cart.icon-white
+            Buy
+        %a{:href => @track.sc_url, :title => 'Source', :target => '_blank'}
+          %i.icon-zoom.icon-file.icon-white
+          Source
+        %a{:href => '#', :title => 'Share', :target => '_blank'}
+          %i.icon-zoom.icon-share.icon-white
           Share
-  .track-playlists
-    .track-playlists-header.navbar.navbar-inner.no-border-radius
-      %nav
-        %ul.nav
-          %li.active= link_to 'Playlists', '#'
-    .track-playlists-content
-      = render :partial => "playlists", :track => @track
-  .track-comments
-    .track-comments-header.navbar.navbar-inner.no-border-radius
-      %nav
-        %ul.nav
-          %li.active= link_to 'Comments', '#'
-    .track-comments-content
-      = render :partial => "comments", :track => @track
+      #player-controls
+        #player-step-backward.control.icon-fade
+          %a{:href => track_url(@track.pre_track), :title => 'Previous Track'}
+            %i.icon-step-backward.icon-zoom.icon-white
+        #player-play.control.icon-fade
+          %i.icon-play.icon-zoom.icon-white
+        #player-pause.control.icon-fade
+          %i.icon-pause.icon-zoom.icon-white
+        #player-step-forward.control.icon-fade
+          %a{:href => track_url(@track.next_track), :title => 'Next Track'}
+            %i.icon-step-forward.icon-zoom.icon-white
+        #player-seekbar
+          %span#player-elapsed.control 00:00
+          #player-seek.control
+            #player-progress-bar
+              #player-progress-bar-meter
+          %span#player-duration.control 00:00
+.tracks-container
+  - @tracks.each_with_index do |track, i|
+    - style = ''
+    - if i % 3 == 2
+      - style = 'margin-right: 0;'
+    .track{:style => style}
+      %a{:href => track_url(track.id)}
+        = image_tag track.artwork_url.gsub('large','t300x300')
+        .track-stats
+          .track-plays
+            ►
+            = track.plays
+        .track-info
+          .track-artist
+            = track.artist
+          .track-title
+            = track.title

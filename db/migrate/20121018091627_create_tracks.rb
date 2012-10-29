@@ -17,11 +17,13 @@ class CreateTracks < ActiveRecord::Migration
       t.integer :user_id
 
       t.integer :plays
+      t.integer :cached_plays
       t.timestamps
     end
 
     add_index :tracks, :user_id
     add_index :tracks, :sc_url
+    add_index :tracks, :cached_plays
 
     execute "create index on tracks using gin(to_tsvector('english', full_title));"
   end

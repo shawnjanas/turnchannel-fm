@@ -1,21 +1,17 @@
 .playlists-container
-  %h1 Playlists
-  .new-playlists
-    %h3 New Playlists
-    - @playlists.each do |playlist|
-      .playlist
-        .playlist-avatar
-          %a{:href => playlist_url(playlist.id)}
-            - playlist.tracks[0..8].each do |track|
-              = image_tag track.artwork_url.gsub('large','badge')
-        .playlist-title
-          = playlist.title
-  .new-playlists
-    %h3 Popular Playlists
-    - @playlists.each do |playlist|
-      .playlist
-        .playlist-avatar
-          - playlist.tracks[0..8].each do |track|
-            = image_tag track.artwork_url.gsub('large','badge')
-        .playlist-title
-          = playlist.title
+  - @playlists.first.tracks.each_with_index do |track, i|
+    - style = ''
+    - if i % 3 == 2
+      - style = 'margin-right: 0;'
+    .playlist{:style => style}
+      %a{:href => track_url(track.id)}
+        = image_tag track.artwork_url.gsub('large','t300x300')
+        .playlist-stats
+          .playlist-plays
+            ►
+            = track.plays
+        .playlist-info
+          .playlist-artist
+            = track.artist
+          .playlist-title
+            = track.title

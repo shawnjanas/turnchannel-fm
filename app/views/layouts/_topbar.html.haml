@@ -1,10 +1,10 @@
 %header
   .navbar.navbar-fixed-top
     .navbar-inner
-      #topbar
-        %span.brand.full-left TurnChannelFM
-        %ul.nav#topbar-nav
-          - if params[:controller] == 'playlists' && params[:action] == 'index'
-            %li.active= link_to 'Playlists', '/playlists', :class => 'topbar-link', :id => 'new'
-          - else
-            %li= link_to 'Playlists', '/playlists', :class => 'topbar-link', :id => 'new'
+      .container
+        #topbar
+          %a.brand.full-left{:href => root_url} TURNCHANNEL
+          %ul.nav#topbar-nav
+            /%li.active= link_to 'House', '/house', :class => 'topbar-link', :id => 'house'
+            /%li= link_to 'Dubstep', '/dubstep', :class => 'topbar-link', :id => 'dubstep'
+            /%li= link_to 'DrumNBass', '/dnb', :class => 'topbar-link', :id => 'dnb'
