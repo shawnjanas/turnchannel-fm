@@ -1,0 +1,27 @@
+%table
+  %tbody
+    - @playlist.tracks.each_with_index do |track, i|
+
+      - minutes = (track.duration / (60*1000)).floor
+      - seconds = ((track.duration - minutes*60*1000) / 1000).floor
+      - if seconds < 10
+        - duration = "#{minutes}:0#{seconds}"
+      - else
+        - duration = "#{minutes}:#{seconds}"
+
+      - c = 'track'
+      - if i % 2 == 1
+        - c = 'track odd'
+      %tr{:'track-id' => track.id, :class => c}
+        %td.play-column
+          %i.icon-play{:title => 'Play'}
+        %td.star-column
+          %i.icon-star-empty{:title => 'Favorite'}
+        %td.title-column= link_to track.title, track_url(track.id)
+        %td.buy-column
+          - unless track.purchase_url.blank?
+            %a{:href => track.purchase_url, :title => 'Purchase', :target => '_blank'}
+              %i.icon-shopping-cart
+        %td.artist-column= link_to track.artist, '#'
+        %td.duration-column= duration
+        %td.plays-column= track.plays

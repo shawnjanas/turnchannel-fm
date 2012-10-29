@@ -1,0 +1,9 @@
+.playlists-container
+  - @similar_playlists.each do |playlist|
+    .playlist
+      .playlist-avatar
+        %a{:href => playlist_url(playlist.id)}
+          - playlist.tracks[0..8].each do |track|
+            = image_tag track.artwork_url.gsub('large','badge')
+      .playlist-title
+        = playlist.title

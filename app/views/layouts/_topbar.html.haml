@@ -4,4 +4,7 @@
       #topbar
         %span.brand.full-left TurnChannelFM
         %ul.nav#topbar-nav
-          %li.active= link_to 'New', '/new', :class => 'topbar-link', :id => 'new'
+          - if params[:controller] == 'playlists' && params[:action] == 'index'
+            %li.active= link_to 'Playlists', '/playlists', :class => 'topbar-link', :id => 'new'
+          - else
+            %li= link_to 'Playlists', '/playlists', :class => 'topbar-link', :id => 'new'

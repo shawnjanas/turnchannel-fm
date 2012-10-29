@@ -1,11 +1,14 @@
 class Track < ActiveRecord::Base
-  attr_accessible :title, :full_title, :plays, :sc_url, :sc_id, :artwork_url, :purchase_url, :description, :duration, :label_name, :artist, :genre_id, :created_at
+  attr_accessible :title, :full_title, :plays, :sc_url, :sc_id, :artwork_url, :purchase_url, :description, :duration, :label_name, :artist, :genre_id, :created_at, :user_id
+
+  has_many :track_playlist_assignments
+  has_many :playlists, :through => :track_playlist_assignments
 
   validates :sc_url, :presence => true, :uniqueness => true
 
   before_save :parse_title
 
-  def self.build(track_hash)
+  def self.build(user_id, playlists, track_hash)
     if track_hash
       if track_hash.stream_url
 
@@ -17,9 +20,13 @@ class Track < ActiveRecord::Base
           :purchase_url => track_hash.purchase_url,
           :description => track_hash.description,
           :duration => track_hash.duration,
-          :raw_data => track_hash,
-          :plays => 0
+          :plays => 0,
+          :user_id => user_id
         )
+
+        playlists.each do |playlist|
+          TrackPlaylistAssignment.create(:track_id => track.id, :playlist_id => playlist.id)
+        end
       else
         throw :track_not_streamable
       end

@@ -16,7 +16,7 @@ class User < ActiveRecord::Base
     self.email.downcase!
   end
 
-  def submit_track(sc_url)
+  def submit_track(playlists, sc_url)
     track = nil
 
     client = Soundcloud.new(:client_id => 'e3216af75bcd70ee4e5d91a6b9f1d302')
@@ -27,7 +27,7 @@ class User < ActiveRecord::Base
       track = sc_url
     end
 
-    Track.build(track)
+    Track.build(self.id, playlists, track)
   end
 
 private

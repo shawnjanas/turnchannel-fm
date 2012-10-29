@@ -8,7 +8,7 @@ class QueueNewTracks
       tracks = QueueNewTracks.fetch_tracks(user, forum)
 
       tracks.reverse.each do |track|
-        user.submit_track(track)
+        user.submit_track(forum.playlists, track)
       end
 
       forum.last_fetch = Time.now
@@ -22,10 +22,10 @@ class QueueNewTracks
     track_list = options[:track_list] || []
 
     if forum.last_fetch.blank?
-      limit = 200
+      limit = 50
     end
 
-    skip = false
+    skip = true
 
     client = Soundcloud.new(:client_id => 'e3216af75bcd70ee4e5d91a6b9f1d302')
     tracks = client.get("/users/#{forum.remote_id}/tracks", :order => 'created_at', :offset => offset, :limit => limit)

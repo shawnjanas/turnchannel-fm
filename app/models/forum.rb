@@ -1,6 +1,9 @@
 class Forum < ActiveRecord::Base
   attr_accessible :name, :remote_id, :last_fetch
 
+  has_many :forum_playlist_assignments
+  has_many :playlists, :through => :forum_playlist_assignments
+
   before_save :validate_remote_id
 
   def validate_remote_id

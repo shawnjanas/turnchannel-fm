@@ -1,0 +1,36 @@
+.playlist-container
+  .playlist-header
+    .playlist-avatar
+      - @playlist.tracks[0..8].each do |track|
+        = image_tag track.artwork_url.gsub('large','badge')
+    .playlist-title
+      %h3
+        = @playlist.title
+        %span
+          by
+          = link_to @playlist.user.name
+      .playlist-tags
+      .playlist-playall
+        %button#playall.btn
+          %i.icon-headphones
+          Play All
+  .playlist-tracks
+    .playlist-tracks-header.navbar.navbar-inner.no-border-radius
+      %nav
+        %ul.nav
+          %li.active= link_to 'Tracks', tracks_playlist_url(@playlist.id)
+
+    .playlist-tracks-content
+      - if params[:action] == 'show' || params[:action] == 'tracks'
+        = render :partial => "tracks", :playlist => @playlist
+    .playlist-comments-content.hide
+      - if params[:action] == 'comments'
+        = render :partial => "comments", :playlist => @playlist
+  .playlist-related
+    .playlist-tracks-header.navbar.navbar-inner.no-border-radius
+      %nav
+        %ul.nav
+          %li.active= link_to 'Similar Playlists', tracks_playlist_url(@playlist.id)
+          %li= link_to 'Comments', comments_playlist_url(@playlist.id)
+    .playlist-related-content
+      = render :partial => "similar_playlists", :playlist => @similar_playlists

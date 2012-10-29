@@ -1,6 +1,37 @@
-%p#notice= notice
-
-
-= link_to 'Edit', edit_track_path(@track)
-\|
-= link_to 'Back', tracks_path
+.track-container
+  .track-header
+    .track-avatar
+      = image_tag @track.artwork_url.gsub('large','t300x300')
+    .track-title
+      %h3
+        = @track.title
+        %span
+          by
+          = @track.artist
+      .track-details
+        - unless @track.label_name.blank?
+          Label:
+          = @track.label_name
+        - unless @track.purchase_url.blank?
+          %a{:href => @track.purchase_url, :title => 'Purchase', :target => '_blank'}
+            %i.icon-shopping-cart
+      .track-options
+        %button#track-play.btn{:'track-id' => @track.id}
+          %i.icon-play
+          Play
+        %button#track-share.btn{:'track-id' => @track.id}
+          Share
+  .track-playlists
+    .track-playlists-header.navbar.navbar-inner.no-border-radius
+      %nav
+        %ul.nav
+          %li.active= link_to 'Playlists', '#'
+    .track-playlists-content
+      = render :partial => "playlists", :track => @track
+  .track-comments
+    .track-comments-header.navbar.navbar-inner.no-border-radius
+      %nav
+        %ul.nav
+          %li.active= link_to 'Comments', '#'
+    .track-comments-content
+      = render :partial => "comments", :track => @track

@@ -34,106 +34,132 @@ body {
   right: 0;
 }
 
+.playlists-container {
+  margin: 10px;
+}
 
 .playlist {
+  float:left;
+  margin-right: 10px;
+
+  .playlist-title {
+    text-align: center;
+  }
+}
+
+h3 span {
+  font-size: 14px;
+  font-weight: lighter;
+}
+
+.new-playlists {
+  float: left;
+  margin-top: 10px;
+  background: white;
+  border: #CCC solid 1px;
+  padding: 10px;
+}
+
+.playlist-avatar {
+  width: 144px;
+  height: 144px;
+  float: left;
+  img {
+    float: left;
+    margin: 0 1px 1px 0;
+  }
+}
+
+.playlist-playall {
+  margin-top: 87px;
+}
+
+.track-playlists-content {
+  margin: 10px;
+  float: left;
+}
+
+.track-comments-content {
+  margin: 10px;
+  float: left;
+}
+
+.playlist-tracks li a, .playlist-related li a {
+  padding: 5px 10px !important;
+}
+
+.playlist-related {
+  float: left;
+  width: 100%;
+}
+
+.playlist-related-content {
+  float:left;
+}
+
+.playlist-tracks-header, .track-playlists-header, .track-comments-header {
+  color: white;
+  font-size: 13px;
+  float: left;
+  width: 100%;
+  margin: 0;
+
+  z-index: 20;
+}
+
+.track-container {
+  width: 100%;
+  float: left;
+  .track-header {
+    width: 100%;
+    float: left;
+    padding: 10px;
+    border-bottom: #CCC solid 1px;
+    .track-avatar {
+      width: 144px;
+      height: 144px;
+      float: left;
+    }
+    .track-title {
+      float:left;
+      margin-left: 10px;
+    }
+  }
+}
+
+.track-options {
+  margin-top: 69px;
+}
+
+.track-description {
+  height: 50px;
+  width: 100%;
+}
+
+.track-details {
+  height: 20px;
+}
+
+.playlist-container {
   width: 100%;
   .playlist-header {
     width: 100%;
     float: left;
     padding: 10px;
     border-bottom: #CCC solid 1px;
-    .playlist-avatar {
-      width: 144px;
-      height: 144px;
-      float: left;
-      img {
-        float: left;
-        margin: 0 1px 1px 0;
-      }
-    }
     .playlist-title {
       float:left;
       margin-left: 10px;
     }
   }
   .playlist-tracks {
-    .playlist-tracks-header {
-      position: fixed;
-      top: 201px;
-      left: 271px;
-      right: 0;
-
-      color: white;
-      font-weight: bold;
-      font-size: 13px;
-      padding-top: 5px;
-
-      z-index: 20;
-
-      .play-column {
-        width: 25px;
-        float:left;
-        height: 25px;
-      }
-      .star-column {
-        width: 25px;
-        float:left;
-        height: 25px;
-      }
-      .buy-column {
-        width: 25px;
-        float:left;
-        height: 25px;
-      }
-      .artwork-column {
-        width: 32px;
-        float:left;
-        height: 25px;
-      }
-      .title-column {
-        width: 49px;
-        float:left;
-        height: 25px;
-      }
-      .artist-column {
-        position: absolute;
-        top: 0;
-        left: 50%;
-        right: 50%;
-        height: 25px;
-        float: left;
-        margin-left: -26px;
-        margin-top: 5px;
-      }
-      .duration-column {
-        width: 73px;
-        float:right;
-        height: 25px;
-      }
-      .added-column {
-        width: 73px;
-        float:right;
-        height: 25px;
-      }
-      .plays-column {
-        width: 50px;
-        float:right;
-        height: 25px;
-      }
-    }
+    float:left;
     .playlist-tracks-content {
-      position: fixed;
-      top: 206px;
-      left: 271px;
-      bottom: 40px;
-      right: 0;
-
       background: white;
+      height: 200px;
+      float: left;
 
       overflow-y: scroll;
-      th {
-        color: white;
-      }
       tr {
         &.odd {
           background: #f8f8f8;
@@ -151,6 +177,7 @@ body {
       th, td {
         text-align: left;
         padding: 3px 5px;
+        border-right: #ccc solid 1px;
       }
       a {
         color: #000;
@@ -162,7 +189,6 @@ body {
       .play-column {
         width: 20px;
         margin-top: 2px;
-        border-right: #ccc solid 1px;
         &:hover {
           cursor: pointer;
           i {
@@ -184,7 +210,6 @@ body {
       .buy-column {
         width: 20px;
         margin-top: 2px;
-        border-right: #ccc solid 1px;
         &:hover {
           cursor: pointer;
           i {
@@ -196,22 +221,16 @@ body {
         height: 13px;
         overflow: hidden;
         line-height: 13px;
-        border-right: #ccc solid 1px;
+        width: 50%;
       }
       .artist-column {
         height: 13px;
         overflow: hidden;
         line-height: 13px;
-        border-right: #ccc solid 1px;
-      }
-      .added-column {
-        width: 73px;
-        border-right: #ccc solid 1px;
-        text-align: right;
+        width: 50%;
       }
       .duration-column {
         width: 73px;
-        border-right: #ccc solid 1px;
         text-align: right;
       }
       .plays-column {

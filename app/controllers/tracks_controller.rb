@@ -1,13 +1,5 @@
 class TracksController < ApplicationController
-  # GET /tracks
-  # GET /tracks.json
   def index
-    @tracks = Track.all.reverse![0..100]
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @tracks }
-    end
   end
 
   # GET /tracks/1
@@ -15,9 +7,13 @@ class TracksController < ApplicationController
   def show
     @track = Track.find(params[:id])
 
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @track }
+    if params[:v].blank?
+      respond_to do |format|
+        format.html # show.html.erb
+        format.json { render json: @track }
+      end
+    else
+      render :layout => false
     end
   end
 

@@ -3,7 +3,14 @@ Turnchannelfm::Application.routes.draw do
   resources :users
   resources :tracks
 
-  root :to => "tracks#index"
+  resources :playlists do
+    member do
+      get 'tracks'
+      get 'comments'
+    end
+  end
+
+  root :to => "playlists#index"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
