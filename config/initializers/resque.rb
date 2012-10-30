@@ -12,10 +12,6 @@ unless ENV['RAILS_ENV'] == 'test'
   rails_root = ENV['RAILS_ROOT'] || File.dirname(__FILE__) + '/../..'
   rails_env = ENV['RAILS_ENV'] || 'development'
 
-
-  resque_config = YAML.load_file(rails_root + '/config/resque.yml')
-  Resque.redis = resque_config[rails_env]
-
   Dir["#{Rails.root}/lib/jobs/*.rb"].each { |file| require file }
 
   # Load Resque schedule
@@ -29,6 +25,4 @@ unless ENV['RAILS_ENV'] == 'test'
       [username, password] == ["turnchannelfm", "ab20cd20"]
     end
   end
-
-  Resque.after_fork = Proc.new { ActiveRecord::Base.establish_connection }
 end
