@@ -65,6 +65,6 @@ module Turnchannelfm
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
 
-    ENV["REDISTOGO_URL"] = 'redis://turnchannel:82ea4d13562442d9ffb83f193221f144@cod.redistogo.com:10097/'
+    ENV["REDISTOGO_URL"] = 'redis://redistogo:3bea54ee1a6a6a6a1bf43426a6f14ec1@cod.redistogo.com:10078/'
   end
 end
