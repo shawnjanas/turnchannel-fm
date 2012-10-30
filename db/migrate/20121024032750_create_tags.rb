@@ -8,8 +8,8 @@ class CreateTags < ActiveRecord::Migration
 
     execute "create index on tags using gin(to_tsvector('english', name));"
 
-    Tag.create(:name => "Dubstep")
-    Tag.create(:name => "House")
-    Tag.create(:name => "DrumNBass")
+    Tag.create(:name => "dubstep")
+    Tag.create(:name => "house")
+    Tag.create(:name => "dnb")
   end
 end

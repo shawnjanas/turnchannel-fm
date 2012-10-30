@@ -1,27 +1,41 @@
 .tracks-container
   .track-filters
+    %h2
+      = @genre.camelize
+      %span
+        = "-"
+        =@tracks.size
+        tracks
     .dropdown
-      %a{:class=>"dropdown-toggle", :id=>"dLabel", :role=>"button", :'data-toggle'=>"dropdown", :'data-target'=>"#", :href=>"/page.html"}
-        All Genres
+      %a{:class=>"dropdown-toggle", :id=>"dLabel", :role=>"button", :'data-toggle'=>"dropdown", :'data-target'=>"#", :href=>"#"}
+        = @sort.camelize
         %b.caret
       %ul.dropdown-menu{:role=>"menu", :'aria-labelledby'=>"dLabel"}
-        %li{:genre => 'all'}= link_to 'All Genres', '#'
+        %li= link_to 'Recently Added', "/tracks/#{@genre}/recently_added"
+        %li= link_to 'Plays', "/tracks/#{@genre}/plays"
+    .dropdown
+      %a{:class=>"dropdown-toggle", :id=>"dLabel", :role=>"button", :'data-toggle'=>"dropdown", :'data-target'=>"#", :href=>"#"}
+        = @genre.camelize
+        %b.caret
+      %ul.dropdown-menu{:role=>"menu", :'aria-labelledby'=>"dLabel"}
+        %li= link_to 'All Genres', "/tracks/all_genres/#{@sort}"
         - Tag.all.each do |tag|
-          %li{:genre => tag.name.downcase}= link_to tag.name, "#"
+          %li= link_to tag.name.camelize, "/tracks/#{tag.name}/#{@sort}"
   - @tracks.each_with_index do |track, i|
     - style = ''
     - if i % 3 == 2
       - style = 'margin-right: 0;'
     .track{:style => style}
-      %a{:href => track_url(track.id)}
+      %a{:href => track_url(track.permalink)}
         = image_tag track.artwork_url.gsub('large','t300x300')
+        .track-play
+          %i.icon-play.icon-white
         .track-stats
           .track-plays
             ►
-            = track.plays
+            = track.cached_plays
           .track-tags
-            - track.tags.each do |tag|
-              %span.label.label-info= tag.name
+            %span.label.label-info= track.tag.name
         .track-info
           .track-artist
             = track.artist

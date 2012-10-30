@@ -1,8 +1,9 @@
 class Track < ActiveRecord::Base
-  attr_accessible :title, :full_title, :plays, :sc_url, :sc_id, :artwork_url, :purchase_url, :description, :duration, :label_name, :artist, :genre_id, :created_at, :user_id
+  attr_accessible :title, :full_title, :plays, :cached_plays, :sc_url, :sc_id, :artwork_url, :purchase_url, :description, :duration, :label_name, :artist, :genre_id, :created_at, :user_id, :tag_id
 
-  has_many :track_tag_assignments
-  has_many :tags, :through => :track_tag_assignments
+  has_permalink :full_title
+
+  belongs_to :tag
 
   validates :sc_url, :presence => true, :uniqueness => true
 
@@ -11,7 +12,6 @@ class Track < ActiveRecord::Base
   def self.build(user_id, tag, track_hash)
     if track_hash
       if track_hash.stream_url
-
         track = Track.create(
           :full_title => track_hash.title,
           :sc_url => track_hash.permalink_url,
@@ -21,10 +21,10 @@ class Track < ActiveRecord::Base
           :description => track_hash.description,
           :duration => track_hash.duration,
           :plays => 0,
-          :user_id => user_id
+          :cached_plays => 0,
+          :user_id => user_id,
+          :tag_id => tag.id
         )
-
-        TrackTagAssignment.create(:track_id => track.id, :tag_id => tag.id)
       else
         throw :track_not_streamable
       end
@@ -33,13 +33,19 @@ class Track < ActiveRecord::Base
     end
   end
 
+  def play
+    self.plays = self.plays + 1
+    self.cached_plays = self.cached_plays + 1
+    self.save
+  end
+
   def pre_track
     pre_track_obj = Track.find(:first, :conditions => ["id < ?", self.id], :order => "id DESC") || Track.find(:first, :conditions => ["id >= ?", self.id], :order => "id")
 
     if pre_track_obj.id == self.id
-      Track.all.last.id
+      Track.all.last.permalink
     else
-      pre_track_obj.id
+      pre_track_obj.permalink
     end
   end
 
@@ -47,9 +53,9 @@ class Track < ActiveRecord::Base
     next_track_obj = Track.find(:first, :conditions => ["id > ?", self.id], :order => "id") || Track.find(:first, :conditions => ["id <= ?", self.id], :order => "id DESC")
 
     if next_track_obj.id == self.id
-      Track.all.first.id
+      Track.all.first.permalink
     else
-      next_track_obj.id
+      next_track_obj.permalink
     end
   end
 

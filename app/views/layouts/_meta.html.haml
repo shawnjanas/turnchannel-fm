@@ -1,10 +1,13 @@
-%meta{:content=>'Discover EDM at its best from artists you care about.', :name=>'description'}
+%meta{:content=>'Discover the best Dubstep Music you probably have never heard of', :name=>'description'}
 
 %meta{:content=>'TurnChannel', :property=>'og:site_name'}
-%meta{:content=>'Discover EDM at its best from artists you care about.', :property=>'og:description'}
+%meta{:content=>'Discover the best Dubstep Music you probably have never heard of', :property=>'og:description'}
 %meta{:content=>'TurnChannel', :property=>'og:title'}
-%meta{:content=>'http://turnchannel.com', :property=>'og:url'}
-%meta{:content=>'http://imgix.8tracks.com/i/000/023/907/c/filthy-dubstep-at-its-best-232-4063.png?fm=jpg&q=65&w=1024&h=1024&fit=max', :property=>'og:image'}
+%meta{:content=>"#{request.protocol}#{request.host_with_port}#{request.fullpath}", :property=>'og:url'}
+- image = 'http://imgix.8tracks.com/i/000/023/907/c/filthy-dubstep-at-its-best-232-4063.png?fm=jpg&q=65&w=1024&h=1024&fit=max'
+- if @track
+  - image = @track.artwork_url
+%meta{:content=>image, :property=>'og:image'}
 %meta{:content=>'website', :property=>'og:type'}
 
 %meta{:content=>'242371292554988', :property=>'fb:app_id'}

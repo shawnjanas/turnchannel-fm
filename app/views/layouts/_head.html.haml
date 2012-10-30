@@ -4,7 +4,9 @@
 
 = stylesheet_link_tag   'application', :media => 'all'
 %script{:src=>"//ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js"}
+%script{:src=>"//platform.twitter.com/widgets.js"}
 = javascript_include_tag 'application'
 
 = csrf_meta_tags
 = render :partial => 'layouts/shim'
+= render :partial => 'layouts/scripts'

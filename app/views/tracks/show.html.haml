@@ -1,4 +1,4 @@
-.player{:'track-id' => @track.sc_id, :'track-next' => track_url(@track.next_track), :'track-previous' => track_url(@track.pre_track)}
+.player{:'track-id' => @track.sc_id}
   .player-container
     .player-avatar
       = image_tag @track.artwork_url.gsub('large','t300x300')
@@ -8,15 +8,11 @@
       .player-title
         = @track.title
       .player-tags
-        - @track.tags.each do |tag|
-          %span.label.label-info= tag.name
+        %span.label.label-info= @track.tag.name
       .player-details
         ►
-        = @track.plays
+        = @track.cached_plays
         plays
-        - unless @track.label_name.blank?
-          Label
-          = @track.label_name
         - unless @track.purchase_url.blank?
           %a{:href => @track.purchase_url, :title => 'Purchase', :target => '_blank'}
             %i.icon-zoom.icon-shopping-cart.icon-white
@@ -24,9 +20,12 @@
         %a{:href => @track.sc_url, :title => 'Source', :target => '_blank'}
           %i.icon-zoom.icon-file.icon-white
           Source
-        %a{:href => '#', :title => 'Share', :target => '_blank'}
+        %a{:href => "http://www.facebook.com/sharer.php?u=#{Rack::Utils.escape("#{request.protocol}#{request.host_with_port}#{request.fullpath}")}&t=I'm listening to \"#{@track.title}\" by #{@track.artist}", :title => 'Facebook', :target => '_blank'}
           %i.icon-zoom.icon-share.icon-white
-          Share
+          Facebook
+        %a{:href => "https://twitter.com/intent/tweet?url=#{Rack::Utils.escape("#{request.protocol}#{request.host_with_port}#{request.fullpath}")}&via=turnchannel&text=I'm listening to \"#{@track.title}\" by #{@track.artist}", :title => 'Share via Twitter', :target => '_blank'}
+          %i.icon-zoom.icon-share.icon-white
+          Twitter
       #player-controls
         #player-step-backward.control.icon-fade
           %a{:href => track_url(@track.pre_track), :title => 'Previous Track'}
@@ -45,20 +44,28 @@
               #player-progress-bar-meter
           %span#player-duration.control 00:00
 .tracks-container
+  .track-filters
+    %h2
+      Related Tracks
+      %span
+        = "-"
+        =@tracks.size
+        tracks
   - @tracks.each_with_index do |track, i|
     - style = ''
     - if i % 3 == 2
       - style = 'margin-right: 0;'
     .track{:style => style}
-      %a{:href => track_url(track.id)}
+      %a{:href => track_url(track.permalink)}
         = image_tag track.artwork_url.gsub('large','t300x300')
+        .track-play
+          %i.icon-play.icon-white
         .track-stats
           .track-plays
             ►
-            = track.plays
+            = track.cached_plays
           .track-tags
-            - track.tags.each do |tag|
-              %span.label.label-info= tag.name
+            %span.label.label-info= track.tag.name
         .track-info
           .track-artist
             = track.artist

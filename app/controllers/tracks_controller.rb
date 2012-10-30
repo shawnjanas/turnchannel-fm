@@ -1,13 +1,48 @@
 class TracksController < ApplicationController
   def index
-    @tracks = Track.all.reverse!
+    @genre = 'all_genres'
+    @sort = 'recently_added'
+    @tracks = Track.order("created_at DESC")
+  end
+
+  def list
+    @genre = params[:genre] || 'all_genres'
+    @sort = params[:sort] || 'recently_added'
+    @sort_name = 'Recently_Added'
+
+    if @genre == 'all_genres'
+      if @sort == 'plays'
+        @tracks = Track.order("cached_plays DESC")
+      else
+        @tracks = Track.order("created_at DESC")
+      end
+    else
+      tag = Tag.find_by_name(@genre)
+      if tag
+        if @sort == 'plays'
+          @tracks = tag.tracks.order("cached_plays DESC")
+        else
+          @tracks = tag.tracks.order("created_at DESC")
+        end
+      else
+        if @sort == 'plays'
+          @tracks = Track.order("cached_plays DESC")
+        else
+          @tracks = Track.order("created_at DESC")
+        end
+      end
+    end
+
+    render :index
   end
 
   # GET /tracks/1
   # GET /tracks/1.json
   def show
-    @track = Track.find(params[:id])
-    @tracks = @track.tags.first.tracks.shuffle
+    @track = Track.find_by_permalink(params[:id])
+    @track.play
+
+    @tracks = @track.tag.tracks.shuffle
 
     #if params[:v].blank?
     #  respond_to do |format|

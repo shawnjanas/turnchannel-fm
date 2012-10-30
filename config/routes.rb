@@ -3,6 +3,8 @@ Turnchannelfm::Application.routes.draw do
   resources :users
   resources :tracks
 
+  match '/tracks/:genre/:sort' => 'tracks#list'
+
   root :to => "tracks#index"
 
   # The priority is based upon order of creation:

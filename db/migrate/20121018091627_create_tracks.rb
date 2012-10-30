@@ -15,6 +15,7 @@ class CreateTracks < ActiveRecord::Migration
       t.string :label_name
 
       t.integer :user_id
+      t.integer :tag_id
 
       t.integer :plays
       t.integer :cached_plays
@@ -22,6 +23,8 @@ class CreateTracks < ActiveRecord::Migration
     end
 
     add_index :tracks, :user_id
+    add_index :tracks, :tag_id
+
     add_index :tracks, :sc_url
     add_index :tracks, :cached_plays
 

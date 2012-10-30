@@ -41,6 +41,7 @@ GEM
       activesupport (>= 3.1, < 4.1)
       haml (~> 3.1)
       railties (>= 3.1, < 4.1)
+    has_permalink (0.1.4)
     hashie (1.2.0)
     hike (1.2.1)
     httmultiparty (0.3.8)
@@ -161,6 +162,7 @@ PLATFORMS
 DEPENDENCIES
   bootstrap-sass (= 2.0.0)
   haml-rails
+  has_permalink
   jquery-rails
   newrelic_rpm
   pg
