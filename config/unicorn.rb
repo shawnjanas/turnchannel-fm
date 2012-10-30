@@ -19,15 +19,6 @@ before_fork do |server, worker|
     Rails.logger.info('Disconnected from Redis')
   end
 
-  @_web_pid ||= spawn("resque-web")
-  @resque_pid ||= spawn("bundle exec rake " + \
-  "resque:work QUEUES=*")
-
-  @resque_schedule_pid ||= spawn("bundle exec rake " + \
-  "resque:scheduler")
-
-  @resque_web_pid ||= spawn("resque-web")
-
   sleep 1
 end
 
@@ -43,4 +34,13 @@ after_fork do |server, worker|
     Resque.redis = ENV['REDISTOGO_URL']
     Rails.logger.info('Connected to Redis')
   end
+
+  @_web_pid ||= spawn("resque-web")
+  @resque_pid ||= spawn("bundle exec rake " + \
+  "resque:work QUEUES=*")
+
+  @resque_schedule_pid ||= spawn("bundle exec rake " + \
+  "resque:scheduler")
+
+  @resque_web_pid ||= spawn("resque-web")
 end
