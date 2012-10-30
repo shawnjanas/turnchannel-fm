@@ -40,9 +40,13 @@ class TracksController < ApplicationController
   # GET /tracks/1.json
   def show
     @track = Track.find_by_permalink(params[:id])
-    @track.play
 
-    @tracks = Track.order("RANDOM()").limit(20)
+    if @track
+      @track.play
+      @tracks = Track.order("RANDOM()").limit(20)
+    else
+      redirect_to root_path
+    end
   end
 
   # GET /tracks/new
