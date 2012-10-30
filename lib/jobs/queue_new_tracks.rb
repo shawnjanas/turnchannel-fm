@@ -25,7 +25,7 @@ class QueueNewTracks
       limit = 50
     end
 
-    skip = true
+    skip = false
 
     client = Soundcloud.new(:client_id => 'e3216af75bcd70ee4e5d91a6b9f1d302')
     tracks = client.get("/users/#{forum.remote_id}/tracks", :order => 'created_at', :offset => offset, :limit => limit)

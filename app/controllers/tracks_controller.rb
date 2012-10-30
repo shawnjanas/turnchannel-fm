@@ -2,7 +2,7 @@ class TracksController < ApplicationController
   def index
     @genre = 'all_genres'
     @sort = 'recently_added'
-    @tracks = Track.order("created_at DESC")
+    @tracks = Track.order("created_at DESC").limit(200)
   end
 
   def list
@@ -12,23 +12,23 @@ class TracksController < ApplicationController
 
     if @genre == 'all_genres'
       if @sort == 'plays'
-        @tracks = Track.order("cached_plays DESC")
+        @tracks = Track.order("cached_plays DESC").limit(100)
       else
-        @tracks = Track.order("created_at DESC")
+        @tracks = Track.order("created_at DESC").limit(100)
       end
     else
       tag = Tag.find_by_name(@genre)
       if tag
         if @sort == 'plays'
-          @tracks = tag.tracks.order("cached_plays DESC")
+          @tracks = tag.tracks.order("cached_plays DESC").limit(100)
         else
-          @tracks = tag.tracks.order("created_at DESC")
+          @tracks = tag.tracks.order("created_at DESC").limit(100)
         end
       else
         if @sort == 'plays'
-          @tracks = Track.order("cached_plays DESC")
+          @tracks = Track.order("cached_plays DESC").limit(100)
         else
-          @tracks = Track.order("created_at DESC")
+          @tracks = Track.order("created_at DESC").limit(100)
         end
       end
     end
