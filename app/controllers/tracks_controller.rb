@@ -42,7 +42,7 @@ class TracksController < ApplicationController
     @track = Track.find_by_permalink(params[:id])
     @track.play
 
-    @tracks = @track.tag.tracks.order("created_at DESC").limit(100)
+    @tracks = Track.order("RANDOM()").limit(100)
   end
 
   # GET /tracks/new

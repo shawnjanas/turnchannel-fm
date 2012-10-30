@@ -25,7 +25,7 @@
     - style = ''
     - if i % 3 == 2
       - style = 'margin-right: 0;'
-    .track{:style => style}
+    %article.track{:style => style}
       %a{:href => track_url(track.permalink)}
         = image_tag track.artwork_url.gsub('large','t300x300')
         .track-play
