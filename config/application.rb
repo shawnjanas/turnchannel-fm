@@ -60,7 +60,11 @@ module Turnchannelfm
     # Enable the asset pipeline
     config.assets.enabled = true
 
+    config.assets.initialize_on_precompile = false
+
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
+
+    ENV["REDISTOGO_URL"] = 'redis://turnchannel:82ea4d13562442d9ffb83f193221f144@cod.redistogo.com:10097/'
   end
 end
