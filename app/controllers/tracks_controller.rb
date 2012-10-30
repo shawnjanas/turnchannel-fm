@@ -42,16 +42,7 @@ class TracksController < ApplicationController
     @track = Track.find_by_permalink(params[:id])
     @track.play
 
-    @tracks = @track.tag.tracks.shuffle
-
-    #if params[:v].blank?
-    #  respond_to do |format|
-    #   format.html # show.html.erb
-    #   format.json { render json: @track }
-    # end
-    #else
-    #  render :layout => false
-    #end
+    @tracks = @track.tag.tracks.order("created_at DESC").limit(100)
   end
 
   # GET /tracks/new
