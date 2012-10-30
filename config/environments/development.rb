@@ -34,4 +34,6 @@ Turnchannelfm::Application.configure do
 
   # Expands the lines which load the assets
   config.assets.debug = true
+
+  ENV["REDISTOGO_URL"] = 'redis://turnchannel:82ea4d13562442d9ffb83f193221f144@cod.redistogo.com:10097/'
 end
