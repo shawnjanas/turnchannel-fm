@@ -13,20 +13,22 @@ unless ENV['RAILS_ENV'] == 'test'
   rails_env = ENV['RAILS_ENV'] || 'development'
 
 
-    resque_config = YAML.load_file(rails_root + '/config/resque.yml')
-    Resque.redis = resque_config[rails_env]
+  resque_config = YAML.load_file(rails_root + '/config/resque.yml')
+  Resque.redis = resque_config[rails_env]
 
-    Dir["#{Rails.root}/lib/jobs/*.rb"].each { |file| require file }
+  Dir["#{Rails.root}/lib/jobs/*.rb"].each { |file| require file }
 
-    # Load Resque schedule
-    # http://blog.redistogo.com/2010/08/05/resque-scheduler/
-    Resque.schedule = YAML.load_file(rails_root + '/config/resque_schedule.yml')
+  # Load Resque schedule
+  # http://blog.redistogo.com/2010/08/05/resque-scheduler/
+  Resque.schedule = YAML.load_file(rails_root + '/config/resque_schedule.yml')
 
-    # Authentication for ResqueServer
-    # Based on https://gist.github.com/1060167
-    if rails_env != 'development'
-      Resque::Server.use(Rack::Auth::Basic) do |username, password|
-        [username, password] == ["turnchannelfm", "ab20cd20"]
-      end
+  # Authentication for ResqueServer
+  # Based on https://gist.github.com/1060167
+  if rails_env != 'development'
+    Resque::Server.use(Rack::Auth::Basic) do |username, password|
+      [username, password] == ["turnchannelfm", "ab20cd20"]
     end
+  end
+
+  Resque.after_fork = Proc.new { ActiveRecord::Base.establish_connection }
 end
