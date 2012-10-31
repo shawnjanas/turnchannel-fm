@@ -1,10 +1,10 @@
 %header
-  .navbar.navbar-fixed-top
+  .navbar
     .navbar-inner
       .container
         #topbar
           %a.brand.full-left{:href => root_url} TURNCHANNEL
           %ul.nav#topbar-nav
-            /%li.active= link_to 'House', '/house', :class => 'topbar-link', :id => 'house'
+            %li= link_to 'Discover', '/discover', :class => 'topbar-link'
             /%li= link_to 'Dubstep', '/dubstep', :class => 'topbar-link', :id => 'dubstep'
             /%li= link_to 'DrumNBass', '/dnb', :class => 'topbar-link', :id => 'dnb'

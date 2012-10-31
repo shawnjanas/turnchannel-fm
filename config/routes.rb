@@ -1,9 +1,10 @@
 Turnchannelfm::Application.routes.draw do
-  resources :forums
-  resources :users
+  #resources :forums
+  #resources :users
   resources :tracks
 
-  match '/tracks/:genre/:sort' => 'tracks#list'
+  match '/discover' => 'tracks#discover'
+  match '/discover/:tag' => 'tracks#discover'
 
   root :to => "tracks#index"
 

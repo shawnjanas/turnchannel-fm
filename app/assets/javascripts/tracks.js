@@ -1,5 +1,5 @@
 $(document).ready(function() {
-  var track_actions = true;
+  var track_actions = false;
 
   $('.track').hover(function() {
     $(this).find('img').addClass('hover');
@@ -33,7 +33,7 @@ $(document).ready(function() {
         });
       }
 
-      var href = $('#player-step-forward a').attr('href');
+      var href = $('.player').attr('next-track');
       window.location = href;
     }
   }, function(s) {
@@ -67,7 +67,7 @@ $(document).ready(function() {
 
     player.play();
 
-    $('#player-pause').show();
+    $('#player-pause').css('display', 'inline-block');
     $('#player-play').hide();
 
     if(track_actions) {
@@ -83,8 +83,8 @@ $(document).ready(function() {
 
     player.pause();
 
+    $('#player-play').css('display', 'inline-block');
     $('#player-pause').hide();
-    $('#player-play').show();
 
     if(track_actions) {
       mixpanel.track("pause control click", {

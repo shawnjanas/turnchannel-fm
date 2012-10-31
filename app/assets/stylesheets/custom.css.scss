@@ -8,6 +8,7 @@ body {
   color: #333;
   /*background-color: #242526;*/
   background-color: #1B1B1B;
+  margin-bottom: 30px;
 }
 
 h3 span {
@@ -26,31 +27,35 @@ h3 span {
 .navbar .brand {
   padding: 20px 20px 0 0;
   margin-left: 0;
+  font-weight: bold;
+  float: left;
+  &:hover {
+    color: #f8f8f8;
+  }
 }
 
 
 .main-container {
-  margin: 60px 0;
   width: 100%;
-  float: left;
 }
 
 .tracks-container {
   width: 960px;
   margin: 0 auto;
+  height: 550px;
 }
 
 .track {
   float: left;
-  width: 300px;
+  width: 217px;
   margin: 30px 30px 0 0;
 
   overflow: hidden;
   position: relative;
 
   img {
-    width: 300px;
-    height: 300px;
+    width: 217px;
+    height: 217px;
     -moz-opacity: .5;
     filter: alpha(opacity=50);
     opacity: .5;
@@ -65,7 +70,7 @@ h3 span {
     position: absolute;
     left: 0;
     top: 0;
-    margin: 133px 0 0 133px;
+    margin: 93px 0 0 93px;
     width: 30px;
     height: 30px;
     -webkit-border-radius: 15px;
@@ -85,7 +90,7 @@ h3 span {
   margin-top: 30px;
   h2 {
     float:left;
-    color: #CCC;
+    color: #FFF;
     span {
       color: #666;
       font-size: 18px;
@@ -115,7 +120,7 @@ h3 span {
   top: 0;
   left: 0;
 
-  width: 300px;
+  width: 217px;
   height: 40px;
 
   color: #f8f8f8;
@@ -143,7 +148,7 @@ h3 span {
   bottom: 0;
   left: 0;
 
-  width: 300px;
+  width: 217px;
   height: 70px;
 
   color: #f8f8f8;
@@ -163,6 +168,7 @@ h3 span {
     font-size: 24px;
     bottom: 35px;
     left: 15px;
+    right: 15px;
     text-shadow: .1em .1em .2em #333;
     height: 28px;
     line-height: 28px;
@@ -174,7 +180,12 @@ h3 span {
     font-size: 16px;
     bottom: 15px;
     left: 15px;
+    right: 15px;
     text-shadow: .1em .1em .2em #333;
+    height: 18px;
+    line-height: 18px;
+    overflow: hidden;
+    vertical-align: baseline;
   }
 }
 
@@ -182,25 +193,69 @@ h3 span {
 
 
 .player {
-  background: #232323;
+  background: #2480a7;
   border-bottom: black solid 1px;
   padding-top: 30px;
 
   color: #f8f8f8;
-  height: 230px;
+  height: 555px;
 }
 .player-container {
   width: 960px;
   margin: 0 auto;
 }
-.player-avatar {
+.player-comments {
   float: left;
-  width: 200px;
-  height: 200px;
+  height: 499px;
+  width: 360px;
+  overflow: scroll;
+  margin-left: 30px;
+  border: 1px solid #666;
+  background: #f8f8f8;
+  padding: 10px;
 }
-.player-header {
+.player-wrapper {
+  overflow: hidden;
+  position: relative;
+
   float: left;
-  margin-left: 20px;
+  width: 521px;
+  height: 521px;
+
+  img {
+    width: 521px;
+    height: 521px;
+  }
+}
+.player-title {
+  height: 36px;
+  text-shadow: .1em .1em .2em #333;
+  overflow: hidden;
+}
+.player-avatar {
+
+}
+.player-footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+
+  width: 481px;
+  height: 90px;
+
+  padding: 10px 20px;
+
+  color: #f8f8f8;
+
+  background: rgb(0, 0, 0);
+  background: rgba(0, 0, 0, 0.8);
+  h2 {
+    color: white;
+    span {
+      font-weight: lighter;
+    }
+  }
+
 }
 .player-artist {
   font-size: 32px;
@@ -211,16 +266,28 @@ h3 span {
   overflow: hidden;
   margin-bottom: 10px;
 }
-.player-title {
-  font-size: 16px;
-  height: 26px;
-  text-shadow: .1em .1em .2em #333;
-}
 .player-details {
-  height: 55px;
-  margin-top: 10px;
+  margin-top: 5px;
   a {
     margin: 0 10px;
+  }
+}
+#player-play {
+  display: none;
+  &.icon-fade {
+    cursor: pointer;
+    &:hover {
+      opacity: 0.6;
+    }
+  }
+}
+#player-pause {
+  display: inline-block;
+  &.icon-fade {
+    cursor: pointer;
+    &:hover {
+      opacity: 0.6;
+    }
   }
 }
 
@@ -236,7 +303,8 @@ h3 span {
 }
 
 #player-controls {
-  height: 40px;
+  height: 20px;
+  margin-top: 5px;
 
   #player-step-backward {
     margin-left: 0;
@@ -266,15 +334,16 @@ h3 span {
   margin-top: 3px;
 
   #player-elapsed {
+    margin: 0;
   }
   #player-duration {
-    float: right;
+    margin: 0;
   }
   #player-seek {
-    margin-top: 13px;
+    margin: 2px 5px 0 5px;
     padding: 5px 0;
     cursor: pointer;
-    width: 565px;
+    width: 409px;
 
     #player-progress-bar {
       height: 3px;

@@ -1,59 +1,55 @@
-.player{:'track-id' => @track.sc_id}
+.player{:'track-id' => @track.sc_id, :'next-track' => track_url(@tracks_rnd.first.permalink)}
   .player-container
-    .player-avatar
-      = image_tag @track.artwork_url.gsub('large','t300x300')
-    .player-header
-      .player-artist
-        = @track.artist
-      .player-title
-        = @track.title
-      .player-tags
-        %span.label.label-info= @track.tag.name
-      .player-details
-        ►
-        = @track.cached_plays
-        plays
-        - unless @track.purchase_url.blank?
-          %a{:href => @track.purchase_url, :title => 'Purchase', :target => '_blank'}
-            %i.icon-zoom.icon-shopping-cart.icon-white
-            Buy
-        %a{:href => @track.sc_url, :title => 'Source', :target => '_blank'}
-          %i.icon-zoom.icon-file.icon-white
-          Source
-        %a{:href => "http://www.facebook.com/sharer.php?u=#{Rack::Utils.escape("#{request.protocol}#{request.host_with_port}#{request.fullpath}")}&t=I'm listening to \"#{@track.title}\" by #{@track.artist}", :title => 'Facebook', :target => '_blank'}
-          %i.icon-zoom.icon-share.icon-white
-          Facebook
-        %a{:href => "https://twitter.com/intent/tweet?url=#{Rack::Utils.escape("#{request.protocol}#{request.host_with_port}#{request.fullpath}")}&via=turnchannel&text=I'm listening to \"#{@track.title}\" by #{@track.artist}", :title => 'Share via Twitter', :target => '_blank'}
-          %i.icon-zoom.icon-share.icon-white
-          Twitter
-      #player-controls
-        #player-step-backward.control.icon-fade
-          %a{:href => track_url(@track.pre_track), :title => 'Previous Track'}
-            %i.icon-step-backward.icon-zoom.icon-white
-        #player-play.control.icon-fade
-          %i.icon-play.icon-zoom.icon-white
-        #player-pause.control.icon-fade
-          %i.icon-pause.icon-zoom.icon-white
-        #player-step-forward.control.icon-fade
-          %a{:href => track_url(@track.next_track), :title => 'Next Track'}
-            %i.icon-step-forward.icon-zoom.icon-white
-        #player-seekbar
-          %span#player-elapsed.control 00:00
-          #player-seek.control
-            #player-progress-bar
-              #player-progress-bar-meter
-          %span#player-duration.control 00:00
+    .player-wrapper
+      = image_tag @track.artwork_url.gsub('large','t500x500')
+      .player-footer
+        .player-title
+          %h2
+            = @track.title
+            %span
+              by
+              = @track.artist
+        .player-details
+          #player-play.icon-fade
+            %i.icon-play.icon-zoom.icon-white
+          #player-pause.icon-fade
+            %i.icon-pause.icon-zoom.icon-white
+          - unless @track.purchase_url.blank?
+            %a{:href => @track.purchase_url, :title => 'Purchase', :target => '_blank'}
+              %i.icon-zoom.icon-shopping-cart.icon-white
+              Buy
+          %a{:href => @track.sc_url, :title => 'Source', :target => '_blank'}
+            %i.icon-zoom.icon-file.icon-white
+            Source
+          %a{:href => "http://www.facebook.com/sharer.php?u=#{Rack::Utils.escape("#{request.protocol}#{request.host_with_port}#{request.fullpath}")}&t=I'm listening to \"#{@track.title}\" by #{@track.artist}", :title => 'Facebook', :target => '_blank'}
+            %i.icon-zoom.icon-share.icon-white
+            Facebook
+          %a{:href => "https://twitter.com/intent/tweet?url=#{Rack::Utils.escape("#{request.protocol}#{request.host_with_port}#{request.fullpath}")}&via=turnchannel&text=I'm listening to \"#{@track.title}\" by #{@track.artist}", :title => 'Share via Twitter', :target => '_blank'}
+            %i.icon-zoom.icon-share.icon-white
+            Twitter
+          %a{:href => "/discover/#{@track.tag.name}"}
+            %span.label.label-inverse= @track.tag.name
+          .pull-right
+            ►
+            = @track.cached_plays
+            plays
+        #player-controls
+          #player-seekbar
+            %span#player-elapsed.control 00:00
+            #player-seek.control
+              #player-progress-bar
+                #player-progress-bar-meter
+            %span#player-duration.control 00:00
+  .player-comments
+    %h3 Comments
+    .fb-comments{:'data-href'=>"#{request.protocol}#{request.host_with_port}#{request.fullpath}", :'data-num-posts'=>"5", :'data-width'=>"360", :'data-colorscheme'=>"white"}
 .tracks-container
   .track-filters
     %h2
       Related Tracks
-      %span
-        = "-"
-        =@tracks.size
-        tracks
   - @tracks.each_with_index do |track, i|
     - style = ''
-    - if i % 3 == 2
+    - if i % 4 == 3
       - style = 'margin-right: 0;'
     %article.track{:style => style}
       %a{:href => track_url(track.permalink)}
@@ -65,7 +61,7 @@
             ►
             = track.cached_plays
           .track-tags
-            %span.label.label-info= track.tag.name
+            %span.label.label-inverse= track.tag.name
         .track-info
           .track-artist
             = track.artist

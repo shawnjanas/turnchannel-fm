@@ -1,0 +1,47 @@
+body {
+}
+
+.landing-background {
+  background: url("/assets/turnchannel-landing-bg.jpg") no-repeat scroll 0 -110px transparent;
+  z-index: -1;
+  height: 500px;
+  overflow: hidden;
+  background-position: center center;
+}
+.navbar {
+  margin-bottom: 0;
+}
+
+.landing-container {
+  margin-top: 35px;
+  .tags-container {
+    width: 500px;
+    height: 200px;
+    margin: 150px 0 0 400px;
+    color: #f8f8f8;
+    h1 {
+      color: white;
+      line-height: 1.2;
+
+      font-size: 42px;
+      margin-bottom: 25px;
+      text-align: center;
+
+      text-shadow: 0 0 15px rgba(0, 0, 0, 0.6),0 -1px 1px rgba(0, 0, 0, 0.6);
+      text-rendering: optimizelegibility;
+    }
+    .tags {
+      text-align: center;
+      span {
+        margin: 5px;
+        padding: 10px;
+        line-height: 30px;
+        font-size: 16px;
+      }
+    }
+  }
+}
+
+.label-inverse {
+  background: #BF0265;
+}

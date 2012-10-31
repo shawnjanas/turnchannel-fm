@@ -1,39 +1,22 @@
 class TracksController < ApplicationController
   def index
-    @genre = 'all_genres'
-    @sort = 'recently_added'
-    @tracks = Track.order("created_at DESC").limit(50)
+    @popular_tracks = Track.order("cached_plays DESC").limit(8)
+    @new_tracks = Track.order("created_at DESC").limit(8)
+
+    render :layout => false
   end
 
-  def list
-    @genre = params[:genre] || 'all_genres'
-    @sort = params[:sort] || 'recently_added'
-    @sort_name = 'Recently_Added'
+  def discover
+    @tag_name = params[:tag]
 
-    if @genre == 'all_genres'
-      if @sort == 'plays'
-        @tracks = Track.order("cached_plays DESC").limit(50)
-      else
-        @tracks = Track.order("created_at DESC").limit(50)
-      end
+    tag = Tag.find_by_name(@tag_name)
+    if tag
+      @track = tag.tracks.order("RANDOM()").limit(1).first
     else
-      tag = Tag.find_by_name(@genre)
-      if tag
-        if @sort == 'plays'
-          @tracks = tag.tracks.order("cached_plays DESC").limit(50)
-        else
-          @tracks = tag.tracks.order("created_at DESC").limit(50)
-        end
-      else
-        if @sort == 'plays'
-          @tracks = Track.order("cached_plays DESC").limit(50)
-        else
-          @tracks = Track.order("created_at DESC").limit(50)
-        end
-      end
+      @track = Track.order("RANDOM()").limit(1).first
     end
 
-    render :index
+    redirect_to track_url(@track.permalink)
   end
 
   # GET /tracks/1
@@ -43,7 +26,9 @@ class TracksController < ApplicationController
 
     if @track
       @track.play
-      @tracks = Track.order("RANDOM()").limit(20)
+      @tracks_popular = Track.where(:tag_id => @track.tag.id).order('cached_plays DESC').limit(4)
+      @tracks_rnd = Track.where(:tag_id => @track.tag.id).order("RANDOM()").limit(4)
+      @tracks = (@tracks_popular + @tracks_rnd).shuffle
     else
       redirect_to root_path
     end
@@ -51,61 +36,61 @@ class TracksController < ApplicationController
 
   # GET /tracks/new
   # GET /tracks/new.json
-  def new
-    @track = Track.new
+  ##def new
+  #  @track = Track.new
 
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @track }
-    end
-  end
+  #  respond_to do |format|
+  #    format.html # new.html.erb
+  #    format.json { render json: @track }
+  #  end
+  #end
 
   # GET /tracks/1/edit
-  def edit
-    @track = Track.find(params[:id])
-  end
+  ##def edit
+  #  @track = Track.find(params[:id])
+  #end
 
   # POST /tracks
   # POST /tracks.json
-  def create
-    @track = Track.new(params[:track])
+  #def create
+  #  @track = Track.new(params[:track])
 
-    respond_to do |format|
-      if @track.save
-        format.html { redirect_to @track, notice: 'Track was successfully created.' }
-        format.json { render json: @track, status: :created, location: @track }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @track.errors, status: :unprocessable_entity }
-      end
-    end
-  end
+  #  respond_to do |format|
+  #    if @track.save
+  #      format.html { redirect_to @track, notice: 'Track was successfully created.' }
+  #      format.json { render json: @track, status: :created, location: @track }
+  #    else
+  #      format.html { render action: "new" }
+  #      format.json { render json: @track.errors, status: :unprocessable_entity }
+  #    end
+  #  end
+  #end
 
   # PUT /tracks/1
   # PUT /tracks/1.json
-  def update
-    @track = Track.find(params[:id])
+  #def update
+  #  @track = Track.find(params[:id])
 
-    respond_to do |format|
-      if @track.update_attributes(params[:track])
-        format.html { redirect_to @track, notice: 'Track was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @track.errors, status: :unprocessable_entity }
-      end
-    end
-  end
+  #  respond_to do |format|
+  #    if @track.update_attributes(params[:track])
+  #      format.html { redirect_to @track, notice: 'Track was successfully updated.' }
+  #      format.json { head :no_content }
+  #    else
+  #      format.html { render action: "edit" }
+  #      format.json { render json: @track.errors, status: :unprocessable_entity }
+  #    end
+  #  end
+  #end
 
   # DELETE /tracks/1
   # DELETE /tracks/1.json
-  def destroy
-    @track = Track.find(params[:id])
-    @track.destroy
+  #def destroy
+  #  @track = Track.find(params[:id])
+  #  @track.destroy
 
-    respond_to do |format|
-      format.html { redirect_to tracks_url }
-      format.json { head :no_content }
-    end
-  end
+  #  respond_to do |format|
+  #    format.html { redirect_to tracks_url }
+  #    format.json { head :no_content }
+  #  end
+  #end
 end
