@@ -1,5 +1,5 @@
 $(document).ready(function() {
-  var track_actions = false;
+  var track_actions = true;
 
   $('.track').hover(function() {
     $(this).find('img').addClass('hover');
@@ -106,6 +106,38 @@ $(document).ready(function() {
 
     if(track_actions) {
       mixpanel.track("seek bar click", {
+        "elapsed": $('#player-elapsed').html(),
+        "duration": $('#player-duration').html()
+      });
+    }
+  });
+
+  $('#player-volume-up').click(function() {
+    if(loading) return false;
+
+    player.mute();
+
+    $('#player-volume-up').hide();
+    $('#player-volume-off').show();
+
+    if(track_actions) {
+      mixpanel.track("mute track", {
+        "elapsed": $('#player-elapsed').html(),
+        "duration": $('#player-duration').html()
+      });
+    }
+  });
+
+  $('#player-volume-off').click(function() {
+    if(loading) return false;
+
+    player.unmute();
+
+    $('#player-volume-up').show();
+    $('#player-volume-off').hide();
+
+    if(track_actions) {
+      mixpanel.track("unmute track", {
         "elapsed": $('#player-elapsed').html(),
         "duration": $('#player-duration').html()
       });

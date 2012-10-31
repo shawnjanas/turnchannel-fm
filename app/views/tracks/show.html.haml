@@ -14,6 +14,9 @@
             %i.icon-play.icon-zoom.icon-white
           #player-pause.icon-fade
             %i.icon-pause.icon-zoom.icon-white
+          #player-step-forward.icon-fade
+            %a{:href => track_url(@tracks_rnd.first.permalink), :title => 'Next Track'}
+              %i.icon-step-forward.icon-zoom.icon-white
           - unless @track.purchase_url.blank?
             %a{:href => @track.purchase_url, :title => 'Purchase', :target => '_blank'}
               %i.icon-zoom.icon-shopping-cart.icon-white
@@ -40,6 +43,11 @@
               #player-progress-bar
                 #player-progress-bar-meter
             %span#player-duration.control 00:00
+          #player-volume-control.control
+            #player-volume-up
+              %i.icon-volume-up.icon-zoom.icon-white
+            #player-volume-off
+              %i.icon-volume-off.icon-zoom.icon-white
   .player-comments
     %h3 Comments
     .fb-comments{:'data-href'=>"#{request.protocol}#{request.host_with_port}#{request.fullpath}", :'data-num-posts'=>"5", :'data-width'=>"360", :'data-colorscheme'=>"white"}

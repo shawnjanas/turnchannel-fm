@@ -6,6 +6,8 @@ Turnchannelfm::Application.routes.draw do
   match '/discover' => 'tracks#discover'
   match '/discover/:tag' => 'tracks#discover'
 
+  match '/a' => "tracks#index"
+
   root :to => "tracks#index"
 
   # The priority is based upon order of creation:

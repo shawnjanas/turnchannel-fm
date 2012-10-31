@@ -269,7 +269,7 @@ h3 span {
 .player-details {
   margin-top: 5px;
   a {
-    margin: 0 10px;
+    margin: 0 5px;
   }
 }
 #player-play {
@@ -301,6 +301,12 @@ h3 span {
     }
   }
 }
+#player-step-forward {
+  margin: 0 5px;
+  a {
+    margin: 0;
+  }
+}
 
 #player-controls {
   height: 20px;
@@ -314,10 +320,13 @@ h3 span {
   }
   #player-pause {
   }
-  #player-step-forward {
-  }
   #player-volume-control {
     float: right;
+    margin: 0;
+    cursor: pointer;
+    &:hover {
+      opacity: 0.6;
+    }
     #player-volume-off {
       display: none;
     }
@@ -343,7 +352,7 @@ h3 span {
     margin: 2px 5px 0 5px;
     padding: 5px 0;
     cursor: pointer;
-    width: 409px;
+    width: 380px;
 
     #player-progress-bar {
       height: 3px;
