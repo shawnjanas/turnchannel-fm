@@ -11,7 +11,7 @@ class Track < ActiveRecord::Base
 
   def self.build(user_id, tag, track_hash)
     if track_hash
-      if track_hash.stream_url
+      if track_hash.stream_url && track_hash.artwork_url
         track = Track.create(
           :full_title => track_hash.title,
           :sc_url => track_hash.permalink_url,
@@ -25,8 +25,6 @@ class Track < ActiveRecord::Base
           :user_id => user_id,
           :tag_id => tag.id
         )
-      else
-        throw :track_not_streamable
       end
     else
       throw :invalid_track
