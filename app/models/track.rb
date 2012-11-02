@@ -4,8 +4,11 @@ class Track < ActiveRecord::Base
   has_permalink :full_title
 
   belongs_to :tag
+  belongs_to :user
 
   validates :sc_url, :presence => true, :uniqueness => true
+  validates :tag_id, :presence => true
+  validates :user_id, :presence => true
 
   before_save :parse_title
 
@@ -35,26 +38,6 @@ class Track < ActiveRecord::Base
     self.plays = self.plays + 1
     self.cached_plays = self.cached_plays + 1
     self.save
-  end
-
-  def pre_track
-    pre_track_obj = Track.find(:first, :conditions => ["id < ?", self.id], :order => "id DESC") || Track.find(:first, :conditions => ["id >= ?", self.id], :order => "id")
-
-    if pre_track_obj.id == self.id
-      Track.all.last.permalink
-    else
-      pre_track_obj.permalink
-    end
-  end
-
-  def next_track
-    next_track_obj = Track.find(:first, :conditions => ["id > ?", self.id], :order => "id") || Track.find(:first, :conditions => ["id <= ?", self.id], :order => "id DESC")
-
-    if next_track_obj.id == self.id
-      Track.all.first.permalink
-    else
-      next_track_obj.permalink
-    end
   end
 
   def parse_title

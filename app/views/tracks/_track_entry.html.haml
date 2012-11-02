@@ -1,0 +1,16 @@
+%article.track{:style => style}
+  %a{:href => track_url(track.permalink)}
+    = image_tag track.artwork_url.gsub('large','t300x300')
+    .track-play
+      %i.icon-play.icon-white
+    .track-stats
+      .track-plays
+        ►
+        = track.cached_plays
+      .track-tags
+        %span.label.label-inverse= track.tag.name
+    .track-info
+      .track-artist
+        = track.artist
+      .track-title
+        = track.title

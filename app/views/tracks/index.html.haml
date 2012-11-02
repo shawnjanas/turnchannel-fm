@@ -1,66 +1,18 @@
-!!!
-%html{:lang => 'en'}
-  %head
-    = render :partial => 'layouts/head'
-
-  %body
-    = render :partial => 'layouts/topbar'
-    .landing-background
-      .container.landing-container
-        .tags-container
-          %h1 Play me some...
-          .tags
-            %a{:href => "/discover/house"}
-              %span.label.label-inverse House
-            %a{:href => "/discover/dubstep"}
-              %span.label.label-inverse Dubstep
-            %a{:href => "/discover/dnb"}
-              %span.label.label-inverse DnB
-    .tracks-container
-      .track-filters
-        %h2
-          Popular
-      - @popular_tracks.each_with_index do |track, i|
-        - style = ''
-        - if i % 4 == 3
-          - style = 'margin-right: 0;'
-        %article.track{:style => style}
-          %a{:href => track_url(track.permalink)}
-            = image_tag track.artwork_url.gsub('large','t300x300')
-            .track-play
-              %i.icon-play.icon-white
-            .track-stats
-              .track-plays
-                ►
-                = track.cached_plays
-              .track-tags
-                %span.label.label-inverse= track.tag.name
-            .track-info
-              .track-artist
-                = track.artist
-              .track-title
-                = track.title
-    .tracks-container
-      .track-filters
-        %h2
-          New
-      - @new_tracks.each_with_index do |track, i|
-        - style = ''
-        - if i % 4 == 3
-          - style = 'margin-right: 0;'
-        %article.track{:style => style}
-          %a{:href => track_url(track.permalink)}
-            = image_tag track.artwork_url.gsub('large','t300x300')
-            .track-play
-              %i.icon-play.icon-white
-            .track-stats
-              .track-plays
-                ►
-                = track.cached_plays
-              .track-tags
-                %span.label.label-inverse= track.tag.name
-            .track-info
-              .track-artist
-                = track.artist
-              .track-title
-                = track.title
+.tracks-container
+  .track-filters
+    %h2
+      Popular
+  - @popular_tracks.each_with_index do |track, i|
+    - style = ''
+    - if i % 4 == 3
+      - style = 'margin-right: 0;'
+    = render :partial => 'track_entry', :locals => {:track => track, :style => style}
+.tracks-container
+  .track-filters
+    %h2
+      New
+  - @new_tracks.each_with_index do |track, i|
+    - style = ''
+    - if i % 4 == 3
+      - style = 'margin-right: 0;'
+    = render :partial => 'track_entry', :locals => {:track => track, :style => style}

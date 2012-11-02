@@ -3,7 +3,7 @@ class TracksController < ApplicationController
     @popular_tracks = Track.order("cached_plays DESC").limit(8)
     @new_tracks = Track.order("created_at DESC").limit(8)
 
-    render :layout => false
+    render :layout => 'landing'
   end
 
   def discover
