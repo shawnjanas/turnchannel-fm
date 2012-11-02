@@ -233,11 +233,33 @@ header {
   float: left;
   height: 499px;
   width: 360px;
-  overflow: scroll;
   margin-left: 30px;
   border: 1px solid #666;
   background: #f8f8f8;
   padding: 10px;
+  .fb-comments-wrapper {
+    overflow: scroll;
+    height: 429px;
+  }
+  .social-connect {
+    margin-top: 15px;
+    h4 {
+      float:left;
+      color: #FFF;
+      margin-top: 5px;
+    }
+    .social {
+      float: left;
+      margin-left: 20px;
+      &#social-fb {
+        margin-top: 5px;
+        width: 80px;
+      }
+      &#social-tw {
+        width: 173px;
+      }
+    }
+  }
 }
 .player-wrapper {
   overflow: hidden;

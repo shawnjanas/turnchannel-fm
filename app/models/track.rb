@@ -37,26 +37,6 @@ class Track < ActiveRecord::Base
     self.save
   end
 
-  def pre_track
-    pre_track_obj = Track.find(:first, :conditions => ["id < ?", self.id], :order => "id DESC") || Track.find(:first, :conditions => ["id >= ?", self.id], :order => "id")
-
-    if pre_track_obj.id == self.id
-      Track.all.last.permalink
-    else
-      pre_track_obj.permalink
-    end
-  end
-
-  def next_track
-    next_track_obj = Track.find(:first, :conditions => ["id > ?", self.id], :order => "id") || Track.find(:first, :conditions => ["id <= ?", self.id], :order => "id DESC")
-
-    if next_track_obj.id == self.id
-      Track.all.first.permalink
-    else
-      next_track_obj.permalink
-    end
-  end
-
   def parse_title
     title, *rest = self.full_title.split(/ by /)
 

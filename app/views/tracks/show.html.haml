@@ -50,7 +50,14 @@
               %i.icon-volume-off.icon-zoom.icon-white
   .player-comments
     %h3 Comments
-    .fb-comments{:'data-href'=>"#{request.protocol}#{request.host_with_port}#{request.fullpath}", :'data-num-posts'=>"5", :'data-width'=>"360", :'data-colorscheme'=>"white"}
+    .fb-comments-wrapper
+      .fb-comments{:'data-href'=>"#{request.protocol}#{request.host_with_port}#{request.fullpath}", :'data-num-posts'=>"5", :'data-width'=>"360", :'data-colorscheme'=>"white"}
+    .social-connect
+      .social#social-fb
+        .fb-like{:'data-href'=>"#{request.protocol}#{request.host_with_port}#{request.fullpath}", :'data-send'=>"false", :'data-layout'=>"button_count", :'data-width'=>"450", :'data-show-faces'=>"false"}
+      .social#social-tw
+        %a{:href=>"https://twitter.com/share", :class=>"twitter-share-button", :'data-via'=>"TurnChannel", :'data-size'=>"large", :'data-hashtags'=>"turnchannel", :'data-dnt'=>"true"} Tweet
+
 .tracks-container
   .track-filters
     %h2
