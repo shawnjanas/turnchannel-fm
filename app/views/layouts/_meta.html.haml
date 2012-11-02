@@ -8,7 +8,7 @@
 
 - description = 'Discover the best Electronic Dance Music you probably have never heard of'
 - if @track
-  - description = track.description.gsub(/\n/,' ').gsub(/\r/,'').gsub(/\t/,'').gsub(/-/,'')
+  - description = @track.description.gsub(/\n/,' ').gsub(/\r/,'').gsub(/\t/,'').gsub(/-/,'')
 %title= title
 
 %meta{:content=>"#{title} - #{description}", :name=>'description'}
