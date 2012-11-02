@@ -16,11 +16,36 @@ h3 span {
   font-weight: lighter;
 }
 
+header {
+  height: 60px;
+}
+
 #topbar {
   height: 60px;
+  overflow: hidden;
   #topbar-nav {
     li a {
       padding: 20px 20px 20px;
+    }
+  }
+  .social-connect {
+    float: right;
+    margin-top: 15px;
+    h4 {
+      float:left;
+      color: #FFF;
+      margin-top: 5px;
+    }
+    .social {
+      float: left;
+      margin-left: 20px;
+      &#social-fb {
+        margin-top: 5px;
+        width: 80px;
+      }
+      &#social-tw {
+        width: 173px;
+      }
     }
   }
 }

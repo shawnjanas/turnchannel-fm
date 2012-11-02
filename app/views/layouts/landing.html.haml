@@ -1,0 +1,11 @@
+!!!
+%html{:lang => 'en'}
+  %head
+    = render :partial => 'layouts/head'
+
+  %body
+    = render :partial => 'layouts/social'
+    = render :partial => 'layouts/topbar'
+    = render :partial => 'layouts/hero'
+    .main-container
+      = yield
