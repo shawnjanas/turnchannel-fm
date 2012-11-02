@@ -6,12 +6,15 @@
 - if @track
   - title = @track.full_title
 
+- description = 'Discover the best Electronic Dance Music you probably have never heard of'
+- if @track
+  - description = track.description.gsub(/\n/,' ').gsub(/\r/,'').gsub(/\t/,'').gsub(/-/,'')
 %title= title
 
-%meta{:content=>"#{title}. Discover the best Electronic Dance Music you probably have never heard of", :name=>'description'}
+%meta{:content=>"#{title} - #{description}", :name=>'description'}
 
 %meta{:content=>'TurnChannel', :property=>'og:site_name'}
-%meta{:content=>'Discover the best Electronic Dance Music you probably have never heard of', :property=>'og:description'}
+%meta{:content=>"#{title} - #{description}", :property=>'og:description'}
 %meta{:content=>title, :property=>'og:title'}
 %meta{:content=>"#{request.protocol}#{request.host_with_port}#{request.fullpath}", :property=>'og:url'}
 %meta{:content=>image, :property=>'og:image'}
