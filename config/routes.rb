@@ -1,4 +1,6 @@
 Turnchannelfm::Application.routes.draw do
+  resources :mixes
+
   #resources :forums
   #resources :users
   resources :tracks

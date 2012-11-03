@@ -15,6 +15,8 @@ gem 'unicorn'
 gem 'newrelic_rpm'
 gem 'has_permalink'
 
+gem 'youtube_it'
+
 group :development, :test do
   gem 'rspec-rails', '2.9.0'
 end

@@ -1,0 +1,17 @@
+%h1 Listing mixes
+
+%table
+  %tr
+    %th
+    %th
+    %th
+
+  - @mixes.each do |mix|
+    %tr
+      %td= link_to 'Show', mix
+      %td= link_to 'Edit', edit_mix_path(mix)
+      %td= link_to 'Destroy', mix, method: :delete, data: { confirm: 'Are you sure?' }
+
+%br
+
+= link_to 'New Mix', new_mix_path

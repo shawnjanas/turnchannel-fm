@@ -1,5 +1,5 @@
 $(document).ready(function() {
-  var track_actions = true;
+  var track_actions = false;
 
   $('.track').hover(function() {
     $(this).find('img').addClass('hover');

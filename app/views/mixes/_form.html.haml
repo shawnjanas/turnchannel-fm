@@ -1,0 +1,10 @@
+= form_for @mix do |f|
+  - if @mix.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@mix.errors.count, "error")} prohibited this mix from being saved:"
+      %ul
+        - @mix.errors.full_messages.each do |msg|
+          %li= msg
+
+  .actions
+    = f.submit 'Save'

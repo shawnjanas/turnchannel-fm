@@ -266,7 +266,7 @@ header {
   position: relative;
 
   float: left;
-  width: 521px;
+  width: 620px;
   height: 521px;
 
   img {
@@ -284,13 +284,11 @@ header {
 }
 .player-footer {
   position: absolute;
-  bottom: 0;
+  top: 0;
   left: 0;
 
-  width: 481px;
-  height: 90px;
-
-  padding: 10px 20px;
+  width: 620px;
+  height: 490px;
 
   color: #f8f8f8;
 
