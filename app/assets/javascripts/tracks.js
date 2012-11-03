@@ -22,9 +22,16 @@ $(document).ready(function() {
   SC.stream("/tracks/"+track_id, {
     autoPlay: true,
     useHTML5Audio: true,
-    ontimedcomments: this._ontimedcomments,
-    onplay: this._onplay,
-    onerror: this._onerror,
+    ontimedcomments: function(){},
+    onplay: function(){},
+    onerror: function(){
+      if(track_actions) {
+        mixpanel.track("error playing track", {"track": track_id});
+      }
+
+      var href = $('.player').attr('next-track');
+      window.location = href;
+    },
     onfinish: function() {
       if(track_actions) {
         mixpanel.track("track finished", {
