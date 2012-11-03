@@ -1,5 +1,5 @@
 $(document).ready(function() {
-  var track_actions = false;
+  var track_actions = true;
 
   $('.track').hover(function() {
     $(this).find('img').addClass('hover');
@@ -19,52 +19,29 @@ $(document).ready(function() {
   SC.initialize({
     client_id: 'e3216af75bcd70ee4e5d91a6b9f1d302'
   });
-
-  try {
-    SC.stream("/tracks/"+track_id, {
-      autoPlay: true,
-      useHTML5Audio: true,
-      ontimedcomments: function(){},
-      onplay: function(){},
-      ontimeout: function(){
-        console.log('TIMEOUT!!!');
-        if(track_actions) {
-          mixpanel.track("error playing track", {"track": track_id});
-        }
-
-        //var href = $('.player').attr('next-track');
-        //window.location = href;
-      },
-      onerror: function() {
-        console.log('errrrror222');
-      },
-      onfinish: function() {
-        if(track_actions) {
-          mixpanel.track("track finished", {
-            "elapsed": $('#player-elapsed').html(),
-            "duration": $('#player-duration').html()
-          });
-        }
-
-        var href = $('.player').attr('next-track');
-        window.location = href;
+  SC.stream("/tracks/"+track_id, {
+    autoPlay: true,
+    useHTML5Audio: true,
+    ontimedcomments: this._ontimedcomments,
+    onplay: this._onplay,
+    onerror: this._onerror,
+    onfinish: function() {
+      if(track_actions) {
+        mixpanel.track("track finished", {
+          "elapsed": $('#player-elapsed').html(),
+          "duration": $('#player-duration').html()
+        });
       }
-    }, function(s) {
-      console.log(s);
-      player = s;
 
-      loading = false;
-      loaded = true;
-    });
-  } catch(err) {
-    console.log('errrrror');
-    /*if(track_actions) {
-      mixpanel.track("error playing track", {"track": track_id});
+      var href = $('.player').attr('next-track');
+      window.location = href;
     }
+  }, function(s) {
+    player = s;
 
-    var href = $('.player').attr('next-track');
-    window.location = href;*/
-  }
+    loading = false;
+    loaded = true;
+  });
 
   setInterval(function() {
     if(loading || !loaded) return false;
