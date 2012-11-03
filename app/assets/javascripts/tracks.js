@@ -1,5 +1,5 @@
 $(document).ready(function() {
-  var track_actions = true;
+  var track_actions = false;
 
   $('.track').hover(function() {
     $(this).find('img').addClass('hover');
@@ -19,36 +19,52 @@ $(document).ready(function() {
   SC.initialize({
     client_id: 'e3216af75bcd70ee4e5d91a6b9f1d302'
   });
-  SC.stream("/tracks/"+track_id, {
-    autoPlay: true,
-    useHTML5Audio: true,
-    ontimedcomments: function(){},
-    onplay: function(){},
-    onerror: function(){
-      if(track_actions) {
-        mixpanel.track("error playing track", {"track": track_id});
-      }
 
-      var href = $('.player').attr('next-track');
-      window.location = href;
-    },
-    onfinish: function() {
-      if(track_actions) {
-        mixpanel.track("track finished", {
-          "elapsed": $('#player-elapsed').html(),
-          "duration": $('#player-duration').html()
-        });
-      }
+  try {
+    SC.stream("/tracks/"+track_id, {
+      autoPlay: true,
+      useHTML5Audio: true,
+      ontimedcomments: function(){},
+      onplay: function(){},
+      ontimeout: function(){
+        console.log('TIMEOUT!!!');
+        if(track_actions) {
+          mixpanel.track("error playing track", {"track": track_id});
+        }
 
-      var href = $('.player').attr('next-track');
-      window.location = href;
+        //var href = $('.player').attr('next-track');
+        //window.location = href;
+      },
+      onerror: function() {
+        console.log('errrrror222');
+      },
+      onfinish: function() {
+        if(track_actions) {
+          mixpanel.track("track finished", {
+            "elapsed": $('#player-elapsed').html(),
+            "duration": $('#player-duration').html()
+          });
+        }
+
+        var href = $('.player').attr('next-track');
+        window.location = href;
+      }
+    }, function(s) {
+      console.log(s);
+      player = s;
+
+      loading = false;
+      loaded = true;
+    });
+  } catch(err) {
+    console.log('errrrror');
+    /*if(track_actions) {
+      mixpanel.track("error playing track", {"track": track_id});
     }
-  }, function(s) {
-    player = s;
 
-    loading = false;
-    loaded = true;
-  });
+    var href = $('.player').attr('next-track');
+    window.location = href;*/
+  }
 
   setInterval(function() {
     if(loading || !loaded) return false;
