@@ -6,7 +6,7 @@ class CreateTags < ActiveRecord::Migration
       t.timestamps
     end
 
-    add_index :tags, :name
+    add_index :tags, :name, :unique => true
     execute "create index on tags using gin(to_tsvector('english', name));"
   end
 end

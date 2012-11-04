@@ -22,15 +22,20 @@ class TracksController < ApplicationController
   # GET /tracks/1
   # GET /tracks/1.json
   def show
-    @track = Track.find_by_permalink(params[:id])
+    #@track = Track.first
+    @mix = Mix.first
+    @tracks = @mix.tracks.shuffle
+    @remote_ids = @tracks.map{|t| t.remote_id}
+
+    @related_mixes = Mix.all
 
     if @track
-      @track.play
-      @tracks_popular = Track.where(:tag_id => @track.tag.id).order('cached_plays DESC').limit(4)
-      @tracks_rnd = Track.where(:tag_id => @track.tag.id).order("RANDOM()").limit(4)
-      @tracks = (@tracks_popular + @tracks_rnd).shuffle
+      #@track.play
+      #@tracks_popular = Track.where(:tag_id => @track.tag.id).order('cached_plays DESC').limit(4)
+      #@tracks_rnd = Track.where(:tag_id => @track.tag.id).order("RANDOM()").limit(4)
+      #@tracks = (@tracks_popular + @tracks_rnd).shuffle
     else
-      redirect_to root_path
+      #redirect_to root_path
     end
   end
 

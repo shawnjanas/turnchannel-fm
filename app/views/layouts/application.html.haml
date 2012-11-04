@@ -8,5 +8,10 @@
     = render :partial => 'layouts/topbar'
     /= render :partial => 'layouts/leftbar'
     .main-container
+      .flash-container
+        - unless notice.blank?
+          %p.notice= notice
+        - unless alert.blank?
+          %p.alert= alert
       = yield
     /= render :partial => 'layouts/player'

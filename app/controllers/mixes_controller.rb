@@ -1,4 +1,6 @@
 class MixesController < ApplicationController
+  before_filter :authenticate_user!, :only => [:toggle_fav]
+
   # GET /mixes
   # GET /mixes.json
   def index
@@ -10,10 +12,21 @@ class MixesController < ApplicationController
     end
   end
 
+  def toggle_fav
+    @mix = Mix.find_by_id(params[:id])
+    state = @mix.toggle_fav(current_user)
+
+    render :json => {:state => state}
+  end
+
   # GET /mixes/1
   # GET /mixes/1.json
   def show
-    @mix = Mix.find(params[:id])
+    @mix = Mix.find_by_permalink(params[:id])
+    @tracks = @mix.tracks.shuffle
+    @remote_ids = @tracks.map{|t| t.remote_id}
+
+    @related_mixes = Mix.all
 
     respond_to do |format|
       format.html # show.html.erb

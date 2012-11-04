@@ -1,88 +1,44 @@
-.player{:'track-id' => @track.sc_id, :'next-track' => track_url(@tracks_rnd.first.permalink)}
+.player
   .player-container
-    .player-wrapper
-      /= image_tag @track.artwork_url.gsub('large','t500x500')
-      .player-footer
-        #ytapiplayer= raw '<iframe width="620" height="378" src="http://www.youtube.com/v/4HVjldqWx4w?version=3&enablejsapi=1&showinfo=0&modestbranding=1&autoplay=1&playlist=fHrJ7GUoDpU,NnlUer7l2h8,TvpeNVRNhI4" frameborder="0" allowfullscreen="false"></iframe>'
-        .player-title
-          %h2
-            = @track.title
-            %span
-              by
-              = @track.artist
-        .player-details
-          #player-play.icon-fade
-            %i.icon-play.icon-zoom.icon-white
-          #player-pause.icon-fade
-            %i.icon-pause.icon-zoom.icon-white
-          #player-step-forward.icon-fade
-            %a{:href => track_url(@tracks_rnd.first.permalink), :title => 'Next Track'}
-              %i.icon-step-forward.icon-zoom.icon-white
-          - unless @track.purchase_url.blank?
-            %a{:href => @track.purchase_url, :title => 'Purchase', :target => '_blank'}
-              %i.icon-zoom.icon-shopping-cart.icon-white
-              Buy
-          %a{:href => @track.sc_url, :title => 'Source', :target => '_blank'}
-            %i.icon-zoom.icon-file.icon-white
-            Source
-          %a{:href => "http://www.facebook.com/sharer.php?u=#{Rack::Utils.escape("#{request.protocol}#{request.host_with_port}#{request.fullpath}")}&t=I'm listening to \"#{@track.title}\" by #{@track.artist}", :title => 'Facebook', :target => '_blank'}
-            %i.icon-zoom.icon-share.icon-white
-            Facebook
-          %a{:href => "https://twitter.com/intent/tweet?url=#{Rack::Utils.escape("#{request.protocol}#{request.host_with_port}#{request.fullpath}")}&via=turnchannel&text=I'm listening to \"#{@track.title}\" by #{@track.artist}", :title => 'Share via Twitter', :target => '_blank'}
-            %i.icon-zoom.icon-share.icon-white
-            Twitter
-          %a{:href => "/discover/#{@track.tag.name}"}
-            %span.label.label-inverse= @track.tag.name
-          .pull-right
-            ►
-            = @track.cached_plays
-            plays
-        #player-controls
-          #player-seekbar
-            %span#player-elapsed.control 00:00
-            #player-seek.control
-              #player-progress-bar
-                #player-progress-bar-meter
-            %span#player-duration.control 00:00
-          #player-volume-control.control
-            #player-volume-up
-              %i.icon-volume-up.icon-zoom.icon-white
-            #player-volume-off
-              %i.icon-volume-off.icon-zoom.icon-white
-  .player-comments
-    %h3 Comments
-    .fb-comments-wrapper
-      .fb-comments{:'data-href'=>"#{request.protocol}#{request.host_with_port}#{request.fullpath}", :'data-num-posts'=>"5", :'data-width'=>"360", :'data-colorscheme'=>"white"}
-    .social-connect
-      .social#social-fb
-        .fb-like{:'data-href'=>"#{request.protocol}#{request.host_with_port}#{request.fullpath}", :'data-send'=>"false", :'data-layout'=>"button_count", :'data-width'=>"450", :'data-show-faces'=>"false"}
-      .social#social-tw
-        %a{:href=>"https://twitter.com/share", :class=>"twitter-share-button", :'data-via'=>"TurnChannel", :'data-size'=>"large", :'data-hashtags'=>"turnchannel", :'data-dnt'=>"true"} Tweet
-
-.tracks-container
-  .track-filters
-    %h2
-      Related Tracks
-  - @tracks.each_with_index do |track, i|
-    - style = ''
-    - if i % 4 == 3
-      - style = 'margin-right: 0;'
-    %article.track{:style => style}
-      %a{:href => track_url(track.permalink)}
-        = image_tag track.artwork_url.gsub('large','t300x300')
-        .track-play
-          %i.icon-play.icon-white
-        .track-stats
-          .track-plays
-            ►
-            = track.cached_plays
-          .track-tags
-            %span.label.label-inverse= track.tag.name
-        .track-info
-          .track-artist
-            = track.artist
-          .track-title
-            = track.title
+    .player-title
+      %h3= @mix.name
+      .mix-buttons
+        %button.btn#mix-fav-btn{:href => "/mixes/#{@mix.id}/toggle_fav", :title => "Add this mix to my Favorites"}
+          %i.icon-heart
+    .player-video
+      #ytapiplayer
+        %iframe{:width=>"960", :height=>"487", :src=>"http://www.youtube.com/v/#{@remote_ids.first}?version=3&enablejsapi=1&showinfo=0&modestbranding=1&autohide=1&iv_load_policy=3&autoplay=1&playlist=#{@remote_ids[1..-1].join(',')}", :frameborder=>"0", :allowfullscreen=>"false"}
+      .player-details
+        .player-current-track
+          %span Currently Playing:
+          = @tracks.first.title
+        .player-tags
+          %span Tags:
+          - @mix.tags.each do |tag|
+            %span.label.label-inverse= tag.name
+        .player-length
+          %span Length:
+          - i = 0
+          - @mix.tracks.each{|t|i+=t.duration}
+          = "#{i} (#{@mix.tracks.size} tracks)"
+        .player-description
+          %span Description:
+          = @mix.description
+    .player-extra
+      .player-comments
+        %h3 Comments
+        .fb-comments-wrapper
+          .fb-comments{:'data-href'=>"#{request.protocol}#{request.host_with_port}#{request.fullpath}", :'data-num-posts'=>"5", :'data-width'=>"600", :'data-colorscheme'=>"white"}
+        .social-connect
+          .social#social-fb
+            .fb-like{:'data-href'=>"#{request.protocol}#{request.host_with_port}#{request.fullpath}", :'data-send'=>"false", :'data-layout'=>"button_count", :'data-width'=>"450", :'data-show-faces'=>"false"}
+          .social#social-tw
+            %a{:href=>"https://twitter.com/share", :class=>"twitter-share-button", :'data-via'=>"TurnChannel", :'data-size'=>"large", :'data-hashtags'=>"turnchannel", :'data-dnt'=>"true"} Tweet
+      .player-related-mixes
+        %h3 Related Mixes
+        - @related_mixes.each do |mix|
+          .player-related-mix
+            = mix.name
 
 :javascript
   // Load the IFrame Player API code asynchronously.

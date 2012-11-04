@@ -2,8 +2,9 @@ source 'https://rubygems.org'
 
 gem 'rails', '3.2.8'
 
-gem 'redis'
+gem 'devise'
 
+gem 'redis'
 gem 'resque', "~> 1.22.0"
 gem 'resque-scheduler'
 

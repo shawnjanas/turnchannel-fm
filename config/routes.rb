@@ -1,9 +1,15 @@
 Turnchannelfm::Application.routes.draw do
-  resources :mixes
+  devise_for :users
+
+  resources :mixes do
+    member do
+      post :toggle_fav
+    end
+  end
 
   #resources :forums
   #resources :users
-  resources :tracks
+  #resources :tracks
 
   match '/discover' => 'tracks#discover'
   match '/discover/:tag' => 'tracks#discover'

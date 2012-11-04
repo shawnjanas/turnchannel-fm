@@ -7,7 +7,7 @@ body {
   line-height: 18px;
   color: #333;
   /*background-color: #242526;*/
-  background-color: #1B1B1B;
+  background-color: #FFF;
   margin-bottom: 30px;
 }
 
@@ -20,20 +20,38 @@ header {
   height: 60px;
 }
 
+.container {
+  width: 960px;
+}
+
+.navbar-inner {
+  background: #fff;
+}
+
+.player-title {
+  h3 {
+    color: #fff;
+  }
+}
+
 #topbar {
   height: 60px;
   overflow: hidden;
+  color: #333;
   #topbar-nav {
     li a {
       padding: 20px 20px 20px;
     }
+  }
+  .sign-in {
+    float: right;
   }
   .social-connect {
     float: right;
     margin-top: 15px;
     h4 {
       float:left;
-      color: #FFF;
+      color: #333;
       margin-top: 5px;
     }
     .social {
@@ -54,8 +72,9 @@ header {
   margin-left: 0;
   font-weight: bold;
   float: left;
+  color: #333;
   &:hover {
-    color: #f8f8f8;
+    color: #000;
   }
 }
 
@@ -218,12 +237,12 @@ header {
 
 
 .player {
-  background: #2480a7;
-  border-bottom: black solid 1px;
-  padding-top: 30px;
+  padding-top: 10px;
 
-  color: #f8f8f8;
-  height: 555px;
+  background-color: #2480A7;
+  background-image: -moz-linear-gradient(top, #2480A7, #16516B);
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#2480A7), to(#16516B));
+  filter: progid:DXImageTransform.Microsoft.Gradient(gradientType=0,startColorStr="#16516B",endColorStr="#2480A7");
 }
 .player-container {
   width: 960px;
@@ -231,15 +250,8 @@ header {
 }
 .player-comments {
   float: left;
-  height: 499px;
-  width: 360px;
-  margin-left: 30px;
-  border: 1px solid #666;
-  background: #f8f8f8;
-  padding: 10px;
+  width: 600px;
   .fb-comments-wrapper {
-    overflow: scroll;
-    height: 429px;
   }
   .social-connect {
     margin-top: 15px;
@@ -261,23 +273,29 @@ header {
     }
   }
 }
+.player-details {
+  color: white;
+  span {
+    font-weight: bold;
+  }
+}
 .player-wrapper {
   overflow: hidden;
   position: relative;
 
   float: left;
-  width: 620px;
-  height: 521px;
-
-  img {
-    width: 521px;
-    height: 521px;
-  }
+  width: 960px;
 }
 .player-title {
   height: 36px;
   text-shadow: .1em .1em .2em #333;
   overflow: hidden;
+  h3 {
+    float: left;
+  }
+  .mix-buttons {
+    float: left;
+  }
 }
 .player-avatar {
 
@@ -289,8 +307,6 @@ header {
 
   width: 620px;
   height: 490px;
-
-  color: #f8f8f8;
 
   background: rgb(0, 0, 0);
   background: rgba(0, 0, 0, 0.8);
