@@ -1,0 +1,18 @@
+!!!
+%html{:lang => 'en'}
+  %head
+    = render :partial => 'layouts/head'
+
+  %body
+    = render :partial => 'layouts/social'
+    = render :partial => 'playlist'
+    = render :partial => 'layouts/topbar'
+    .main-container
+      .flash-container
+        - unless notice.blank?
+          %p.notice= notice
+        - unless alert.blank?
+          %p.alert= alert
+      = yield
+    /= render :partial => 'layouts/player'
+

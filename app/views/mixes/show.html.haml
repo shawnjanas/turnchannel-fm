@@ -1,44 +1,70 @@
-.player
-  .player-container
+- i = 0
+- @mix.tracks.each{|t|i+=t.duration}
+
+.player-container
+  .player-wrapper
     .player-title
-      %h3= @mix.name
-      .mix-buttons
-        %button.btn#mix-fav-btn{:href => "/mixes/#{@mix.id}/toggle_fav", :title => "Add this mix to my Favorites"}
-          %i.icon-heart
+      %h3= "► #{@tracks.first.title}"
     .player-video
       #ytapiplayer
-        %iframe{:width=>"960", :height=>"487", :src=>"http://www.youtube.com/v/#{@remote_ids.first}?version=3&enablejsapi=1&showinfo=0&modestbranding=1&autohide=1&iv_load_policy=3&autoplay=1&playlist=#{@remote_ids[1..-1].join(',')}", :frameborder=>"0", :allowfullscreen=>"false"}
-      .player-details
-        .player-current-track
-          %span Currently Playing:
-          = @tracks.first.title
-        .player-tags
-          %span Tags:
+        /%iframe{:width=>"960", :height=>"487", :src=>"http://www.youtube.com/v/#{@remote_ids.first}?version=3&enablejsapi=1&showinfo=0&modestbranding=1&autohide=1&iv_load_policy=3&autoplay=0&rel=0&playlist=#{@remote_ids[1..-1].join(',')}", :frameborder=>"0", :allowfullscreen=>"false"}
+.mix-container
+  .mix-details
+    .mix-details-container
+      .mix-thumbnail-container
+        .mix-thumbnail
+          - if @mix.thumbnail.is_a? Array
+            - @mix.thumbnail.each do |thumbnail|
+              = image_tag thumbnail
+          - else
+            = image_tag @mix.thumbnail
+        .mix-buttons
+          - favorite_class = 'btn'
+          - favorite_class = 'btn btn-primary' if current_user && FavoriteMix.find_by_user_id_and_mix_id(current_user.id, @mix.id)
+          %button#mix-fav-btn{:class => favorite_class, :href => "/mixes/#{@mix.id}/toggle_fav", :title => "Add this mix to my Favorites"}
+            %i.icon-heart
+            Favorite
+          %button.btn#mix-fav-btn{:href => "/mixes/#{@mix.id}/toggle_fav", :title => "Add this mix to my Favorites"}
+            All Tracks
+            %b.caret
+      .mix-title
+        %h2= @mix.name
+        .mix-tags
           - @mix.tags.each do |tag|
             %span.label.label-inverse= tag.name
-        .player-length
-          %span Length:
-          - i = 0
-          - @mix.tracks.each{|t|i+=t.duration}
+        .mix-length
           = "#{i} (#{@mix.tracks.size} tracks)"
-        .player-description
-          %span Description:
+        .mix-description
           = @mix.description
-    .player-extra
-      .player-comments
-        %h3 Comments
-        .fb-comments-wrapper
-          .fb-comments{:'data-href'=>"#{request.protocol}#{request.host_with_port}#{request.fullpath}", :'data-num-posts'=>"5", :'data-width'=>"600", :'data-colorscheme'=>"white"}
-        .social-connect
-          .social#social-fb
-            .fb-like{:'data-href'=>"#{request.protocol}#{request.host_with_port}#{request.fullpath}", :'data-send'=>"false", :'data-layout'=>"button_count", :'data-width'=>"450", :'data-show-faces'=>"false"}
-          .social#social-tw
-            %a{:href=>"https://twitter.com/share", :class=>"twitter-share-button", :'data-via'=>"TurnChannel", :'data-size'=>"large", :'data-hashtags'=>"turnchannel", :'data-dnt'=>"true"} Tweet
-      .player-related-mixes
-        %h3 Related Mixes
-        - @related_mixes.each do |mix|
-          .player-related-mix
-            = mix.name
+    .mix-comments-container
+      %h3 Comments
+      .fb-comments-wrapper
+        .fb-comments{:'data-href'=>"#{request.protocol}#{request.host_with_port}#{request.fullpath}", :'data-num-posts'=>"5", :'data-width'=>"580", :'data-colorscheme'=>"white"}
+      .social-connect
+        .social#social-fb
+          .fb-like{:'data-href'=>"#{request.protocol}#{request.host_with_port}#{request.fullpath}", :'data-send'=>"false", :'data-layout'=>"button_count", :'data-width'=>"450", :'data-show-faces'=>"false"}
+        .social#social-tw
+          %a{:href=>"https://twitter.com/share", :class=>"twitter-share-button", :'data-via'=>"TurnChannel", :'data-size'=>"large", :'data-hashtags'=>"turnchannel", :'data-dnt'=>"true"} Tweet
+  .mix-related-container
+    %h3 Related Mixes
+    - @related_mixes.each do |mix|
+      %a{:href => mix_path(mix.permalink)}
+        .related-mix
+          .related-thumbnail
+            - if mix.thumbnail.is_a? Array
+              - mix.thumbnail.each do |thumbnail|
+                = image_tag thumbnail
+            - else
+              = image_tag @mix.thumbnail
+          .related-details
+            %h4= mix.name_exerpt
+            .related-tags
+              - mix.tags.each do |tag|
+                %span.label.label-inverse= tag.name
+            .related-stats
+              = "► #{mix.plays}"
+              %i.icon-heart
+              = mix.favorite_mixes.size
 
 :javascript
   // Load the IFrame Player API code asynchronously.

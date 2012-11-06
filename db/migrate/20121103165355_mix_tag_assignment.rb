@@ -1,6 +1,6 @@
 class MixTagAssignment < ActiveRecord::Migration
   def change
-    create_table :mix_tag_assignments, :id => false do |t|
+    create_table :mix_tag_assignments do |t|
       t.integer :mix_id
       t.integer :tag_id
     end

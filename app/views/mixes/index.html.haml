@@ -1,17 +1,64 @@
-%h1 Listing mixes
+!!!
+%html{:lang => 'en'}
+  %head
+    = render :partial => 'layouts/head'
 
-%table
-  %tr
-    %th
-    %th
-    %th
-
-  - @mixes.each do |mix|
-    %tr
-      %td= link_to 'Show', mix
-      %td= link_to 'Edit', edit_mix_path(mix)
-      %td= link_to 'Destroy', mix, method: :delete, data: { confirm: 'Are you sure?' }
-
-%br
-
-= link_to 'New Mix', new_mix_path
+  %body
+    = render :partial => 'layouts/social'
+    = render :partial => 'layouts/topbar'
+    .landing-background
+      .container.landing-container
+        .tags-container
+          %h1 Play me some...
+          .tags
+            - @tags.each do |tag|
+              %a{:href => "#", :tag => tag.name}
+                %span.label.label-inverse= tag.name
+    /.tracks-container
+    /  .track-filters
+    /    %h2
+    /      Popular
+    /  - @popular_tracks.each_with_index do |track, i|
+    /    - style = ''
+    /    - if i % 4 == 3
+    /      - style = 'margin-right: 0;'
+    /    %article.track{:style => style}
+    /      %a{:href => track_url(track.permalink)}
+    /        = image_tag track.artwork_url.gsub('large','t300x300')
+    /        .track-play
+    /          %i.icon-play.icon-white
+    /        .track-stats
+    /          .track-plays
+    /            ►
+    /            = track.cached_plays
+    /          .track-tags
+    /            %span.label.label-inverse= track.tag.name
+    /        .track-info
+    /          .track-artist
+    /            = track.artist
+    /          .track-title
+    /            = track.title
+    /.tracks-container
+    /  .track-filters
+    /    %h2
+    /      New
+    /  - @new_tracks.each_with_index do |track, i|
+    /    - style = ''
+    /    - if i % 4 == 3
+    /      - style = 'margin-right: 0;'
+    /    %article.track{:style => style}
+    /      %a{:href => track_url(track.permalink)}
+    /        = image_tag track.artwork_url.gsub('large','t300x300')
+    /        .track-play
+    /          %i.icon-play.icon-white
+    /        .track-stats
+    /          .track-plays
+    /            ►
+    /            = track.cached_plays
+    /          .track-tags
+    /            %span.label.label-inverse= track.tag.name
+    /        .track-info
+    /          .track-artist
+    /            = track.artist
+    /          .track-title
+    /            = track.title

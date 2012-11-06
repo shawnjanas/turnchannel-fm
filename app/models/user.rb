@@ -9,6 +9,11 @@ class User < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation, :remember_me
   attr_accessible :name
 
+  has_many :mixes
+
+  has_many :favorite_mixes
+  has_many :mixes_favorite, :through => :favorite_mixes
+
   def submit_track(tag, sc_url)
     track = nil
 

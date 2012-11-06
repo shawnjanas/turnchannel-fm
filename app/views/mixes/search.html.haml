@@ -1,0 +1,23 @@
+.tracks-container
+  .track-filters
+    %h2
+      Popular
+  - @mixes.each_with_index do |mix, i|
+    - style = ''
+    - if i % 4 == 3
+      - style = 'margin-right: 0;'
+    %article.track{:style => style}
+      %a{:href => mix_url(mix.permalink)}
+        = image_tag JSON.parse(mix.tracks.first.thumbnails).first['url']
+        .track-play
+          %i.icon-play.icon-white
+        .track-stats
+          .track-plays
+            ►
+            = mix.plays
+          .track-tags
+            - mix.tags.each do |tag|
+              %span.label.label-inverse= tag.name
+        .track-info
+          .track-title
+            = mix.name

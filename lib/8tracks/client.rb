@@ -13,6 +13,10 @@ class EightTracksClient
     query("/mixes/#{mix_id}.json?")['mix']
   end
 
+  def mixes(params)
+    query("/mixes.json?sort=#{params[:sort]}&per_page=#{params[:per_page]}")['mixes']
+  end
+
   def tracks(mix_id, options = {:start => true})
     tracks = options[:tracks] || []
 
@@ -21,7 +25,12 @@ class EightTracksClient
       action = 'play'
     end
 
-    track = query("/sets/#{play_token}/#{action}.json?mix_id=#{mix_id}&")
+    begin
+      track = query("/sets/#{play_token}/#{action}.json?mix_id=#{mix_id}&")
+    rescue => e
+      tracks = self.tracks(mix_id, :tracks => tracks, :start => false)
+      return tracks
+    end
 
     if track['set']['at_end'] == false
       tracks << track['set']['track']

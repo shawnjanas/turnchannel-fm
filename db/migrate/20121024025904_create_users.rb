@@ -5,7 +5,5 @@ class CreateUsers < ActiveRecord::Migration
 
       t.timestamps
     end
-
-    User.create(:name => 'TurnChannelFM')
   end
 end

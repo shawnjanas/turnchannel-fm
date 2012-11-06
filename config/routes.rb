@@ -7,16 +7,17 @@ Turnchannelfm::Application.routes.draw do
     end
   end
 
+  match '/mixes/tags/:tags' => 'mixes#search'
+
   #resources :forums
   #resources :users
   #resources :tracks
 
   match '/discover' => 'tracks#discover'
-  match '/discover/:tag' => 'tracks#discover'
 
   match '/a' => "tracks#index"
 
-  root :to => "tracks#index"
+  root :to => "mixes#index"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

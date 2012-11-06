@@ -1,5 +1,5 @@
-queue_new_tracks:
-  cron: "1 */1 * * *" # every hour
-  class: QueueNewTracks
+queue_fetch_popular_8tracks_mixes:
+  cron: "*/1 * * * *" # every hour
+  class: QueueFetchPopular8TracksMixes
   args:
-  description: "Checks for new tracks"
+  description: "Checks for new popular mixes"

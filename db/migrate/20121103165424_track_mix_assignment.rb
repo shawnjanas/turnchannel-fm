@@ -1,6 +1,6 @@
 class TrackMixAssignment < ActiveRecord::Migration
   def change
-    create_table :track_mix_assignments, :id => false do |t|
+    create_table :track_mix_assignments do |t|
       t.integer :track_id
       t.integer :mix_id
     end

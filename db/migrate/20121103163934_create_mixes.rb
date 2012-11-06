@@ -4,10 +4,16 @@ class CreateMixes < ActiveRecord::Migration
       t.string :name
       t.string :source
       t.string :remote_id
-      t.string :description
+      t.text :description
 
-      t.integer :plays, :default => 0
+      t.integer :plays_count, :default => 0
+      t.integer :likes_count, :default => 0
       t.string :permalink
+
+      t.text :cover_urls
+
+      t.boolean :published
+      t.datetime :first_published_at
 
       t.integer :user_id
       t.timestamps

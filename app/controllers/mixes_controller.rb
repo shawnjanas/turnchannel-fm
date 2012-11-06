@@ -5,11 +5,9 @@ class MixesController < ApplicationController
   # GET /mixes.json
   def index
     @mixes = Mix.all
+    @tags = Tag.all
 
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @mixes }
-    end
+    render :layout => false
   end
 
   def toggle_fav
@@ -19,19 +17,29 @@ class MixesController < ApplicationController
     render :json => {:state => state}
   end
 
+  def search
+    tags = params[:tags].split('+')
+    @mixes = []
+
+    tags.each do |tag_name|
+      tag = Tag.find_by_name(tag_name)
+      @mixes += tag.mixes
+    end
+
+    @mixes.uniq!
+  end
+
   # GET /mixes/1
   # GET /mixes/1.json
   def show
     @mix = Mix.find_by_permalink(params[:id])
+    @mix.play
     @tracks = @mix.tracks.shuffle
     @remote_ids = @tracks.map{|t| t.remote_id}
 
     @related_mixes = Mix.all
 
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @mix }
-    end
+    render :layout => 'mix'
   end
 
   # GET /mixes/new
