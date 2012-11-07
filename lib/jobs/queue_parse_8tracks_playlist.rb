@@ -7,7 +7,7 @@ class QueueParse8TracksMix
     mix_id = mix_id.to_s
     client = EightTracksClient.new(:api_key => '7bddbb8622d28ae3ec1812d4472f4cb64937d530')
 
-    return if Mix.find_by_remote_id(mix_id)
+    return if Mix.find_by_remote(mix_id)
 
     # Fetch mix info
     mix_hash = client.mix(mix_id)
@@ -17,7 +17,7 @@ class QueueParse8TracksMix
       mix = Mix.create(
         :name => mix_hash['name'],
         :source => '8tracks',
-        :remote_id => mix_id,
+        :remote => mix_id,
         :description => mix_hash['description'],
         :cover_urls => mix_hash['cover_urls'].to_json,
         :user_id => user.id,
@@ -44,22 +44,22 @@ class QueueParse8TracksMix
           :album_release_name => track_hash['release_name'],
           :year => track_hash['year'],
           :source => 'youtube',
-          :remote_id => nil,
+          :remote => nil,
           :buy_link => track_hash['buy_link'],
           :buy_icon => track_hash['buy_icon'],
           :published => false
         )
 
         unless track_hash['you_tube_id'].blank?
-          if Track.find_by_remote_id(track_hash['you_tube_id'])
-            track = Track.find_by_remote_id(track_hash['you_tube_id'])
+          if Track.find_by_remote(track_hash['you_tube_id'])
+            track = Track.find_by_remote(track_hash['you_tube_id'])
           else
             yt_client = YouTubeIt::Client.new
             begin
               video = yt_client.video_by(track_hash['you_tube_id'])
 
               if !video.blank? && video.access_control['embed'] == 'allowed'
-                track.remote_id = track_hash['you_tube_id']
+                track.remote = track_hash['you_tube_id']
                 track.duration = video.duration
                 track.thumbnails = video.thumbnails.to_json
               end

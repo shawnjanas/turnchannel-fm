@@ -1,13 +1,12 @@
 - i = 0
-- @mix.tracks.each{|t|i+=t.duration}
+- @tracks.each{|t|i+=t.duration}
 
 .player-container
   .player-wrapper
     .player-title
-      %h3= "► #{@tracks.first.title}"
+      %h3= "► #{@tracks.first.name} - #{@tracks.first.artist}"
     .player-video
       #ytapiplayer
-        /%iframe{:width=>"960", :height=>"487", :src=>"http://www.youtube.com/v/#{@remote_ids.first}?version=3&enablejsapi=1&showinfo=0&modestbranding=1&autohide=1&iv_load_policy=3&autoplay=0&rel=0&playlist=#{@remote_ids[1..-1].join(',')}", :frameborder=>"0", :allowfullscreen=>"false"}
 .mix-container
   .mix-details
     .mix-details-container
@@ -27,24 +26,28 @@
           %button.btn#mix-fav-btn{:href => "/mixes/#{@mix.id}/toggle_fav", :title => "Add this mix to my Favorites"}
             All Tracks
             %b.caret
+        .mix-social-connect
+          .social#social-fb
+            .fb-like{:'data-href'=>"#{request.protocol}#{request.host_with_port}#{request.fullpath}", :'data-send'=>"false", :'data-layout'=>"button_count", :'data-width'=>"450", :'data-show-faces'=>"false"}
+          .social#social-tw
+            %a{:href=>"https://twitter.com/share", :class=>"twitter-share-button", :'data-via'=>"TurnChannel", :'data-hashtags'=>"turnchannel", :'data-dnt'=>"true"} Tweet
       .mix-title
         %h2= @mix.name
         .mix-tags
           - @mix.tags.each do |tag|
             %span.label.label-inverse= tag.name
         .mix-length
-          = "#{i} (#{@mix.tracks.size} tracks)"
+          = "#{i} (#{@tracks.size} tracks)"
         .mix-description
           = @mix.description
+        .mix-stats
+          = "► #{@mix.plays_count}"
+          %i.icon-heart
+          = @mix.favorite_mixes.size
     .mix-comments-container
       %h3 Comments
       .fb-comments-wrapper
-        .fb-comments{:'data-href'=>"#{request.protocol}#{request.host_with_port}#{request.fullpath}", :'data-num-posts'=>"5", :'data-width'=>"580", :'data-colorscheme'=>"white"}
-      .social-connect
-        .social#social-fb
-          .fb-like{:'data-href'=>"#{request.protocol}#{request.host_with_port}#{request.fullpath}", :'data-send'=>"false", :'data-layout'=>"button_count", :'data-width'=>"450", :'data-show-faces'=>"false"}
-        .social#social-tw
-          %a{:href=>"https://twitter.com/share", :class=>"twitter-share-button", :'data-via'=>"TurnChannel", :'data-size'=>"large", :'data-hashtags'=>"turnchannel", :'data-dnt'=>"true"} Tweet
+        .fb-comments{:'data-href'=>"#{request.protocol}#{request.host_with_port}#{request.fullpath}", :'data-num-posts'=>"5", :'data-width'=>"605", :'data-colorscheme'=>"white"}
   .mix-related-container
     %h3 Related Mixes
     - @related_mixes.each do |mix|
@@ -62,7 +65,7 @@
               - mix.tags.each do |tag|
                 %span.label.label-inverse= tag.name
             .related-stats
-              = "► #{mix.plays}"
+              = "► #{mix.plays_count}"
               %i.icon-heart
               = mix.favorite_mixes.size
 

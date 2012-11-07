@@ -67,7 +67,7 @@ function onYouTubePlayerAPIReady() {
   var playlist_ids = $('.playlist').attr('ids');
 
   player = new YT.Player('ytapiplayer', {
-    height: '487',
+    height: '560',
     width: '960',
     videoId: playlist_ids.split(',')[0],
     playerVars: { 'playlist':playlist_ids.split(',').slice(1, playlist_ids.length).join(','), 'showinfo': 0, 'modestbranding': 1, 'autohide': 0, 'iv_load_policy': 3, 'autoplay': 1, 'rel': 0},

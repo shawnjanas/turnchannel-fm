@@ -34,8 +34,8 @@ class MixesController < ApplicationController
   def show
     @mix = Mix.find_by_permalink(params[:id])
     @mix.play
-    @tracks = @mix.tracks.shuffle
-    @remote_ids = @tracks.map{|t| t.remote_id}
+    @tracks = @mix.tracks.find_all{|t| t.remote != nil}
+    @remote_ids = @tracks.map{|t| t.remote}
 
     @related_mixes = Mix.all
 

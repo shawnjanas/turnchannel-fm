@@ -10,7 +10,7 @@ class QueueFetchPopular8TracksMixes
 
     mixes_hash.each do |mix_hash|
       mix_id = mix_hash['id'].to_s
-      unless Mix.find_by_remote_id(mix_id)
+      unless Mix.find_by_remote(mix_id)
         Resque.enqueue(QueueParse8TracksMix, mix_id)
         break
       end

@@ -7,7 +7,7 @@ class CreateTracks < ActiveRecord::Migration
       t.integer :year
 
       t.string :source
-      t.string :remote_id, :default => nil
+      t.string :remote, :default => nil
 
       t.text :buy_link
       t.string :buy_icon
@@ -22,7 +22,7 @@ class CreateTracks < ActiveRecord::Migration
       t.timestamps
     end
 
-    add_index :tracks, :remote_id, :unique => true
+    add_index :tracks, :remote, :unique => true
     execute "create index on tracks using gin(to_tsvector('english', name));"
     execute "create index on tracks using gin(to_tsvector('english', artist));"
   end

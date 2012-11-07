@@ -27,9 +27,11 @@
   width: 628px;
   float: left;
   .mix-details-container {
-    height: 172px;
+    float: left;
+    width: 606px;
     border: #ddd solid 1px;
     padding: 10px;
+    background: white;
     .mix-thumbnail-container {
       float: left;
       width: 180px;
@@ -45,11 +47,26 @@
       .mix-buttons {
         margin-top: 10px;
       }
+      .mix-social-connect {
+        margin-top: 10px;
+        .social {
+          width: 90px;
+        }
+        #social-fb {
+          float: left;
+        }
+        #social-tw {
+          float: right;
+        }
+      }
     }
     .mix-title {
       float: left;
       width: 390px;
       margin-left: 10px;
+      h2 {
+        line-height: 30px;
+      }
     }
   }
   .mix-comments-container {
@@ -58,6 +75,7 @@
     padding: 10px;
     margin-top: 10px;
     border: #ddd solid 1px;
+    background: white;
   }
 }
 .mix-related-container {
@@ -66,6 +84,7 @@
   margin-left: 10px;
   padding: 10px;
   border: #DDD solid 1px;
+  background: white;
 
   .related-mix {
     width: 300px;

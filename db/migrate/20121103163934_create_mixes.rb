@@ -3,7 +3,7 @@ class CreateMixes < ActiveRecord::Migration
     create_table :mixes do |t|
       t.string :name
       t.string :source
-      t.string :remote_id
+      t.string :remote
       t.text :description
 
       t.integer :plays_count, :default => 0
@@ -22,7 +22,7 @@ class CreateMixes < ActiveRecord::Migration
     add_index :mixes, :user_id
     add_index :mixes, :permalink
 
-    add_index :mixes, [:remote_id, :source], :unique => true
+    add_index :mixes, :remote, :unique => true
 
     execute "create index on mixes using gin(to_tsvector('english', name));"
   end

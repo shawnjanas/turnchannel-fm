@@ -1,7 +1,7 @@
 class Mix < ActiveRecord::Base
-  attr_accessible :name, :source, :remote_id, :description, :plays_count, :likes_count, :permalink, :cover_urls, :published, :first_published_at, :user_id
+  attr_accessible :name, :source, :remote, :description, :plays_count, :likes_count, :permalink, :cover_urls, :published, :first_published_at, :user_id
 
-  validates :remote_id, :presence => true, :uniqueness => true
+  validates :remote, :presence => true, :uniqueness => true
   validates_presence_of :name, :source, :permalink, :user_id
 
   has_permalink :name
@@ -28,7 +28,7 @@ class Mix < ActiveRecord::Base
   end
 
   def thumbnail
-    tracks = self.tracks.limit(4)
+    tracks = self.tracks.where("remote IS NOT NULL").limit(4)
     if tracks.size == 4
       tracks.map do |track|
         track.thumbnail
@@ -37,6 +37,12 @@ class Mix < ActiveRecord::Base
       tracks.first.thumbnail
     else
       'http://thedefaultthumb.com'
+    end
+  end
+
+  def cover_art
+    if self.cover_urls
+      JSON.parse(self.cover_urls)['max133w']
     end
   end
 
@@ -50,7 +56,7 @@ class Mix < ActiveRecord::Base
   end
 
   def play
-    self.plays = self.plays + 1
+    self.plays_count = self.plays_count + 1
     self.save
   end
 end

@@ -8,13 +8,13 @@
       - style = 'margin-right: 0;'
     %article.track{:style => style}
       %a{:href => mix_url(mix.permalink)}
-        = image_tag JSON.parse(mix.tracks.first.thumbnails).first['url']
+        = image_tag mix.cover_art
         .track-play
           %i.icon-play.icon-white
         .track-stats
           .track-plays
             ►
-            = mix.plays
+            = mix.plays_count
           .track-tags
             - mix.tags.each do |tag|
               %span.label.label-inverse= tag.name

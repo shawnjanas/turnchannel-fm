@@ -9,7 +9,7 @@
         - c = 'playing' if i == 0
         .playlist-track{:index => i, :class => c}
           = image_tag track.thumbnail
-          %h4= track.title
+          %h4= "#{track.name} - #{track.artist}"
           .track-play
             %i.icon-play.icon-white
 
