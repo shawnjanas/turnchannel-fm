@@ -1,12 +1,6 @@
 var player;
 
 $(document).ready(function() {
-  //Load player api asynchronously.
-  var tag = document.createElement('script');
-  tag.src = "//www.youtube.com/player_api";
-  var firstScriptTag = document.getElementsByTagName('script')[0];
-  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
   var tags_selected = [];
 
   $('.landing-background .tags a').click(function() {
@@ -44,7 +38,7 @@ $(document).ready(function() {
   });
 
   $('#mix-tracks-btn').click(function() {
-    window.scrollBy(0,0);
+    $(window).scrollTop(0);
   });
 
   $('.playlist-container .playlist-track').hover(function() {
@@ -57,12 +51,25 @@ $(document).ready(function() {
     }
   });
 
+  $('.mix-related-container .related-mix').hover(function() {
+    $(this).find('.related-play').show();
+  }, function() {
+    $(this).find('.related-play').hide();
+  });
+
   $('.playlist-container .playlist-track').click(function() {
     var playlist_index = $(this).attr('index'); 
     player.playVideoAt(playlist_index);
   });
+  if($('#ytapiplayer').length > 0) {
+    //Load player api asynchronously.
+    var tag = document.createElement('script');
+    tag.src = "//www.youtube.com/player_api";
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-  window.scrollBy(0,183);
+    $(window).scrollTop(183);
+  }
 });
 
 function newTrackPlaying(playlist_index) {

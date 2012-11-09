@@ -1,24 +1,27 @@
-.mixes-container
-  .mixes-section
+.mix-container
+  .track-filters
     %h2
-      Popular
-    .mixes-section-container
-      - @mix_results.each_with_index do |mix, i|
-        - style = ''
-        - if i % 4 == 3
-          - style = 'margin-right: 0;'
-        %article.track{:style => style}
-          %a{:href => mix_url(mix.permalink)}
-            = image_tag mix.cover_art
-            .track-play
-              %i.icon-play.icon-white
-            .track-stats
-              .track-plays
-                ►
-                = mix.plays_count
-              .track-tags
-                - mix.tags.each do |tag|
-                  %span.label.label-inverse= tag.name
-            .track-info
-              .track-title
-                = mix.name
+      Mixes for
+      - if @raw_tags
+        = @raw_tags.join('+')
+      - elsif @q
+        = @q
+    - @mix_results.each_with_index do |mix, i|
+      - style = ''
+      - if i % 4 == 3
+        - style = 'margin-right: 0;'
+      %article.track{:style => style}
+        %a{:href => mix_url(mix.permalink)}
+          = image_tag mix.cover_art
+          .track-play
+            %i.icon-play.icon-white
+          .track-stats
+            .track-plays
+              ►
+              = mix.plays_count
+            .track-tags
+              - mix.tags.each do |tag|
+                %span.label.label-inverse= tag.name
+          .track-info
+            .track-title
+              = mix.name

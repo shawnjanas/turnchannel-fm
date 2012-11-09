@@ -19,6 +19,10 @@ gem 'has_permalink'
 
 gem 'youtube_it'
 
+gem 'omniauth'
+gem 'oauth2'
+gem 'omniauth-facebook'
+
 group :development, :test do
   gem 'rspec-rails', '2.9.0'
 end

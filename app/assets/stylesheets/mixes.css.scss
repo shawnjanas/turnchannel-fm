@@ -14,6 +14,8 @@
 .player-title {
   font-size: 18px;
   color: white;
+  height: 20px;
+  overflow: hidden;
   .player-artist {
     font-weight: bold;
   }
@@ -94,8 +96,10 @@
   background: white;
 
   .related-mix {
-    width: 300px;
-    height: 100px;
+    position: relative;
+    width: 290px;
+    height: 90px;
+    padding: 5px;
     &:hover {
       background: #f8f8f8;
     }
@@ -112,11 +116,29 @@
     .related-details {
       float: left;
       margin-left: 10px;
-      width: 170px;
+      width: 160px;
 
-      h4 {
-        height: 18px;
+      h4, .related-tags {
+        min-height: 18px;
+        max-height: 36px;
         overflow: hidden;
+      }
+    }
+    .related-play {
+      display: none;
+      position: absolute;
+      left: 0;
+      top: 0;
+      margin: 38px 0 0 55px;
+      width: 20px;
+      height: 20px;
+      -webkit-border-radius: 10px;
+      -moz-border-radius: 10px;
+      border-radius: 10px;
+      background: black;
+      border: white solid 2px;
+      i {
+        margin: 1px 0 0 3px;
       }
     }
   }

@@ -14,51 +14,72 @@
             - @tags.each do |tag|
               %a{:href => "#", :tag => tag.name}
                 %span.label.label-inverse= tag.name
-    /.tracks-container
-    /  .track-filters
-    /    %h2
-    /      Popular
-    /  - @popular_tracks.each_with_index do |track, i|
-    /    - style = ''
-    /    - if i % 4 == 3
-    /      - style = 'margin-right: 0;'
-    /    %article.track{:style => style}
-    /      %a{:href => track_url(track.permalink)}
-    /        = image_tag track.artwork_url.gsub('large','t300x300')
-    /        .track-play
-    /          %i.icon-play.icon-white
-    /        .track-stats
-    /          .track-plays
-    /            ►
-    /            = track.cached_plays
-    /          .track-tags
-    /            %span.label.label-inverse= track.tag.name
-    /        .track-info
-    /          .track-artist
-    /            = track.artist
-    /          .track-title
-    /            = track.title
-    /.tracks-container
-    /  .track-filters
-    /    %h2
-    /      New
-    /  - @new_tracks.each_with_index do |track, i|
-    /    - style = ''
-    /    - if i % 4 == 3
-    /      - style = 'margin-right: 0;'
-    /    %article.track{:style => style}
-    /      %a{:href => track_url(track.permalink)}
-    /        = image_tag track.artwork_url.gsub('large','t300x300')
-    /        .track-play
-    /          %i.icon-play.icon-white
-    /        .track-stats
-    /          .track-plays
-    /            ►
-    /            = track.cached_plays
-    /          .track-tags
-    /            %span.label.label-inverse= track.tag.name
-    /        .track-info
-    /          .track-artist
-    /            = track.artist
-    /          .track-title
-    /            = track.title
+    .mix-container
+      .track-filters
+        %h2
+          Hot Mixes
+      - @hot_mixes.each_with_index do |mix, i|
+        - style = ''
+        - if i % 4 == 3
+          - style = 'margin-right: 0;'
+        %article.track{:style => style}
+          %a{:href => mix_url(mix.permalink)}
+            = image_tag mix.cover_art
+            .track-play
+              %i.icon-play.icon-white
+            .track-stats
+              .track-plays
+                ►
+                = mix.plays_count
+              .track-tags
+                - mix.tags.each do |tag|
+                  %span.label.label-inverse= tag.name
+            .track-info
+              .track-title
+                = mix.name
+    .mix-container
+      .track-filters
+        %h2
+          Popular Mixes
+      - @popular_mixes.each_with_index do |mix, i|
+        - style = ''
+        - if i % 4 == 3
+          - style = 'margin-right: 0;'
+        %article.track{:style => style}
+          %a{:href => mix_url(mix.permalink)}
+            = image_tag mix.cover_art
+            .track-play
+              %i.icon-play.icon-white
+            .track-stats
+              .track-plays
+                ►
+                = mix.plays_count
+              .track-tags
+                - mix.tags.each do |tag|
+                  %span.label.label-inverse= tag.name
+            .track-info
+              .track-title
+                = mix.name
+    .mix-container
+      .track-filters
+        %h2
+          New Mixes
+      - @new_mixes.each_with_index do |mix, i|
+        - style = ''
+        - if i % 4 == 3
+          - style = 'margin-right: 0;'
+        %article.track{:style => style}
+          %a{:href => mix_url(mix.permalink)}
+            = image_tag mix.cover_art
+            .track-play
+              %i.icon-play.icon-white
+            .track-stats
+              .track-plays
+                ►
+                = mix.plays_count
+              .track-tags
+                - mix.tags.each do |tag|
+                  %span.label.label-inverse= tag.name
+            .track-info
+              .track-title
+                = mix.name

@@ -4,7 +4,9 @@ class MixesController < ApplicationController
   # GET /mixes
   # GET /mixes.json
   def index
-    @mixes = Mix.all
+    @popular_mixes = Mix.popular_mixes
+    @hot_mixes = Mix.hot_mixes
+    @new_mixes = Mix.new_mixes
     @tags = Tag.all.each.sort_by{|tag|tag.mixes.size}.reverse[0..23]
 
     render :layout => false
@@ -19,12 +21,13 @@ class MixesController < ApplicationController
 
   def search
     if !params[:tags].blank?
-      raw_tags = params[:tags].split('+')
+      @raw_tags = params[:tags].split('+')
       @mixes = []
 
-      tags = raw_tags.map{|tag_name| Tag.find_by_name(tag_name)}.reject{|tag| tag.blank?}
+      tags = @raw_tags.map{|tag_name| Tag.find_by_name(tag_name)}.reject{|tag| tag.blank?}
       @mix_results = Mix.search_by_tags(tags)
     else !params[:q].blank?
+      @q = params[:q]
       @mix_results = Mix.search_by_keyword(params[:q])
     end
   end

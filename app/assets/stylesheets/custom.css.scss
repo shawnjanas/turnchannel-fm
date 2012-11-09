@@ -114,13 +114,13 @@ header {
   img {
     width: 217px;
     height: 217px;
-    -moz-opacity: .5;
-    filter: alpha(opacity=50);
-    opacity: .5;
+    -moz-opacity: 1;
+    filter: alpha(opacity=1);
+    opacity: 1;
     &.hover {
-      -moz-opacity: 1;
-      filter: alpha(opacity=1);
-      opacity: 1;
+      filter: alpha(opacity=50);
+      -moz-opacity: .5;
+      opacity: .5;
     }
   }
   .track-play {
@@ -144,11 +144,10 @@ header {
 
 .track-filters {
   width: 960px;
-  height: 40px;
   margin-top: 30px;
+  float: left;
   h2 {
-    float:left;
-    color: #FFF;
+    color: #000;
     span {
       color: #666;
       font-size: 18px;

@@ -12,9 +12,10 @@
                   %i.icon-search
           .sign-in
             - if user_signed_in?
-              = current_user.email
+              It's
+              = current_user.name
               = link_to 'Sign Out', destroy_user_session_path, :method => :delete
             - else
-              = link_to 'Login', '#sign-in-modal', :'data-toggle'=>"modal"
+              = link_to 'Login', '#sign-in-modal', :'data-toggle'=>"modal", :target => '_blank'
               or
               = link_to 'Sign Up', '/users/sign_up'

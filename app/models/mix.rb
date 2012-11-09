@@ -31,12 +31,18 @@ class Mix < ActiveRecord::Base
   end
 
   def duration_time
-    minutes = (self.duration / 60).floor
-    seconds = self.duration - (minutes * 60)
+    hours = (self.duration / 60 / 60).floor
+    minutes = ((self.duration - (hours * 60 * 60)) / 60).floor
+    seconds = self.duration - (hours * 60 * 60) - (minutes * 60)
 
     seconds = "0#{seconds}" if seconds < 10
+    minutes = "0#{minutes}" if minutes < 10 && hours > 0
 
-    "#{minutes}:#{seconds}"
+    unless hours == 0
+      "#{hours}:#{minutes}:#{seconds}"
+    else
+      "#{minutes}:#{seconds}"
+    end
   end
 
   def thumbnail
@@ -60,8 +66,8 @@ class Mix < ActiveRecord::Base
 
   def name_exerpt
     name = self.name
-    if name.size > 21
-      "#{name[0..18]}..."
+    if name.size > 41
+      "#{name[0..38]}..."
     else
       name
     end
@@ -112,6 +118,16 @@ class Mix < ActiveRecord::Base
     self.tracks.each{|track| duration += track.duration if track.duration}
     self.duration = duration
     self.save
+  end
+
+  def self.popular_mixes
+    Mix.find(:all, :order => 'plays_weekly_count DESC', :limit => 8)
+  end
+  def self.hot_mixes
+    Mix.find(:all, :order => 'plays_daily_count DESC', :limit => 8)
+  end
+  def self.new_mixes
+    Mix.find(:all, :order => 'id DESC', :limit => 8)
   end
 
   def related_tracks
