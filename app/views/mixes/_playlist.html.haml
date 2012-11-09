@@ -1,16 +1,20 @@
 .playlist-wrapper
   %h3
     = @mix.name
-    %span= "#{@tracks.size} tracks"
+    %span= "- #{@tracks.size} tracks"
   .playlist-container
-    .playlist{:ids => @remote_ids.join(','), :style => "width:#{@tracks.size*130+2}px"}
+    .playlist{:ids => @remote_ids.join(','), :style => "width:#{@tracks.size*140+2}px"}
       - @tracks.each_with_index do |track, i|
         - c = ''
         - c = 'playing' if i == 0
         .playlist-track{:index => i, :class => c}
           = image_tag track.thumbnail
-          %h4= "#{track.name} - #{track.artist}"
+          .track-artist
+            = track.artist
+          .track-name
+            = track.name
           .track-play
             %i.icon-play.icon-white
+
 
 

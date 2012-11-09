@@ -1,5 +1,8 @@
+# Changes:
+#   just-let-the-music-take-you => Kid Cuddie wrong track
+
 class Mix < ActiveRecord::Base
-  attr_accessible :name, :source, :remote, :description, :plays_count, :likes_count, :permalink, :cover_urls, :published, :first_published_at, :user_id
+  attr_accessible :name, :source, :remote, :description, :plays_count, :plays_history, :plays_weekly_count, :likes_count, :permalink, :cover_urls, :published, :first_published_at, :user_id, :duration, :searchable_metadata
 
   validates :remote, :presence => true, :uniqueness => true
   validates_presence_of :name, :source, :permalink, :user_id
@@ -25,6 +28,15 @@ class Mix < ActiveRecord::Base
       FavoriteMix.create(:user_id => user.id, :mix_id => self.id)
       1
     end
+  end
+
+  def duration_time
+    minutes = (self.duration / 60).floor
+    seconds = self.duration - (minutes * 60)
+
+    seconds = "0#{seconds}" if seconds < 10
+
+    "#{minutes}:#{seconds}"
   end
 
   def thumbnail
@@ -55,8 +67,80 @@ class Mix < ActiveRecord::Base
     end
   end
 
-  def play
-    self.plays_count = self.plays_count + 1
+  def play!
+    plays_history = JSON.parse(self.plays_history)
+
+    hour_plays = plays_history.first + 1
+    plays_history[0] = hour_plays
+
+    self.plays_history = plays_history.to_json
     self.save
+  end
+
+  def update_plays!
+    plays_history = JSON.parse(self.plays_history)
+
+    hour_plays = plays_history.first
+    _plays_history = plays_history.unshift(0)[0..168]
+
+    weekly_plays = 0  # Trending
+    daily_plays = 0   # Hot
+
+    _plays_history.each{|i|weekly_plays+=i}
+    plays_history[1..24].each{|i|daily_plays+=i}
+
+    self.plays_count += hour_plays
+
+    self.plays_weekly_count = weekly_plays
+    self.plays_daily_count = daily_plays
+
+    self.plays_history = _plays_history.to_json
+    self.save
+  end
+
+  def create_searchable_meta
+    meta = ''
+
+    self.tracks.each{|track| meta += "#{track.name} #{track.artist} ".downcase}
+    self.searchable_metadata = meta
+    self.save
+  end
+
+  def calc_duration
+    duration = 0
+
+    self.tracks.each{|track| duration += track.duration if track.duration}
+    self.duration = duration
+    self.save
+  end
+
+  def related_tracks
+    mix_ids = []
+    self.tags.map do |t|
+      mix_ids += t.mixes.map(&:id)
+    end
+    mix_ids.uniq!
+
+    results = []
+    results += Mix.find_all_by_id(mix_ids, :order => 'plays_weekly_count DESC', :limit => 10)
+    results += Mix.find_all_by_id(mix_ids, :conditions => ['id not in (?)', results.map(&:id)], :order => 'plays_daily_count DESC', :limit => 10)
+    results += Mix.find_all_by_id(mix_ids, :conditions => ['id not in (?)', results.map(&:id)], :order => 'plays_count', :limit => 10)
+  end
+
+  def self.search_by_tags(tags)
+    mix_ids = []
+    tags.map do |t|
+      mix_ids += t.mixes.map(&:id)
+    end
+    mix_ids.uniq!
+
+    results = []
+    results += Mix.find_all_by_id(mix_ids, :order => 'plays_weekly_count DESC', :limit => 10)
+    results += Mix.find_all_by_id(mix_ids, :conditions => ['id not in (?)', results.map(&:id)], :order => 'plays_daily_count DESC', :limit => 10)
+    results += Mix.find_all_by_id(mix_ids, :conditions => ['id not in (?)', results.map(&:id)], :order => 'plays_count', :limit => 10)
+  end
+
+  def self.search_by_keyword(query)
+    Mix.find(:all, :conditions => ['searchable_metadata LIKE ?', "%#{query.downcase}%"])
   end
 end

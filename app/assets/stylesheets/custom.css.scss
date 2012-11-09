@@ -18,7 +18,6 @@ h3 span {
 
 header {
   height: 60px;
-  border-top: 5px #333 solid;
 }
 
 .container {
@@ -26,11 +25,17 @@ header {
 }
 
 .navbar-inner {
-  background: #fff;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
 }
 
 .player-title {
   h3 {
+    span {
+      color: #BF0265;
+      font-size: 18px;
+    }
     color: #fff;
   }
 }
@@ -38,14 +43,22 @@ header {
 #topbar {
   height: 60px;
   overflow: hidden;
-  color: #333;
+  color: #fff;
   #topbar-nav {
     li a {
       padding: 20px 20px 20px;
     }
   }
+  .search-bar {
+    float: left;
+    margin-top: 16px;
+    input {
+      width: 420px;
+    }
+  }
   .sign-in {
     float: right;
+    margin-top: 20px;
   }
   .social-connect {
     float: right;
@@ -73,9 +86,9 @@ header {
   margin-left: 0;
   font-weight: bold;
   float: left;
-  color: #333;
+  color: #FFF;
   &:hover {
-    color: #000;
+    color: #F8F8F8;
   }
 }
 

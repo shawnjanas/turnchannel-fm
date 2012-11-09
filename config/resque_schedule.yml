@@ -1,5 +1,12 @@
 queue_fetch_popular_8tracks_mixes:
-  cron: "*/1 * * * *" # every hour
+  cron: "*/1 * * * *" # every minute
   class: QueueFetchPopular8TracksMixes
   args:
   description: "Checks for new popular mixes"
+
+queue_fetch_popular_8tracks_mixes:
+  cron: "* */1 * * *" # every hour
+  class: QueueUpdateMixPlays
+  args:
+  description: "Updated the Mixes play count"
+

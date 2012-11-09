@@ -17,9 +17,7 @@ class Track < ActiveRecord::Base
   end
 
   def resolve_remote
-    puts 'resolve_remote'
     if !self.remote.blank? && self.thumbnails.blank?
-      puts self.remote
       unless (track = Track.find_by_remote(self.remote))
         puts track.inspect
         yt_client = YouTubeIt::Client.new
@@ -29,10 +27,12 @@ class Track < ActiveRecord::Base
           if !video.blank? && video.access_control['embed'] == 'allowed'
             self.duration = video.duration
             self.thumbnails = video.thumbnails.to_json
+
+            self.mix.create_searchable_meta
+            self.mix.calc_duration
             self.save
           end
         rescue => e
-          puts "Error: #{e}"
         end
       else
         self.track_mix_assignments.each do |x|

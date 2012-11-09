@@ -2,7 +2,7 @@ body {
 }
 
 .landing-background {
-  background: url("/assets/turnchannel-landing-bg.jpg") no-repeat scroll 0 -110px #2480A7;
+  background: url(/assets/turnchannel-landing-bg.jpg) #2480A7;
   z-index: -1;
   height: 500px;
   overflow: hidden;
@@ -14,10 +14,14 @@ body {
 
 .landing-container {
   margin-top: 35px;
+  .char {
+    width: 350px;
+    float:left;
+  }
   .tags-container {
     width: 500px;
     height: 200px;
-    margin: 150px 0 0 400px;
+    margin: 80px 0 0 400px;
     color: #f8f8f8;
     h1 {
       color: white;
@@ -33,9 +37,10 @@ body {
     .tags {
       text-align: center;
       span {
-        margin: 5px;
+        display: inline-block;
+        margin: 3px;
         padding: 10px;
-        line-height: 30px;
+        line-height: 15px;
         font-size: 16px;
       }
     }

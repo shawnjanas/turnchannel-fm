@@ -5,7 +5,7 @@ class MixesController < ApplicationController
   # GET /mixes.json
   def index
     @mixes = Mix.all
-    @tags = Tag.all
+    @tags = Tag.all.each.sort_by{|tag|tag.mixes.size}.reverse[0..23]
 
     render :layout => false
   end
@@ -18,26 +18,29 @@ class MixesController < ApplicationController
   end
 
   def search
-    tags = params[:tags].split('+')
-    @mixes = []
+    if !params[:tags].blank?
+      raw_tags = params[:tags].split('+')
+      @mixes = []
 
-    tags.each do |tag_name|
-      tag = Tag.find_by_name(tag_name)
-      @mixes += tag.mixes
+      tags = raw_tags.map{|tag_name| Tag.find_by_name(tag_name)}.reject{|tag| tag.blank?}
+      @mix_results = Mix.search_by_tags(tags)
+    else !params[:q].blank?
+      @mix_results = Mix.search_by_keyword(params[:q])
     end
-
-    @mixes.uniq!
   end
 
   # GET /mixes/1
   # GET /mixes/1.json
   def show
     @mix = Mix.find_by_permalink(params[:id])
-    @mix.play
+    @mix.play!
+
+    current_user.play_mix(@mix) if current_user
+
     @tracks = @mix.tracks.find_all{|t| t.remote != nil}
     @remote_ids = @tracks.map{|t| t.remote}
 
-    @related_mixes = Mix.all
+    @related_mixes = @mix.related_tracks
 
     render :layout => 'mix'
   end

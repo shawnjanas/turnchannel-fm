@@ -1,10 +1,12 @@
-- i = 0
-- @tracks.each{|t|i+=t.duration}
-
 .player-container
   .player-wrapper
     .player-title
-      %h3= "► #{@tracks.first.name} - #{@tracks.first.artist}"
+      ►
+      %span.player-artist
+        = @tracks.first.artist
+      = '-'
+      %span.player-name
+        = @tracks.first.name
     .player-video
       #ytapiplayer
 .mix-container
@@ -23,7 +25,7 @@
           %button#mix-fav-btn{:class => favorite_class, :href => "/mixes/#{@mix.id}/toggle_fav", :title => "Add this mix to my Favorites"}
             %i.icon-heart
             Favorite
-          %button.btn#mix-fav-btn{:href => "/mixes/#{@mix.id}/toggle_fav", :title => "Add this mix to my Favorites"}
+          %button.btn#mix-tracks-btn{:title => "View all tracks"}
             All Tracks
             %b.caret
         .mix-social-connect
@@ -37,7 +39,7 @@
           - @mix.tags.each do |tag|
             %span.label.label-inverse= tag.name
         .mix-length
-          = "#{i} (#{@tracks.size} tracks)"
+          = "#{@mix.duration_time} (#{@tracks.size} tracks)"
         .mix-description
           = @mix.description
         .mix-stats
@@ -68,23 +70,3 @@
               = "► #{mix.plays_count}"
               %i.icon-heart
               = mix.favorite_mixes.size
-
-:javascript
-  // Load the IFrame Player API code asynchronously.
-  /*var tag = document.createElement('script');
-  tag.src = "https://www.youtube.com/player_api";
-  var firstScriptTag = document.getElementsByTagName('script')[0];
-  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-  var params = { allowScriptAccess: "always" };
-  var atts = { id: "myytplayer" };
-  swfobject.embedSWF("http://www.youtube.com/apiplayer?enablejsapi=1&version=3", "ytapiplayer", "620", "378", "8", null, null, params, atts);
-
-  function onYouTubePlayerReady(playerId) {
-    var ytplayer = document.getElementById("myytplayer");
-    ytplayer.loadPlaylist({
-      list: 'PL6A40AB04892E2A1F',
-      listType: 'playlist'
-    });
-  }
-  */

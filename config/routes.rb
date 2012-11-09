@@ -12,6 +12,7 @@ Turnchannelfm::Application.routes.draw do
   end
 
   match '/mixes/tags/:tags' => 'mixes#search'
+  match '/mixes/search/:q' => 'mixes#search'
 
   #resources :forums
   #resources :users
