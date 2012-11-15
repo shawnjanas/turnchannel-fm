@@ -1,16 +1,14 @@
 class User < ActiveRecord::Base
-  attr_accessible :name, :email, :password, :password_confirmation
-  #has_secure_password
+  # Include default devise modules. Others available are:
+  # :token_authenticatable, :confirmable,
+  # :lockable, :timeoutable and :omniauthable
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :trackable, :validatable,
+         :token_authenticatable, :omniauthable
 
-  before_save :downcase_email#, :create_remember_token
-
-  VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
-  validates :email, :presence => true,
-                    :format => { :with => VALID_EMAIL_REGEX },
-                    :uniqueness => { :case_sensitive => false }
-
-  #validates :password, :presence => true, :length => { :minimum => 6 }
-  #validates :password_confirmation, :presence => true
+  # Setup accessible (or protected) attributes for your model
+  attr_accessible :email, :password, :password_confirmation, :remember_me
+  attr_accessible :name, :play_history, :provider, :uid, :avatar
 
   def downcase_email
     self.email.downcase!
@@ -30,8 +28,25 @@ class User < ActiveRecord::Base
     Track.build(self.id, tag, track)
   end
 
-private
-  def create_remember_token
-    self.remember_token = SecureRandom.urlsafe_base64
+  def self.find_for_facebook_oauth(auth, signed_in_resource=nil)
+    user = User.where(:provider => auth.provider, :uid => auth.uid).first
+    unless user
+      if (user = User.find_by_email(auth.info.email))
+        user.uid = auth.uid
+        user.provider = auth.provider
+        user.avatar = auth.info.image
+        user.save!
+      else
+        user = User.create(
+          :name => auth.extra.raw_info.name,
+          :avatar => auth.info.image,
+          :provider => auth.provider,
+          :uid => auth.uid,
+          :email => auth.info.email,
+          :password => Devise.friendly_token[0,20]
+        )
+      end
+    end
+    user
   end
 end

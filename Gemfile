@@ -2,12 +2,19 @@ source 'https://rubygems.org'
 
 gem 'rails', '3.2.8'
 
-gem 'redis'
+gem 'devise'
+gem 'activeadmin'
 
+gem 'redis'
 gem 'resque', "~> 1.22.0"
 gem 'resque-scheduler'
 
 gem 'soundcloud'
+gem 'youtube_it'
+
+gem 'omniauth'
+gem 'oauth2'
+gem 'omniauth-facebook'
 
 gem 'pg'
 gem 'unicorn'

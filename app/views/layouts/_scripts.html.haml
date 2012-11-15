@@ -1,7 +1,7 @@
 :javascript
   function woopraReady(tracker) {
       tracker.setDomain('turnchannel.com');
-      tracker.setIdleTimeout(432000000);
+      tracker.setIdleTimeout(7200000);
       tracker.track();
       return false;
   }
@@ -29,3 +29,10 @@
   mixpanel.init("cd286edeb40f2d32288f1e60fc929547");
 
   !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+
+  var uvOptions = {};
+  (function() {
+    var uv = document.createElement('script'); uv.type = 'text/javascript'; uv.async = true;
+    uv.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'widget.uservoice.com/b45OeLTHNOH0v2JiibXTyg.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(uv, s);
+  })();
