@@ -22,11 +22,22 @@ header {
 
 #topbar {
   height: 60px;
-  overflow: hidden;
+  color: #fff;
   #topbar-nav {
     li a {
       padding: 20px 20px 20px;
     }
+  }
+  .search-bar {
+    float: left;
+    margin-top: 16px;
+    input {
+      width: 420px;
+    }
+  }
+  .sign-in {
+    float: right;
+    margin-top: 20px;
   }
   .social-connect {
     float: right;
@@ -579,120 +590,26 @@ header {
 }
 
 footer {
-  height: 40px;
-  position: fixed;
-  bottom: 0;
-  right: 0;
-  left: 270px;
+  float: left;
+  width: 100%;
+  background: #333;
   color: white;
-
-  .control {
+  height: 50px;
+  border-top: #000 solid 1px;
+  .title {
+    margin-top: 15px;
     float: left;
-    margin: 10px 0 0 10px;
+    font-size: 16px;
   }
-
-  #player-details {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-
-    border-right: #222 solid 1px;
-
-    .control {
+  .social-connect {
+    float: right;
+    margin-top: 10px;
+    .social {
       float: left;
-      margin: 10px 0 0 10px;
-      &:hover {
-        opacity: 0.7;
-        cursor: pointer;
-        cursor: hand;
-      }
+      padding-left: 10px;
     }
-
-    #player-heading {
-      height: 45px;
-      width: 270px;
-      overflow: hidden;
-
-      #player-title {
-        margin-top: 5px;
-        text-align: center;
-        font-weight: bold;
-        font-size: 13px;
-      }
-      #player-artist {
-        text-align: center;
-        color: #999;
-
-        font-size: 12px;
-      }
-    }
-    #player-artwork {
-      width: 270px;
-      height: 270px;
-      img {
-        width: 270px;
-        height: 270px;
-      }
-    }
-    #player-controls {
-      height: 40px;
-
-      #player-step-backward {
-      }
-      #player-play {
-      }
-      #player-pause {
-        display: none;
-      }
-      #player-step-forward {
-      }
-      #player-volume-control {
-        float: right;
-        #player-volume-off {
-          display: none;
-        }
-      }
-      #player-shuffle {
-        float: right;
-        padding-right: 10px;
-      }
-    }
-  }
-
-  #player-seekbar {
-    height: 40px;
-    #player-elapsed {
-    }
-    #player-duration {
-      float: right;
-      margin-right: 10px;
-    }
-    #player-seek {
-      left: 50px;
-      right: 60px;
-      position: absolute;
-      margin-top: 13px;
-      padding: 5px 0;
-      cursor: pointer;
-
-      #player-progress-bar {
-        height: 3px;
-        padding: 0;
-        background-repeat: no-repeat;
-        background: #B3B3B3;
-
-        #player-progress-bar-meter {
-          -webkit-transition: width 1s linear;
-          -moz-transition: width 1s linear;
-          -ms-transition: width 1s linear;
-          -o-transition: width 1s linear;
-          transition: width 1s linear;
-          -webkit-opacity: .99;
-          height: 3px;
-          width: 0;
-          background: #5BB75B;
-        }
-      }
+    #social-fb {
+      padding-top: 5px;
     }
   }
 }

@@ -61,7 +61,6 @@ $(document).ready(function() {
   }, 500);
 
   // Event Listeners
-
   $('#player-play').click(function() {
     if(loading) return false;
 

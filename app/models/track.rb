@@ -44,4 +44,22 @@ class Track < ActiveRecord::Base
     _rest = rest.join(' by ')
     self.artist = _rest.split(/ - /).first
   end
+
+  def find_youtube_video!
+    title = self.full_title
+
+    client = YouTubeIt::Client.new
+
+    if (res = client.videos_by(:query => title))
+      if (videos = res.videos)
+        if (video = videos.first)
+          if (self.duration/1000 - video.duration).abs < 10
+            return "http://www.youtube.com/watch?v=#{video.unique_id}"
+          end
+        end
+      end
+    end
+
+    nil
+  end
 end
