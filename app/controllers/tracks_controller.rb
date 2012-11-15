@@ -19,6 +19,12 @@ class TracksController < ApplicationController
     redirect_to track_url(@track.permalink)
   end
 
+  def search
+    @q = params[:q]
+
+    @tracks = Track.find(:all, :conditions => ['full_title LIKE ?', "%#{@q.downcase}%"], :limit => 20)
+  end
+
   # GET /tracks/1
   # GET /tracks/1.json
   def show

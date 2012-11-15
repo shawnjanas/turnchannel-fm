@@ -1,5 +1,5 @@
 class Track < ActiveRecord::Base
-  attr_accessible :title, :full_title, :plays, :cached_plays, :sc_url, :sc_id, :artwork_url, :purchase_url, :description, :duration, :label_name, :artist, :genre_id, :created_at, :user_id, :tag_id
+  attr_accessible :title, :full_title, :plays, :cached_plays, :sc_url, :sc_id, :artwork_url, :purchase_url, :description, :duration, :label_name, :artist, :genre_id, :created_at, :user_id, :tag_id, :searchable_metadata
 
   has_permalink :full_title
 
@@ -43,6 +43,7 @@ class Track < ActiveRecord::Base
     self.title = title
     _rest = rest.join(' by ')
     self.artist = _rest.split(/ - /).first
+    self.full_title = self.full_title.downcase
   end
 
   def find_youtube_video!

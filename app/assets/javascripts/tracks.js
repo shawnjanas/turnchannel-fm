@@ -9,6 +9,15 @@ $(document).ready(function() {
     $(this).find('.track-play').hide();
   });
 
+  $('#global-search').submit(function(e) {
+    window.location = '/tracks/search/'+$(this).find('#global-search-field').val();
+    return false;
+  });
+
+  $('#global-search span').click(function() {
+    $('#global-search').submit();
+  });
+
   var track_id = $('.player').attr('track-id');
   if(typeof track_id === 'undefined') return false;
 
