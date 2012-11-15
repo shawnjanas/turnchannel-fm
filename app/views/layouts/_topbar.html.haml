@@ -7,7 +7,7 @@
           .search-bar
             .input-append
               %form#global-search{:method => 'post', :action => '/tracks/search/'}
-                %input{:class=>"span2", :id=>"global-search-field", :type=>"text"}
+                %input{:class=>"span2", :id=>"global-search-field", :type=>"text", :value => (@q || '')}
                 %span{:class=>"add-on"}
                   %i.icon-search
           %ul.nav#topbar-nav
