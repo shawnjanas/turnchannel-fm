@@ -1,6 +1,8 @@
 Turnchannelfm::Application.routes.draw do
   ActiveAdmin.routes(self)
 
+  mount Resque::Server.new, :at => "/resque"
+
   devise_for :admin_users, ActiveAdmin::Devise.config
 
   devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
