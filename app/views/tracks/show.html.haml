@@ -5,10 +5,10 @@
       .player-footer
         .player-title
           %h2
-            = @track.title
+            = @track.f_title
             %span
               by
-              = @track.artist
+              = @track.f_artist
         .player-details
           #player-play.icon-fade
             %i.icon-play.icon-zoom.icon-white
@@ -79,6 +79,6 @@
             %span.label.label-inverse= track.tag.name
         .track-info
           .track-artist
-            = track.artist
+            = track.f_artist
           .track-title
-            = track.title
+            = track.f_title

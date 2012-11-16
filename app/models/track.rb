@@ -46,6 +46,22 @@ class Track < ActiveRecord::Base
     self.full_title = self.full_title.downcase
   end
 
+  def f_title
+    if self.title
+      self.title.split(" ").map{|t| t.capitalize}.join(' ')
+    else
+      ""
+    end
+  end
+
+  def f_artist
+    if self.artist
+      self.artist.split(" ").map{|t| t.capitalize}.join(' ')
+    else
+      ""
+    end
+  end
+
   def find_youtube_video!
     title = self.full_title
 

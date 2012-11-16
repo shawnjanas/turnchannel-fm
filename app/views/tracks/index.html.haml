@@ -38,9 +38,9 @@
                 %span.label.label-inverse= track.tag.name
             .track-info
               .track-artist
-                = track.artist
+                = track.f_artist
               .track-title
-                = track.title
+                = track.f_title
     .tracks-container
       .track-filters
         %h2
@@ -62,7 +62,7 @@
                 %span.label.label-inverse= track.tag.name
             .track-info
               .track-artist
-                = track.artist
+                = track.f_artist
               .track-title
-                = track.title
+                = track.f_title
     = render :partial => 'layouts/footer'
