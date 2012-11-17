@@ -9,7 +9,7 @@ class QueueNewTracks
 
       tracks.reverse.each_with_index do |track, i|
         track_obj = user.submit_track(forum.tag, track)
-        Resque.enqueue(QueueShareTrack, track_obj.id) if i < 5 && Rails.env.production?
+        Resque.enqueue(QueueShareTrack, track_obj.id) if i == 0 && Rails.env.production?
       end
 
       forum.last_fetch = Time.now
