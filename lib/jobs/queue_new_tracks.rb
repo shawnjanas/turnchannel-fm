@@ -2,7 +2,7 @@ class QueueNewTracks
   @queue = :high
 
   def self.perform
-    user = User.find_by_email('shawn@turnchannel.com')
+    user = User.find_by_id(1)
 
     Forum.all.each do |forum|
       tracks = QueueNewTracks.fetch_tracks(user, forum)
