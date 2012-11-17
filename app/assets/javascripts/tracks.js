@@ -35,15 +35,18 @@ $(document).ready(function() {
     onplay: this._onplay,
     onerror: this._onerror,
     onfinish: function() {
+      var href = $('.player').attr('next-track');
+
       if(track_actions) {
         mixpanel.track("track finished", {
           "elapsed": $('#player-elapsed').html(),
           "duration": $('#player-duration').html()
+        }, function() {
+          window.location = href;
         });
+      } else {
+        window.location = href;
       }
-
-      var href = $('.player').attr('next-track');
-      window.location = href;
     }
   }, function(s) {
     player = s;
