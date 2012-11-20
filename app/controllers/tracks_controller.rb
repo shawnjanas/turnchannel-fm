@@ -2,7 +2,7 @@ class TracksController < ApplicationController
   def index
     @popular_tracks = Track.order("cached_plays DESC").limit(8)
     @new_tracks = Track.order("created_at DESC").limit(8)
-    @featured_tracks = [Track.find_by_id(2991), Track.find_by_id(2821), Track.find_by_id(2759), Track.find_by_id(2842)]
+    @featured_tracks = [Track.find_by_id(2991), Track.find_by_id(2821), Track.find_by_id(2759), Track.find_by_id(2842), Track.find_by_id(2992)]
 
     render :layout => false
   end
