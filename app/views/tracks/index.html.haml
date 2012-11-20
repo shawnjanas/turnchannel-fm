@@ -20,6 +20,30 @@
     .tracks-container
       .track-filters
         %h2
+          Featured
+      - @featured_tracks.each_with_index do |track, i|
+        - style = ''
+        - if i % 4 == 3
+          - style = 'margin-right: 0;'
+        %article.track{:style => style}
+          %a{:href => track_url(track.permalink)}
+            = image_tag track.artwork_url.gsub('large','t300x300')
+            .track-play
+              %i.icon-play.icon-white
+            .track-stats
+              .track-plays
+                ►
+                = track.cached_plays
+              .track-tags
+                %span.label.label-inverse= track.tag.name
+            .track-info
+              .track-artist
+                = track.f_artist
+              .track-title
+                = track.f_title
+    .tracks-container
+      .track-filters
+        %h2
           Popular
       - @popular_tracks.each_with_index do |track, i|
         - style = ''
