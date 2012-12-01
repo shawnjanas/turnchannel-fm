@@ -6,8 +6,9 @@ body {
   font-size: 12px;
   line-height: 18px;
   color: #333;
-  /*background-color: #242526;*/
-  background-color: #1B1B1B;
+  /*background: #F7F5F5 url(http://passets-lt.pinterest.com/images/paper.jpg) repeat;*/
+  background: #DDD url(/assets/nasty_fabric.png) repeat;
+  /*background: #DDD;*/
   margin-bottom: 30px;
 }
 
@@ -18,6 +19,26 @@ h3 span {
 
 header {
   height: 60px;
+}
+.container {
+  width: 940px;
+}
+.container-bg {
+  border: #DDD solid 1px;
+  background: white;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.container-with-right-bar {
+  width: 600px;
+  float: left;
+  margin: 20px;
+}
+.right-bar {
+  width: 280px;
+  margin: 20px 20px 20px 0;
+  float: left;
 }
 
 #topbar {
@@ -74,6 +95,419 @@ header {
   cursor: pointer;
 }
 
+.featured-tracks-container {
+  width: 600px;
+  height: 440px;
+  border: #DDD solid 1px;
+  img {
+    float: left;
+  }
+  .featured-tracks-heading {
+    background: #333;
+    height: 35px;
+    padding: 5px 0 0 10px;
+    h3 {
+      color: white;
+    }
+  }
+  .featured-track-navmain {
+    float: left;
+    width: 100px;
+    .featured-track-item {
+      width: 100px;
+      height: 100px;
+      float: left;
+      opacity: 0.8;
+    }
+    .selected {
+      opacity: 1;
+    }
+  }
+  .featured-track-main {
+    width: 400px;
+    height: 400px;
+    float: left;
+  }
+  .featured-track-sub {
+    float: left;
+    width: 100px;
+    .featured-track-item {
+      width: 100px;
+      height: 100px;
+      float: left;
+      opacity: 0.8;
+      .track-play {
+        display:none;
+        position: absolute;
+        left: 0;
+        top: 0;
+        margin: 38px 0 0 38px;
+        width: 30px;
+        height: 30px;
+        -webkit-border-radius: 15px;
+        -moz-border-radius: 15px;
+        border-radius: 15px;
+        background: black;
+        border: white solid 2px;
+        i {
+          margin: 6px 0 0 8px;
+        }
+      }
+      .genre {
+        position: absolute;
+        left: 0;
+        top: 0;
+        margin: 5px 0 0 5px;
+      }
+    }
+    .selected {
+      opacity: 1;
+    }
+  }
+}
+.new-tracks-container {
+  width: 600px;
+  height: 355px;
+  border: #DDD solid 1px;
+  margin-top: 20px;
+  img {
+    float: left;
+  }
+  .new-tracks-heading {
+    background: #333;
+    height: 35px;
+    padding: 5px 0 0 10px;
+    h3 {
+      color: white;
+    }
+  }
+  .new-track-items {
+    .new-track-item {
+      width: 108px;
+      height: 144px;
+      float: left;
+      margin: 10px 0 0 10px;
+      position: relative;
+      img {
+        width: 108px;
+        height: 108px;
+      }
+      .new-track-description {
+        height: 34px;
+        float: left;
+        .track-item-title, .track-item-artist {
+          min-height: 18px;
+          max-height: 18px;
+          overflow: hidden;
+          color: #333;
+          &.hover {
+            color: #1C62B9;
+          }
+        }
+        .track-item-title {
+          font-weight: bold;
+        }
+        .track-item-artist {
+
+        }
+      }
+      .track-play {
+        display:none;
+        position: absolute;
+        left: 0;
+        top: 0;
+        margin: 38px 0 0 38px;
+        width: 30px;
+        height: 30px;
+        -webkit-border-radius: 15px;
+        -moz-border-radius: 15px;
+        border-radius: 15px;
+        background: black;
+        border: white solid 2px;
+        i {
+          margin: 6px 0 0 8px;
+        }
+      }
+      .genre {
+        position: absolute;
+        left: 0;
+        top: 0;
+        margin: 5px 0 0 5px;
+      }
+    }
+  }
+}
+.related-tracks-container {
+  width: 900px;
+  height: 375px;
+  border: #DDD solid 1px;
+  margin: 20px 0 20px 20px;
+  img {
+    float: left;
+  }
+  .related-tracks-heading {
+    background: #333;
+    height: 35px;
+    padding: 5px 0 0 10px;
+    h3 {
+      color: white;
+    }
+  }
+  .related-track-items {
+    .related-track-item {
+      width: 117px;
+      height: 144px;
+      float: left;
+      margin: 10px 0 10px 10px;
+      position: relative;
+      img {
+        width: 117px;
+        height: 117px;
+        border: 1px solid #AAA;
+      }
+      .related-track-description {
+        height: 34px;
+        float: left;
+        .track-item-title, .track-item-artist {
+          min-height: 18px;
+          max-height: 18px;
+          overflow: hidden;
+          color: #333;
+          &.hover {
+            color: #1C62B9;
+          }
+        }
+        .track-item-title {
+          font-weight: bold;
+        }
+        .track-item-artist {
+
+        }
+      }
+      .track-play {
+        display:none;
+        position: absolute;
+        left: 0;
+        top: 0;
+        margin: 42px 0 0 42px;
+        width: 30px;
+        height: 30px;
+        -webkit-border-radius: 15px;
+        -moz-border-radius: 15px;
+        border-radius: 15px;
+        background: black;
+        border: white solid 2px;
+        i {
+          margin: 6px 0 0 8px;
+        }
+      }
+      .genre {
+        position: absolute;
+        left: 0;
+        top: 0;
+        margin: 5px 0 0 5px;
+      }
+    }
+  }
+}
+
+.top10-tracks-container {
+  border: #DDD solid 1px;
+  background: #DDD;
+  img {
+    float: left;
+  }
+  .top10-tracks-heading {
+    background: #333;
+    height: 35px;
+    padding: 5px 0 0 10px;
+    h3 {
+      color: white;
+    }
+  }
+  .top10-track-items {
+    .top10-track-item {
+      position: relative;
+      padding: 10px;
+      height: 40px;
+      border-bottom: #FFF solid 1px;
+      img {
+        width: 40px;
+        height: 40px;
+      }
+      .top10-track-item-details {
+        width: 188px;
+        float: left;
+        padding-left: 10px;
+        &.track-item-number-10 {
+          width: 166px;
+        }
+        h4 {
+          min-height: 18px;
+          max-height: 36px;
+          overflow: hidden;
+        }
+        .track-item-title, .track-item-artist {
+          min-height: 18px;
+          max-height: 18px;
+          overflow: hidden;
+          color: #333;
+          &.hover {
+            color: #1C62B9;
+          }
+        }
+        .track-item-title {
+          font-weight: bold;
+        }
+        .track-item-artist {
+
+        }
+      }
+      .track-item-number {
+        font-size: 40px;
+        line-height: 40px;
+        float: left;
+        width: 20px;
+        color: #fff;
+        text-shadow: 0 0 3px #BBB;
+      }
+      .track-play {
+        display:none;
+        position: absolute;
+        left: 0;
+        top: 0;
+        margin: 19px 0 0 19px;
+        width: 18px;
+        height: 18px;
+        -webkit-border-radius: 9px;
+        -moz-border-radius: 9px;
+        border-radius: 9px;
+        background: black;
+        border: white solid 2px;
+        i {
+          margin: 1px 0 0 3px;
+        }
+      }
+    }
+  }
+}
+.discover-tracks-container {
+  margin-bottom: 20px;
+  border: #DDD solid 1px;
+  background: #DDD;
+  img {
+    float: left;
+  }
+  .discover-tracks-heading {
+    background: #333;
+    height: 35px;
+    padding: 5px 0 0 10px;
+    h3 {
+      color: white;
+    }
+  }
+  .discover-track-items {
+    .discover-track-item {
+      border-bottom: #FFF solid 1px;
+      a {
+        span {
+          display: block;
+          padding: 10px;
+          height: 20px;
+          width: 258px;
+          color: #333;
+          font-weight: bold;
+          &:hover {
+            color: #1C62B9;
+          }
+        }
+      }
+    }
+  }
+}
+.search-tracks-container {
+  width: 900px;
+  height: 539px;
+  border: #DDD solid 1px;
+  margin: 20px 0 20px 20px;
+  img {
+    float: left;
+  }
+  .search-tracks-heading {
+    background: #333;
+    height: 35px;
+    padding: 5px 0 0 10px;
+    h3 {
+      color: white;
+    }
+  }
+  .search-track-items {
+    .search-track-item {
+      width: 117px;
+      height: 144px;
+      float: left;
+      margin: 10px 0 10px 10px;
+      position: relative;
+      img {
+        width: 117px;
+        height: 117px;
+        border: 1px solid #AAA;
+      }
+      .search-track-description {
+        height: 34px;
+        float: left;
+        .track-item-title, .track-item-artist {
+          min-height: 18px;
+          max-height: 18px;
+          overflow: hidden;
+          color: #333;
+          &.hover {
+            color: #1C62B9;
+          }
+        }
+        .track-item-title {
+          font-weight: bold;
+        }
+        .track-item-artist {
+
+        }
+      }
+      .track-play {
+        display:none;
+        position: absolute;
+        left: 0;
+        top: 0;
+        margin: 42px 0 0 42px;
+        width: 30px;
+        height: 30px;
+        -webkit-border-radius: 15px;
+        -moz-border-radius: 15px;
+        border-radius: 15px;
+        background: black;
+        border: white solid 2px;
+        i {
+          margin: 6px 0 0 8px;
+        }
+      }
+      .genre {
+        position: absolute;
+        left: 0;
+        top: 0;
+        margin: 5px 0 0 5px;
+      }
+    }
+  }
+}
+
+.landing-header {
+  h2 {
+    color: #fff;
+  }
+  background: url(/assets/wild_oliva.png) repeat;
+  padding: 10px;
+}
+
+
 
 .main-container {
   width: 100%;
@@ -83,45 +517,6 @@ header {
   width: 960px;
   margin: 0 auto;
   height: 550px;
-}
-
-.track {
-  float: left;
-  width: 217px;
-  margin: 30px 30px 0 0;
-
-  overflow: hidden;
-  position: relative;
-
-  img {
-    width: 217px;
-    height: 217px;
-    -moz-opacity: .5;
-    filter: alpha(opacity=50);
-    opacity: .5;
-    &.hover {
-      -moz-opacity: 1;
-      filter: alpha(opacity=1);
-      opacity: 1;
-    }
-  }
-  .track-play {
-    display:none;
-    position: absolute;
-    left: 0;
-    top: 0;
-    margin: 93px 0 0 93px;
-    width: 30px;
-    height: 30px;
-    -webkit-border-radius: 15px;
-    -moz-border-radius: 15px;
-    border-radius: 15px;
-    background: black;
-    border: white solid 2px;
-    i {
-      margin: 6px 0 0 8px;
-    }
-  }
 }
 
 .track-filters {
@@ -233,12 +628,10 @@ header {
 
 
 .player {
-  background: #2480a7;
-  border-bottom: black solid 1px;
-  padding-top: 30px;
+  margin: 20px;
 
   color: #f8f8f8;
-  height: 555px;
+  height: 520px;
 }
 .player-container {
   width: 960px;
@@ -246,15 +639,23 @@ header {
 }
 .player-comments {
   float: left;
-  height: 499px;
-  width: 360px;
-  margin-left: 30px;
-  border: 1px solid #666;
+  height: 519px;
+  width: 357px;
+  margin-left: 20px;
+  border: 1px solid #DDD;
   background: #f8f8f8;
-  padding: 10px;
+  .player-comments-heading {
+    background: #333;
+    height: 35px;
+    padding: 5px 0 0 10px;
+    h3 {
+      color: white;
+    }
+  }
   .fb-comments-wrapper {
-    overflow: scroll;
-    height: 429px;
+    overflow: hidden;
+    height: 409px;
+    padding: 10px;
   }
   .social-connect {
     margin-top: 15px;
@@ -281,8 +682,10 @@ header {
   position: relative;
 
   float: left;
-  width: 521px;
-  height: 521px;
+  width: 519px;
+  height: 519px;
+
+  border: #DDD solid 1px;
 
   img {
     width: 521px;

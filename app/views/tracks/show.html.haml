@@ -49,36 +49,28 @@
             #player-volume-off
               %i.icon-volume-off.icon-zoom.icon-white
   .player-comments
-    %h3 Comments
+    .player-comments-heading
+      %h3 Comments
     .fb-comments-wrapper
-      .fb-comments{:'data-href'=>"#{request.protocol}#{request.host_with_port}#{request.fullpath}", :'data-num-posts'=>"5", :'data-width'=>"360", :'data-colorscheme'=>"white"}
+      .fb-comments{:'data-href'=>"#{request.protocol}#{request.host_with_port}#{request.fullpath}", :'data-num-posts'=>"5", :'data-width'=>"335", :'data-colorscheme'=>"white"}
     .social-connect
       .social#social-fb
         .fb-like{:'data-href'=>"#{request.protocol}#{request.host_with_port}#{request.fullpath}", :'data-send'=>"false", :'data-layout'=>"button_count", :'data-width'=>"450", :'data-show-faces'=>"false"}
       .social#social-tw
         %a{:href=>"https://twitter.com/share", :class=>"twitter-share-button", :'data-via'=>"TurnChannel", :'data-size'=>"large", :'data-hashtags'=>"turnchannel", :'data-dnt'=>"true"} Tweet
 
-.tracks-container
-  .track-filters
-    %h2
-      Related Tracks
-  - @tracks.each_with_index do |track, i|
-    - style = ''
-    - if i % 4 == 3
-      - style = 'margin-right: 0;'
-    %article.track{:style => style}
-      %a{:href => track_url(track.permalink)}
-        = image_tag track.artwork_url.gsub('large','t300x300')
-        .track-play
-          %i.icon-play.icon-white
-        .track-stats
-          .track-plays
-            ►
-            = track.cached_plays
-          .track-tags
+.related-tracks-container
+  .related-tracks-heading
+    %h3 Related Tracks
+  .related-track-items
+    - @tracks.each do |track|
+      %article.related-track-item.track
+        %a{:href => track_url(track.permalink)}
+          = image_tag track.artwork_url
+          .related-track-description
+            .track-item-title= track.f_title
+            .track-item-artist= track.f_artist
+          .track-play
+            %i.icon-play.icon-white
+          .genre
             %span.label.label-inverse= track.tag.name
-        .track-info
-          .track-artist
-            = track.f_artist
-          .track-title
-            = track.f_title

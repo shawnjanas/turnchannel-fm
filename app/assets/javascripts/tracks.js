@@ -2,16 +2,68 @@ $(document).ready(function() {
   var track_actions = true;
 
   $('.track').hover(function() {
-    $(this).find('img').addClass('hover');
+    $(this).find('.track-item-title').addClass('hover');
     $(this).find('.track-play').show();
   }, function() {
-    $(this).find('img').removeClass('hover');
+    $(this).find('.track-item-title').removeClass('hover');
     $(this).find('.track-play').hide();
   });
 
   $('#global-search').submit(function(e) {
-    window.location = '/tracks/search/'+$(this).find('#global-search-field').val();
+    if(track_actions) {
+      mixpanel.track("search query", {
+        "query": $(this).find('#global-search-field').val()
+      }, function() {
+        window.location = '/tracks/search/'+$(this).find('#global-search-field').val();
+      });
+    } else {
+      window.location = '/tracks/search/'+$(this).find('#global-search-field').val();
+    }
     return false;
+  });
+
+  var interval;
+  var featured_index = 0;
+  $("#featured-track-"+featured_index).addClass('selected');
+
+  function startInt() {
+    return setInterval(function() {
+      var track = $("#featured-track-"+featured_index)
+      track.removeClass('selected');
+
+      featured_index = ++featured_index % 8;
+
+      track = $("#featured-track-"+featured_index)
+      track.addClass('selected');
+
+      var img_url = track.find('img').attr('src');
+      var img_href = track.find('a').attr('href');
+
+      $('.featured-track-main img').attr('src', img_url);
+      $('.featured-track-main a').attr('href', img_href);
+    }, 5000);
+  }
+  interval = startInt();
+
+  $('.featured-tracks-container .featured-track-item').hover(function() {
+    var img_url = $(this).find('img').attr('src');
+    var img_href = $(this).find('a').attr('href');
+
+    var id = $(this).attr('id').split('-')[2];
+    featured_index = id;
+
+    $(this).parent().parent().find('.selected').removeClass('selected');
+    $(this).addClass('selected');
+    $(this).parent().parent().find('.featured-track-main img').attr('src', img_url);
+    $(this).parent().parent().find('.featured-track-main a').attr('href', img_href);
+    clearInterval(interval);
+
+    if(track_actions) {
+      mixpanel.track("hover featured track", {
+      });
+    }
+  }, function() {
+    interval = startInt();
   });
 
   $('#global-search span').click(function() {
@@ -53,6 +105,11 @@ $(document).ready(function() {
 
     loading = false;
     loaded = true;
+    if(track_actions) {
+      mixpanel.track("play track", {
+        "duration": $('#player-duration').html()
+      });
+    }
   });
 
   setInterval(function() {
@@ -154,6 +211,17 @@ $(document).ready(function() {
       });
     }
   });
+
+  if(track_actions) {
+    mixpanel.track_links('.featured-tracks-container .featured-track-item a', 'featured track click');
+    mixpanel.track_links('.featured-tracks-container .featured-track-main a', 'featured track main click');
+    mixpanel.track_links('.discover-track-item a', 'discover genre click');
+    mixpanel.track_links('.topbar-link', 'discover click');
+    mixpanel.track_links('.new-track-item a', 'new track click');
+    mixpanel.track_links('.top10-track-item a', 'top10 track click');
+    mixpanel.track_links('.related-track-item a', 'related track click');
+    mixpanel.track_links('.search-track-item a', 'search track click');
+  }
 
   function to_time(time) {
     var total_seconds = Math.floor(time / 1000);
