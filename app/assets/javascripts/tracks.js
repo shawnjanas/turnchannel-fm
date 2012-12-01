@@ -14,10 +14,10 @@ $(document).ready(function() {
       mixpanel.track("search query", {
         "query": $(this).find('#global-search-field').val()
       }, function() {
-        window.location = '/tracks/search/'+$(this).find('#global-search-field').val();
+        window.location = '/tracks/search/'+$('#global-search-field').val();
       });
     } else {
-      window.location = '/tracks/search/'+$(this).find('#global-search-field').val();
+      window.location = '/tracks/search/'+$('#global-search-field').val();
     }
     return false;
   });
