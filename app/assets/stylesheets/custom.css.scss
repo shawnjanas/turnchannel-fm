@@ -118,6 +118,10 @@ header {
       height: 100px;
       float: left;
       opacity: 0.8;
+      img {
+        width: 100px;
+        height: 100px;
+      }
     }
     .selected {
       opacity: 1;
@@ -126,6 +130,10 @@ header {
   .featured-track-main {
     width: 400px;
     height: 400px;
+    img {
+      width: 400px;
+      height: 400px;
+    }
     float: left;
   }
   .featured-track-sub {
@@ -136,6 +144,10 @@ header {
       height: 100px;
       float: left;
       opacity: 0.8;
+      img {
+        width: 100px;
+        height: 100px;
+      }
       .track-play {
         display:none;
         position: absolute;
