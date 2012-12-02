@@ -48,17 +48,25 @@
               %i.icon-volume-up.icon-zoom.icon-white
             #player-volume-off
               %i.icon-volume-off.icon-zoom.icon-white
+  .player-share
+    .player-share-heading
+      %h3 Did you like this track?
+    .player-share-wrapper
+      .social-title
+        = "Could you do us a favor? If you know anyone who likes #{@track.tag.name} music, could you share this track with them?"
+      .social-connect
+        .social#social-fb
+          .fb-like{:'data-href'=>"#{request.protocol}#{request.host_with_port}#{request.fullpath}", :'data-send'=>"false", :'data-layout'=>"box_count", :'data-width'=>"450", :'data-show-faces'=>"false"}
+        .social#social-tw
+          %a{:href=>"https://twitter.com/share", :class=>"twitter-share-button", :'data-via'=>"TurnChannel", :'data-hashtags'=>"turnchannel", :'data-dnt'=>"true", :'data-text'=>"This #{@track.tag.name} track is sick! #{@track.f_full_title}", :'data-count' => 'vertical'} Tweet
+        .register-container
+          Receive updates for the latest EDM tracks!
+          %a.register-btn.btn.btn-primary Register
   .player-comments
     .player-comments-heading
       %h3 Comments
     .fb-comments-wrapper
       .fb-comments{:'data-href'=>"#{request.protocol}#{request.host_with_port}#{request.fullpath}", :'data-num-posts'=>"5", :'data-width'=>"335", :'data-colorscheme'=>"white"}
-    .social-connect
-      .social#social-fb
-        .fb-like{:'data-href'=>"#{request.protocol}#{request.host_with_port}#{request.fullpath}", :'data-send'=>"false", :'data-layout'=>"button_count", :'data-width'=>"450", :'data-show-faces'=>"false"}
-      .social#social-tw
-        %a{:href=>"https://twitter.com/share", :class=>"twitter-share-button", :'data-via'=>"TurnChannel", :'data-size'=>"large", :'data-hashtags'=>"turnchannel", :'data-dnt'=>"true"} Tweet
-
 .related-tracks-container
   .related-tracks-heading
     %h3 Related Tracks

@@ -46,6 +46,10 @@ class Track < ActiveRecord::Base
     self.full_title = self.full_title.downcase
   end
 
+  def f_full_title
+    "#{self.f_title} by #{self.f_artist}"
+  end
+
   def f_title
     if self.title
       self.title.split(" ").map{|t| t.capitalize}.join(' ')

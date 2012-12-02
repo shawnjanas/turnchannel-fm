@@ -70,6 +70,10 @@ $(document).ready(function() {
     $('#global-search').submit();
   });
 
+  $('.register-btn').click(function() {
+    $('.sign-in a').last().click();
+  });
+
   var track_id = $('.player').attr('track-id');
   if(typeof track_id === 'undefined') return false;
 
