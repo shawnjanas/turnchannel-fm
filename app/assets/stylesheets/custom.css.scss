@@ -132,7 +132,7 @@ header {
     height: 400px;
     img {
       width: 400px;
-      height: 100px;
+      height: 400px;
     }
     float: left;
   }
@@ -652,7 +652,7 @@ header {
 .player-share {
   float: left;
   height: 238px;
-  width: 337px;
+  width: 357px;
   margin:  0 0 20px 20px;
   border: 1px solid #DDD;
   background: #f8f8f8;
@@ -714,7 +714,8 @@ header {
     }
   }
   .fb-comments-wrapper {
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: scroll;
     height: 409px;
     padding: 10px;
   }
