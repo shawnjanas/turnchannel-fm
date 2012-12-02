@@ -41,7 +41,7 @@ class QueueShareTrack
     handles = []
     if (raw_tw = track.description.scan(/twitter\.com\/.*/))
       raw_tw.each do |tw|
-        handles << tw.split('/').last.strip!
+        handles << tw.split('/').last.strip
       end
     end
 
