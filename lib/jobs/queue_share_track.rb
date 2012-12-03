@@ -51,7 +51,7 @@ class QueueShareTrack
         message += "@#{handle} "
       end
 
-      message += "Hey man. Your track was featured on TurnChannel. Lovin' your music. Just thought we would let you know."
+      message += "Hey man. Your track was featured on TurnChannel. Just thought we would let you know."
       HTTParty.post 'https://api.bufferapp.com/1/updates/create.json?access_token=1/6538074d7e3ff8fe02a8d458c3071390', :body => {
         :text => "#{message} http://turnchannel.com/tracks/#{track.permalink}",
         :profile_ids => ['506ba3061b81f6513c00001e'], # Only Twitter
