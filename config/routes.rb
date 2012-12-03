@@ -15,6 +15,8 @@ Turnchannelfm::Application.routes.draw do
 
   match '/a' => "tracks#index"
 
+  match '/channel.html' => 'tracks#channel'
+
   root :to => "tracks#index"
 
   # The priority is based upon order of creation:
