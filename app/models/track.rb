@@ -1,35 +1,16 @@
 class Track < ActiveRecord::Base
-  attr_accessible :title, :full_title, :plays, :cached_plays, :sc_url, :sc_id, :artwork_url, :purchase_url, :description, :duration, :label_name, :artist, :genre_id, :created_at, :user_id, :tag_id, :searchable_metadata
+  attr_accessible :source, :name, :mix_name, :title, :slug, :isrc, :release_date, :purchase_url, :images, :duration, :yt_remote_id, :yt_artwork_url, :plays_count, :remote_track_id, :label_id, :searchable_meta
 
-  has_permalink :full_title
+  has_many :genre_track_assignments
+  has_many :genres, :through => :genre_track_assignments
 
-  belongs_to :tag
+  has_many :artist_track_assignments
+  has_many :artists, :through => :artist_track_assignments
 
-  validates :sc_url, :presence => true, :uniqueness => true
+  belongs_to :label
 
-  before_save :parse_title
-
-  def self.build(user_id, tag, track_hash)
-    if track_hash
-      if track_hash.stream_url && track_hash.artwork_url
-        track = Track.create(
-          :full_title => track_hash.title,
-          :sc_url => track_hash.permalink_url,
-          :sc_id => track_hash.id,
-          :artwork_url => track_hash.artwork_url,
-          :purchase_url => track_hash.purchase_url,
-          :description => track_hash.description,
-          :duration => track_hash.duration,
-          :plays => 0,
-          :cached_plays => 0,
-          :user_id => user_id,
-          :tag_id => tag.id
-        )
-      end
-    else
-      throw :invalid_track
-    end
-  end
+  validates :title, :presence => true
+  validates :yt_remote_id, :presence => true, :uniqueness => true
 
   def play
     self.plays = self.plays + 1
@@ -66,21 +47,61 @@ class Track < ActiveRecord::Base
     end
   end
 
-  def find_youtube_video!
-    title = self.full_title
+  def cover_art
+    JSON.parse(self.images)['large']['url']
+  end
 
-    client = YouTubeIt::Client.new
+  def self.build(source, genre, artists, label, track_hash)
+    if source == :bp
+      unless (track = Track.find_by_remote_track_id(track_hash['id']))
+        duration_list = track_hash['length'].split(':')
+        track_duration = duration_list.first.to_i * 60 + duration_list.last.to_i
 
-    if (res = client.videos_by(:query => title))
-      if (videos = res.videos)
-        if (video = videos.first)
-          if (self.duration/1000 - video.duration).abs < 10
-            return "http://www.youtube.com/watch?v=#{video.unique_id}"
+        track = Track.new(
+          :source => 'bp',
+          :name => track_hash['name'],
+          :mix_name => track_hash['mixName'],
+          :title => track_hash['title'],
+          :slug => track_hash['slug'],
+          :isrc => track_hash['isrc'],
+          :release_date => track_hash['releaseDate'],
+          :purchase_url => "http://www.beatport.com/track/#{track_hash['slug']}/#{track_hash['id']}",
+          :images => track_hash['images'].to_json,
+          :duration => track_duration,
+          :remote_track_id => track_hash['id'],
+          :label_id => label.id
+        )
+        track.find_youtube_video!(artists)
+        unless track.new_record?
+          artists.each do |artist|
+            ArtistTrackAssignment.create(
+              :artist_id => artist.id,
+              :track_id => track.id,
+            )
           end
         end
       end
     end
+  end
 
-    nil
+  def find_youtube_video!(artists)
+    title = "#{artists.first.name} - #{self.name}"
+
+    puts "TITLE => #{title}"
+
+    client = YouTubeIt::Client.new
+    if (res = client.videos_by(:query => title))
+      if (videos = res.videos)
+        videos.each do |video|
+          if (self.duration - video.duration).abs < 10
+            self.yt_remote_id = video.unique_id
+            #self.yt_artwork_url = video.unique_id
+            self.save
+            break
+          end
+        end
+      end
+    end
+    self
   end
 end

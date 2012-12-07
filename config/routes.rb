@@ -15,7 +15,7 @@ Turnchannelfm::Application.routes.draw do
 
   match '/a' => "tracks#index"
 
-  match '/channel.html' => 'tracks#channel'
+  match '/channel.html' => 'pages#channel'
 
   root :to => "tracks#index"
 

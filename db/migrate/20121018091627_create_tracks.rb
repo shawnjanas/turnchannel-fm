@@ -1,33 +1,35 @@
 class CreateTracks < ActiveRecord::Migration
   def change
     create_table :tracks do |t|
+      t.string :source
+      t.string :name
+      t.string :mix_name
       t.string :title
-      t.string :full_title
-      t.string :artist
-
-      t.string :sc_url
-      t.integer :sc_id
-      t.string :artwork_url
+      t.string :slug
+      t.string :isrc
+      t.string :release_date
       t.string :purchase_url
-
-      t.text :description
+      t.text :images
       t.integer :duration
-      t.string :label_name
 
-      t.integer :user_id
-      t.integer :tag_id
+      t.string :yt_remote_id
+      t.string :yt_artwork_url
 
-      t.integer :plays
-      t.integer :cached_plays
+      t.integer :plays_count, :default => 0
+      t.integer :remote_track_id
+
+      t.integer :label_id
+
+      t.text :searchable_meta
       t.timestamps
     end
 
-    add_index :tracks, :user_id
-    add_index :tracks, :tag_id
+    add_index :tracks, :slug
+    add_index :tracks, :yt_remote_id, :unique => true
 
-    add_index :tracks, :sc_url
-    add_index :tracks, :cached_plays
+    add_index :tracks, :label_id
+    add_index :tracks, :remote_track_id
 
-    execute "create index on tracks using gin(to_tsvector('english', full_title));"
+    execute "create index on tracks using gin(to_tsvector('english', searchable_meta));"
   end
 end

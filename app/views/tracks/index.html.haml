@@ -1,66 +1,74 @@
-.container-with-right-bar
-  .featured-tracks-container
-    .featured-tracks-heading
-      %h3 Featured on TurnChannel
-    .featured-track-navmain
-      - @featured_tracks[0..3].each_with_index do |track, i|
-        .featured-track-item{:id => "featured-track-#{i}"}
-          %a{:href => track_url(track.permalink)}
-            = image_tag track.artwork_url.gsub('large','t500x500')
-    .featured-track-main
-      %a{:href => track_url(@featured_tracks.first.permalink)}
-        = image_tag @featured_tracks.first.artwork_url.gsub('large','t500x500')
-    .featured-track-sub
-      - @featured_tracks[4..7].each_with_index do |track, i|
-        - i = i + 4
-        .featured-track-item{:id => "featured-track-#{i}"}
-          %a{:href => track_url(track.permalink)}
-            = image_tag track.artwork_url.gsub('large','t500x500')
-  .new-tracks-container
-    .new-tracks-heading
-      %h3 New on TurnChannel
-    .new-track-items
-      - @new_tracks.each do |track|
-        %article.new-track-item.track
-          %a{:href => track_url(track.permalink)}
-            = image_tag track.artwork_url
-            .new-track-description
-              .track-item-title= track.f_title
-              .track-item-artist= track.f_artist
-            .track-play
-              %i.icon-play.icon-white
-            .genre
-              %span.label.label-inverse= track.tag.name
+.main
+  .filter-bar
+  .tracks-container
+    - @tracks.each do |track|
+      - artist = track.artists.first
+      %article.track
+        .cover-art
+          /= raw '<object width="560" height="315"><param name="movie" value="http://www.youtube.com/v/vM2I7hiPZRQ?version=3&amp;hl=en_GB&amp;rel=0"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="http://www.youtube.com/v/'+track.yt_remote_id+'?version=3&amp;hl=en_GB&amp;rel=0" type="application/x-shockwave-flash" width="560" height="315" allowscriptaccess="always" allowfullscreen="true"></embed></object>'
+          %a{:href => "http://www.youtube.com/watch?v=#{track.yt_remote_id}"}
+            = image_tag track.cover_art
+          /= raw '<iframe width="100%" height="300" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=http%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F69457761&amp;color=ff6600&amp;auto_play=false&amp;show_artwork=true"></iframe>'
+        .details
+          %h1= link_to track.title
+          .genre
+            %span.label.label-inverse Dubstep
+          .stats
+            %i.icon-play
+            45
+            %i.icon-play
+            45
+          .artist
+            /= link_to artist.name, "#"
+            .artist-image
+              = image_tag artist.image
+          .vote-container
+            .vote-up
+              %i.icon-thumbs-up
+            .vote-down
+              %i.icon-thumbs-down
+            .sharing
+              Facebook    Twitter
 .right-bar
-  .discover-tracks-container
-    .discover-tracks-heading
-      %h3 Play me some...
-    .discover-track-items
-      .discover-track-item
-        %a{:href => '/discover/house'}
-          %span House
-      .discover-track-item
-        %a{:href => '/discover/dubstep'}
-          %span Dubstep
-      .discover-track-item
-        %a{:href => '/discover/dnb'}
-          %span DrumNBass
-  .top10-tracks-container
-    .top10-tracks-heading
-      %h3 TurnChannel Top 10
-    .top10-track-items
-      - @popular_tracks.each_with_index do |track, i|
-        %article.top10-track-item.track
-          %a{:href => track_url(track.permalink)}
-            = image_tag track.artwork_url
-            - if (i+1) == 10
-              .top10-track-item-details.track-item-number-10
-                .track-item-title= track.f_title
-                .track-item-artist= track.f_artist
-            - else
-              .top10-track-item-details
-                .track-item-title= track.f_title
-                .track-item-artist= track.f_artist
-            .track-item-number= (i+1)
-            .track-play
-              %i.icon-play.icon-white
+  .right-wrapper
+    .right-box
+      .title
+        %h4 Show us some love :)
+      .facebook
+        facebook stuff
+      .twitter
+        twitter stuff
+    - track = @tracks.first
+    - artist = track.artists.first
+    .player
+      .player-container
+        .player-header
+          .player-title
+            %h1= track.title
+            = link_to artist.name, '#'
+        .player-wrapper
+          = image_tag track.cover_art
+          /#player-volume-control.control
+          /  #player-volume-up
+          /    %i.icon-volume-up.icon-zoom.icon-white
+          /  #player-volume-off
+          /    %i.icon-volume-off.icon-zoom.icon-white
+          #player-controls
+            #player-seekbar
+              %span#player-elapsed.control 00:00
+              #player-seek.control
+                #player-progress-bar
+                  #player-progress-bar-meter
+              %span#player-duration.control 00:00
+            #player-step-backward.icon-fade
+              %a{:href => '#', :title => 'Pre Track'}
+                %i.icon-step-backward.icon-zoom.icon-white
+            #player-play.icon-fade
+              %i.icon-play.icon-zoom.icon-white
+            #player-pause.icon-fade
+              %i.icon-pause.icon-zoom.icon-white
+            #player-step-forward.icon-fade
+              %a{:href => '#', :title => 'Next Track'}
+                %i.icon-step-forward.icon-zoom.icon-white
+            /.player{:'track-id' => track.sc_id, :'next-track' => track_url(tracks_rnd.first.permalink)}
+#ytapiplayer

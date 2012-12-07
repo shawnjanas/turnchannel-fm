@@ -1,5 +1,5 @@
 %header
-  .navbar
+  .navbar.navbar-inverse.navbar-fixed-top
     .navbar-inner
       .container
         #topbar
@@ -10,8 +10,6 @@
                 %input{:class=>"span2", :id=>"global-search-field", :type=>"text", :value => (@q || '')}
                 %span{:class=>"add-on"}
                   %i.icon-search
-          %ul.nav#topbar-nav
-            %li= link_to 'Discover', '/discover', :class => 'topbar-link'
           .sign-in
             - if user_signed_in?
               .dropdown

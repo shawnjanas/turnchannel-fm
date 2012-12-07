@@ -1,5 +1,8 @@
+var player;
+var loaded;
+var track_actions = false;
+
 $(document).ready(function() {
-  var track_actions = true;
 
   $('.track').hover(function() {
     $(this).find('.track-item-title').addClass('hover');
@@ -74,6 +77,15 @@ $(document).ready(function() {
     $('.sign-in a').last().click();
   });
 
+  if($('#ytapiplayer').length > 0) {
+    //Load player api asynchronously.
+    var tag = document.createElement('script');
+    tag.src = "//www.youtube.com/player_api";
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+  }
+
+  /*
   var track_id = $('.player').attr('track-id');
   if(typeof track_id === 'undefined') return false;
 
@@ -115,15 +127,16 @@ $(document).ready(function() {
       });
     }
   });
+  */
 
   setInterval(function() {
-    if(loading || !loaded) return false;
+    if(!loaded) return false;
 
     var sound = player;
 
     // Elapsed time
-    var position = sound.position;
-    var duration_est = sound.durationEstimate;
+    var position = sound.getCurrentTime();
+    var duration_est = sound.getDuration();
 
     var loaded_ratio = position / duration_est;
     var seek_width = loaded_ratio * 100;
@@ -132,6 +145,8 @@ $(document).ready(function() {
     $('#player-duration').html(to_time(duration_est));
     $('#player-progress-bar-meter').css('width', seek_width+'%');
   }, 500);
+
+  /*
 
   // Event Listeners
   $('#player-play').click(function() {
@@ -165,16 +180,17 @@ $(document).ready(function() {
       });
     }
   });
+  */
 
   $('#player-seek').click(function(e) {
-    if(loading) return false;
+    if(!loaded) return false;
 
     var x = e.offsetX;
     var seek_width = $('#player-seek').width();
     var per_seek = (x/seek_width);
 
     var sound = player;
-    sound.setPosition(per_seek * sound.durationEstimate);
+    sound.seekTo(Math.floor(per_seek * sound.getDuration()), true);
 
     if(track_actions) {
       mixpanel.track("seek bar click", {
@@ -183,6 +199,8 @@ $(document).ready(function() {
       });
     }
   });
+
+  /*
 
   $('#player-volume-up').click(function() {
     if(loading) return false;
@@ -226,9 +244,10 @@ $(document).ready(function() {
     mixpanel.track_links('.related-track-item a', 'related track click');
     mixpanel.track_links('.search-track-item a', 'search track click');
   }
+  */
 
   function to_time(time) {
-    var total_seconds = Math.floor(time / 1000);
+    var total_seconds = Math.floor(time);
 
     var minutes = Math.floor(total_seconds / 60);
     var seconds = total_seconds % 60;
@@ -244,3 +263,39 @@ $(document).ready(function() {
     return minutes+':'+seconds
   }
 });
+function onYouTubePlayerAPIReady() {
+  player = new YT.Player('ytapiplayer', {
+    width: '560',
+    height: '315',
+    videoId: '9DDs_tInLB0',
+    playerVars: { 'showinfo': 0, 'modestbranding': 1, 'autohide': 0, 'iv_load_policy': 3, 'autoplay': 1, 'rel': 0, 'theme': 'light', 'wmode': 'transparent'},
+    events: {
+      'onStateChange': onPlayerStateChange
+    }
+  });
+  loaded = true;
+}
+function onPlayerStateChange(evt) {
+  /*
+  var data = evt.data;
+  var target = evt.target;
+
+  if(data == YT.PlayerState.PAUSED) {
+    mixpanel.track("track paused", {
+      "track": $('.playlist-container .playlist-track.playing .track-artist').html() + " - " + $('.playlist-container .playlist-track.playing .track-name').html()
+    });
+  } else if(data == YT.PlayerState.ENDED) {
+    if(track_actions) {
+      mixpanel.track("track finished", {
+        "track": $('.playlist-container .playlist-track.playing .track-artist').html() + " - " + $('.playlist-container .playlist-track.playing .track-name').html()
+      });
+    }
+  } else if(data == YT.PlayerState.PLAYING) {
+    mixpanel.track("track play", {
+      "track": $('.playlist-container .playlist-track.playing .track-artist').html() + " - " + $('.playlist-container .playlist-track.playing .track-name').html()
+    });
+    newTrackPlaying(target.getPlaylistIndex());
+  } else if(data == -1) {
+  }
+  */
+}

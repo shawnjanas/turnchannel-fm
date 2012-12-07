@@ -1,3 +1,159 @@
-// Place all the styles related to the tracks controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+.main {
+  width: 740px;
+  float: left;
+
+  background: white;
+  box-shadow: 0 1px 3px rgba(34, 25, 25, 0.4);
+  -moz-box-shadow: 0 1px 2px rgba(34,25,25,0.4);
+  -webkit-box-shadow: 0 1px 3px rgba(34, 25, 25, 0.4);
+  
+  /*padding: 20px;*/
+}
+
+a {
+  color: #BF0265;
+  &:hover {
+    
+  }
+}
+h1, h1 a {
+  color: #222;
+  font-size: 18px;
+  line-height: 22px;
+  font-weight: normal;
+  text-shadow: 0 1px rgba(0, 0, 0, .2);
+}
+
+.track {
+  float: left;
+  width: 740px;
+  border-bottom: #DDD 1px solid;
+  padding: 10px;
+  .cover-art {
+    float: left;
+    width: 460px;
+    height: 460px;
+    img {
+      float: left;
+    }
+  }
+  .details {
+    float: left;
+    margin: 0 0 0 10px;
+    width: 248px;
+    .artist {
+      margin-top: 10px;
+      .artist-image {
+        margin-top: 10px;
+        border: #DDD 1px solid;
+        width: 245px;
+        height: 168px;
+        img {
+          float: left;
+        }
+      }
+    }
+    .stats {
+      margin-top: 5px;
+    }
+    .genre {
+      margin-top: 10px;
+    }
+    .vote-container {
+      background: #f8f8f8;
+      border: #DDD 1px solid;
+      height: 40px;
+      margin-top: 10px;
+      border-radius: 5px 5px 0 0;
+      background-color: #F4F4F4;
+      border: 1px solid #DDD;
+      box-shadow: 0 0 0 1px white inset, 0 1px 2px #EEE;
+      -moz-box-shadow: 0 0 0 1px #fff inset, 0 1px 2px #eee;
+      -webkit-box-shadow: 0 0 0 1px white inset, 0 1px 2px #EEE;
+      
+      .vote-up, .vote-down {
+        float: left;
+        padding-top: 10px;
+        text-align: center;
+        height: 30px;
+        &:hover {
+          cursor: pointer;
+        }
+      }
+      .vote-up {
+        border-right: #DDD 1px solid;
+        width: 119px;
+      }
+      .vote-down {
+        width: 118px
+      }
+      .sharing {
+        float: left;
+        width: 245px;
+        background-color: #F4F4F4;
+        border: 1px solid #DDD;
+        border-radius: 0 0 5px 5px;
+        box-shadow: 0 1px 2px #EEE, 0 0 0 1px white inset;
+        -moz-box-shadow: 0 1px 2px #eee, 0 0 0 1px #fff inset;
+        -webkit-box-shadow: 0 1px 2px #EEE, 0 0 0 1px white inset;
+      }
+    }
+  }
+}
+
+.right-bar {
+  float: left;
+  width: 300px;
+  margin: 0 0 0 20px;
+  .right-wrapper {
+    position: fixed;
+    top: 80px;
+  }
+}
+
+.right-box {
+  width: 280px;
+  float: left;
+
+  background: white;
+  box-shadow: 0 1px 3px rgba(34, 25, 25, 0.4);
+  -moz-box-shadow: 0 1px 2px rgba(34,25,25,0.4);
+  -webkit-box-shadow: 0 1px 3px rgba(34, 25, 25, 0.4);
+  
+  padding: 10px;
+}
+.player {
+  position: fixed;
+  margin-top: 20px;
+  width: 300px;
+  float: left;
+  bottom: 20px;
+
+  background: white;
+  box-shadow: 0 1px 3px rgba(34, 25, 25, 0.4);
+  -moz-box-shadow: 0 1px 2px rgba(34,25,25,0.4);
+  -webkit-box-shadow: 0 1px 3px rgba(34, 25, 25, 0.4);
+  text-align: center;
+  .player-title {
+    h1 {
+      margin: 0;
+      text-align: center
+    }
+  }
+  .player-wrapper {
+    position: relative;
+    #player-controls {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      color: white;
+      #player-elapsed {
+
+      }
+    }
+  }
+}
+#ytapiplayer {
+  position: fixed;
+  top: -500px;
+}

@@ -7,31 +7,46 @@ body {
   line-height: 18px;
   color: #333;
   /*background: #F7F5F5 url(http://passets-lt.pinterest.com/images/paper.jpg) repeat;*/
-  background: #DDD url(/assets/nasty_fabric.png) repeat;
-  /*background: #DDD;*/
+  /*background: #DDD url(/assets/nasty_fabric.png) repeat;*/
+  background: #DDD;
   margin-bottom: 30px;
 }
 
-h3 span {
-  font-size: 14px;
-  font-weight: lighter;
+h1, h4, h5 {
+  margin-top: 0;
+}
+h4 {
 }
 
 header {
   height: 60px;
 }
 .container {
-  width: 940px;
+  width: 1060px;
 }
+.navbar .container {
+  width: 1060px;
+}
+.navbar-inverse .navbar-inner {
+  height: 50px;
+  background-color: #222;
+  padding: 0;
+  min-width: 1060px;
+  border-bottom: 1px solid #333;
+  border-top: 1px solid #333;
+  box-shadow: 0 1px black, 0 2px 1px rgba(0, 0, 0, .4);
+  -moz-box-shadow: 0 1px #000, 0 2px 1px rgba(0, 0, 0, .4);
+  -webkit-box-shadow: 0 1px black, 0 2px 1px rgba(0, 0, 0, .4);
+  background-image: none;
+}
+
 .container-bg {
-  border: #DDD solid 1px;
-  background: white;
   margin-top: 20px;
   margin-bottom: 20px;
 }
 
 .container-with-right-bar {
-  width: 600px;
+  width: 740px;
   float: left;
   margin: 20px;
 }
@@ -42,7 +57,6 @@ header {
 }
 
 #topbar {
-  height: 60px;
   color: #fff;
   #topbar-nav {
     li a {
@@ -51,7 +65,8 @@ header {
   }
   .search-bar {
     float: left;
-    margin-top: 16px;
+    margin-top: 8px;
+    height: 32px;
     input {
       width: 420px;
     }
@@ -82,10 +97,11 @@ header {
   }
 }
 .navbar .brand {
-  padding: 20px 20px 0 0;
+  padding: 15px 20px 0 0;
   margin-left: 0;
   font-weight: bold;
   float: left;
+  color: #fff;
   &:hover {
     color: #f8f8f8;
   }
@@ -640,14 +656,8 @@ header {
 
 
 .player {
-  margin: 20px;
-
-  color: #f8f8f8;
-  height: 520px;
 }
 .player-container {
-  width: 960px;
-  margin: 0 auto;
 }
 .player-share {
   float: left;
@@ -733,14 +743,14 @@ header {
   position: relative;
 
   float: left;
-  width: 519px;
-  height: 519px;
+  width: 300px;
+  height: 300px;
 
   border: #DDD solid 1px;
 
   img {
-    width: 521px;
-    height: 521px;
+    width: 300px;
+    height: 300px;
   }
 }
 .player-title {
@@ -752,11 +762,7 @@ header {
 
 }
 .player-footer {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-
-  width: 481px;
+  width: 281px;
   height: 90px;
 
   padding: 10px 20px;
@@ -825,7 +831,6 @@ header {
 }
 
 #player-controls {
-  height: 20px;
   margin-top: 5px;
 
   #player-step-backward {
@@ -857,6 +862,7 @@ header {
   height: 40px;
   float: left;
   margin-top: 3px;
+  margin-left: 10px;
 
   #player-elapsed {
     margin: 0;
@@ -865,10 +871,10 @@ header {
     margin: 0;
   }
   #player-seek {
-    margin: 2px 5px 0 5px;
+    margin: 2px 5px 0 15px;
     padding: 5px 0;
     cursor: pointer;
-    width: 380px;
+    width: 200px;
 
     #player-progress-bar {
       height: 3px;
