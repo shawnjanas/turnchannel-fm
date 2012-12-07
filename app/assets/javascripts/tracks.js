@@ -107,9 +107,11 @@ $(document).ready(function() {
     }
   }, function(s) {
     player = s;
+    player.setVolume(50);
 
     loading = false;
     loaded = true;
+    console.log(player);
     if(track_actions) {
       mixpanel.track("play track", {
         "duration": $('#player-duration').html()
