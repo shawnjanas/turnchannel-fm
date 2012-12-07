@@ -6,8 +6,8 @@ body {
   font-size: 12px;
   line-height: 18px;
   color: #333;
-  /*background: #F7F5F5 url(http://passets-lt.pinterest.com/images/paper.jpg) repeat;*/
-  background: #DDD url(/assets/nasty_fabric.png) repeat;
+  background: #F7F5F5 url(http://passets-lt.pinterest.com/images/paper.jpg) repeat;
+  /*background: #DDD url(/assets/nasty_fabric.png) repeat;*/
   /*background: #DDD;*/
   margin-bottom: 30px;
 }
@@ -24,10 +24,55 @@ header {
   width: 940px;
 }
 .container-bg {
-  border: #DDD solid 1px;
-  background: white;
+  box-shadow: 0 1px 3px rgba(34, 25, 25, 0.4);
+  -moz-box-shadow: 0 1px 2px rgba(34, 25, 25, 0.4);
+  -webkit-box-shadow: 0 1px 3px rgba(34, 25, 25, 0.4);
+  background: #fff;
   margin-top: 20px;
   margin-bottom: 20px;
+}
+
+.feature-box {
+  z-index: 20;
+  box-shadow: 0 1px 3px rgba(34, 25, 25, 0.4);
+  -moz-box-shadow: 0 1px 2px rgba(34, 25, 25, 0.4);
+  -webkit-box-shadow: 0 1px 3px rgba(34, 25, 25, 0.4);
+  background: #BF0265;
+  margin-top: 20px;
+  margin-bottom: -20px;
+  height: 37px;
+  padding: 10px 20px;
+  width: 900px;
+
+  h2 {
+    color: #FFF;
+    float: left;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, .4), 0 0 30px rgba(0, 0, 0, .075);
+  }
+  .feature-image {
+    float: left;
+    width: 200px;
+    height: 200px;
+  }
+  .register-now {
+    float: right;
+  }
+}
+.navbar-inner {
+  height: 50px;
+  background-color: #222;
+  padding: 0;
+  min-width: 940px;
+  border-bottom: 1px solid #333;
+  border-top: 1px solid #333;
+  box-shadow: 0 1px black, 0 2px 1px rgba(0, 0, 0, 0.4);
+  -moz-box-shadow: 0 1px black, 0 2px 1px rgba(0, 0, 0, 0.4);
+  -webkit-box-shadow: 0 1px black, 0 2px 1px rgba(0, 0, 0, 0.4);
+  background-image: none;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+  
 }
 
 .container-with-right-bar {
@@ -46,19 +91,22 @@ header {
   color: #fff;
   #topbar-nav {
     li a {
-      padding: 20px 20px 20px;
+      padding: 15px 20px 20px;
     }
   }
   .search-bar {
     float: left;
-    margin-top: 16px;
+    margin-top: 11px;
     input {
       width: 420px;
     }
   }
   .sign-in {
     float: right;
-    margin-top: 20px;
+    margin-top: 5px;
+    .dropdown {
+      margin-top: 10px;
+    }
   }
   .social-connect {
     float: right;
@@ -82,7 +130,7 @@ header {
   }
 }
 .navbar .brand {
-  padding: 20px 20px 0 0;
+  padding: 15px 20px 0 0;
   margin-left: 0;
   font-weight: bold;
   float: left;
@@ -651,7 +699,7 @@ header {
 }
 .player-share {
   float: left;
-  height: 238px;
+  height: 166px;
   width: 357px;
   margin:  0 0 20px 20px;
   border: 1px solid #DDD;
@@ -699,7 +747,7 @@ header {
 }
 .player-comments {
   float: left;
-  height: 259px;
+  height: 331px;
   width: 357px;
   margin-left: 20px;
   border: 1px solid #DDD;

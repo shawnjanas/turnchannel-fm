@@ -12,6 +12,7 @@ Turnchannelfm::Application.routes.draw do
   match '/discover' => 'tracks#discover'
   match '/discover/:tag' => 'tracks#discover'
   match '/tracks/search/:q' => 'tracks#search'
+  match '/tracks/search' => 'tracks#search'
 
   match '/a' => "tracks#index"
 
