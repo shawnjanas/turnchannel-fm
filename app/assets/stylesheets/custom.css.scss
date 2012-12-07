@@ -21,28 +21,27 @@ header {
   height: 60px;
 }
 .container {
-  width: 940px;
+  width: 1000px;
 }
 .container-bg {
   box-shadow: 0 1px 3px rgba(34, 25, 25, 0.4);
   -moz-box-shadow: 0 1px 2px rgba(34, 25, 25, 0.4);
   -webkit-box-shadow: 0 1px 3px rgba(34, 25, 25, 0.4);
   background: #fff;
-  margin-top: 20px;
-  margin-bottom: 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .feature-box {
-  z-index: 20;
   box-shadow: 0 1px 3px rgba(34, 25, 25, 0.4);
   -moz-box-shadow: 0 1px 2px rgba(34, 25, 25, 0.4);
   -webkit-box-shadow: 0 1px 3px rgba(34, 25, 25, 0.4);
   background: #BF0265;
-  margin-top: 20px;
-  margin-bottom: -20px;
   height: 37px;
+  margin-top: 7px;
+  margin-bottom: 4px;
   padding: 10px 20px;
-  width: 900px;
+  width: 960px;
 
   h2 {
     color: #FFF;
@@ -297,11 +296,29 @@ header {
     }
   }
 }
+.guide-bar {
+  float: left;
+  width: 175px;
+  margin-top: 10px;
+  h4 {
+    color: #BF0265;
+    margin-bottom: 10px;
+  }
+  .social {
+    float: left;
+    &#social-fb {
+      width: 50px;
+    }
+    &#social-tw {
+      width: 50px;
+      margin-left: 10px;
+    }
+  }
+}
 .related-tracks-container {
-  width: 900px;
-  height: 375px;
-  border: #DDD solid 1px;
-  margin: 20px 0 20px 20px;
+  float:left;
+  width: 300px;
+  margin: 10px 0 20px 4px;
   img {
     float: left;
   }
@@ -315,33 +332,40 @@ header {
   }
   .related-track-items {
     .related-track-item {
-      width: 117px;
-      height: 144px;
+      width: 290px;
       float: left;
-      margin: 10px 0 10px 10px;
+      margin: 0 0 10px 10px;
       position: relative;
       img {
-        width: 117px;
-        height: 117px;
+        width: 92px;
+        height: 92px;
         border: 1px solid #AAA;
+        float: left;
       }
       .related-track-description {
-        height: 34px;
+        width: 175px;
+        margin-left: 10px;
         float: left;
         .track-item-title, .track-item-artist {
-          min-height: 18px;
-          max-height: 18px;
           overflow: hidden;
-          color: #333;
           &.hover {
             color: #1C62B9;
           }
         }
         .track-item-title {
           font-weight: bold;
+          font-size: 14px;
+          min-height: 18px;
+          max-height: 36px;
+          color: #333;
         }
         .track-item-artist {
-
+          font-size: 12px;
+          min-height: 18px;
+          max-height: 36px;
+          color: #666;
+        }
+        .genre, .plays {
         }
       }
       .track-play {
@@ -349,7 +373,7 @@ header {
         position: absolute;
         left: 0;
         top: 0;
-        margin: 42px 0 0 42px;
+        margin: 32px 0 0 32px;
         width: 30px;
         height: 30px;
         -webkit-border-radius: 15px;
@@ -360,12 +384,6 @@ header {
         i {
           margin: 6px 0 0 8px;
         }
-      }
-      .genre {
-        position: absolute;
-        left: 0;
-        top: 0;
-        margin: 5px 0 0 5px;
       }
     }
   }
@@ -688,10 +706,10 @@ header {
 
 
 .player {
-  margin: 20px;
+  float:left;
 
   color: #f8f8f8;
-  height: 520px;
+  width: 520px;
 }
 .player-container {
   width: 960px;
@@ -745,14 +763,18 @@ header {
     }
   }
 }
+.player-description {
+  float: left;
+  color: #333;
+  padding: 10px;
+}
 .player-comments {
   float: left;
-  height: 331px;
-  width: 357px;
-  margin-left: 20px;
+  width: 520px;
   border: 1px solid #DDD;
   background: #f8f8f8;
   overflow: hidden;
+  margin-top: 14px;
   .player-comments-heading {
     background: #333;
     height: 35px;
@@ -762,9 +784,6 @@ header {
     }
   }
   .fb-comments-wrapper {
-    overflow-x: hidden;
-    overflow-y: scroll;
-    height: 409px;
     padding: 10px;
   }
   .social-connect {
