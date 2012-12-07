@@ -86,7 +86,7 @@ $(document).ready(function() {
     client_id: 'e3216af75bcd70ee4e5d91a6b9f1d302'
   });
   SC.get("/tracks/"+track_id, function(track, error) {
-    if(error.message == '404 - Not Found') {
+    if(error && error.message == '404 - Not Found') {
       var href = $('.player').attr('next-track');
       window.location = href;
     } else {
