@@ -9,19 +9,28 @@ body {
   background: #F7F5F5 url(http://passets-lt.pinterest.com/images/paper.jpg) repeat;
   /*background: #DDD url(/assets/nasty_fabric.png) repeat;*/
   /*background: #DDD;*/
+  margin-top: 55px;
   margin-bottom: 30px;
 }
 
+h2, h3, h4 {
+  margin-top: 0;
+}
+h4 {
+  margin-top: 5px;
+}
 h3 span {
   font-size: 14px;
-  font-weight: lighter;
+  font-weight: normal;
 }
 
 header {
-  height: 60px;
+  overflow: hidden;
 }
-.container {
+.container, .navbar .container {
   width: 1000px;
+}
+.main-container {
 }
 .container-bg {
   box-shadow: 0 1px 3px rgba(34, 25, 25, 0.4);
@@ -33,20 +42,20 @@ header {
 }
 
 .feature-box {
+  margin-top: 70px;
   box-shadow: 0 1px 3px rgba(34, 25, 25, 0.4);
   -moz-box-shadow: 0 1px 2px rgba(34, 25, 25, 0.4);
   -webkit-box-shadow: 0 1px 3px rgba(34, 25, 25, 0.4);
   background: #BF0265;
   height: 37px;
-  margin-top: 7px;
-  margin-bottom: 4px;
   padding: 10px 20px;
   width: 960px;
 
-  h2 {
+  h3 {
     color: #FFF;
     float: left;
     text-shadow: 0 1px 3px rgba(0, 0, 0, .4), 0 0 30px rgba(0, 0, 0, .075);
+    margin: 0;
   }
   .feature-image {
     float: left;
@@ -55,13 +64,14 @@ header {
   }
   .register-now {
     float: right;
+    margin-top: -3px;
   }
 }
-.navbar-inner {
+.navbar .navbar-inner {
   height: 50px;
   background-color: #222;
   padding: 0;
-  min-width: 940px;
+  min-width: 1000px;
   border-bottom: 1px solid #333;
   border-top: 1px solid #333;
   box-shadow: 0 1px black, 0 2px 1px rgba(0, 0, 0, 0.4);
@@ -129,6 +139,7 @@ header {
   }
 }
 .navbar .brand {
+  color: #FFF;
   padding: 15px 20px 0 0;
   margin-left: 0;
   font-weight: bold;
@@ -153,7 +164,7 @@ header {
     background: #333;
     height: 35px;
     padding: 5px 0 0 10px;
-    h3 {
+    h4 {
       color: white;
     }
   }
@@ -236,7 +247,7 @@ header {
     background: #333;
     height: 35px;
     padding: 5px 0 0 10px;
-    h3 {
+    h4 {
       color: white;
     }
   }
@@ -300,8 +311,47 @@ header {
   float: left;
   width: 175px;
   margin-top: 10px;
-  h4 {
+  .vote {
+    float:left;
+    color: #fff;
+    background: #222;
+    border: 1px solid #DDD;
+    border-right: none;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    #upvote, #downvote {
+      float: left;
+      width: 80px;
+      height: 52px;
+      padding-top: 35px;
+      text-align: center;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+    #upvote {
+      &:hover {
+        background: green;
+      }
+      &.selected {
+        background: green;
+      }
+      border-right: 1px solid #333;
+    }
+    #downvote {
+      &:hover {
+        background: #999;
+      }
+      &.selected {
+        background: #999;
+      }
+    }
+  }
+  h5 {
     color: #BF0265;
+    margin-top: 0;
     margin-bottom: 10px;
   }
   .social {
@@ -326,7 +376,7 @@ header {
     background: #333;
     height: 35px;
     padding: 5px 0 0 10px;
-    h3 {
+    h4 {
       color: white;
     }
   }
@@ -365,7 +415,8 @@ header {
           max-height: 18px;
           color: #666;
         }
-        .genre, .plays {
+        .genre {
+          margin-top: 3px;
         }
       }
       .track-play {
@@ -399,7 +450,7 @@ header {
     background: #333;
     height: 35px;
     padding: 5px 0 0 10px;
-    h3 {
+    h4 {
       color: white;
     }
   }
@@ -480,7 +531,7 @@ header {
     background: #333;
     height: 35px;
     padding: 5px 0 0 10px;
-    h3 {
+    h4 {
       color: white;
     }
   }
@@ -515,7 +566,7 @@ header {
     background: #333;
     height: 35px;
     padding: 5px 0 0 10px;
-    h3 {
+    h4 {
       color: white;
     }
   }
@@ -586,10 +637,6 @@ header {
 }
 
 
-
-.main-container {
-  width: 100%;
-}
 
 .tracks-container {
   width: 960px;
@@ -726,7 +773,7 @@ header {
     background: #333;
     height: 35px;
     padding: 5px 0 0 10px;
-    h3 {
+    h4 {
       color: white;
     }
   }
@@ -778,7 +825,7 @@ header {
     background: #333;
     height: 35px;
     padding: 5px 0 0 10px;
-    h3 {
+    h4 {
       color: white;
     }
   }
@@ -833,6 +880,8 @@ header {
   background: rgba(0, 0, 0, 0.8);
   h2 {
     color: white;
+    font-size: 24px;
+    line-height: 36px;
     span {
       font-weight: lighter;
     }

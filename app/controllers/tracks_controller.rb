@@ -1,4 +1,6 @@
 class TracksController < ApplicationController
+  before_filter :authenticate_user!, :only => [:toggle_like, :toggle_dislike]
+
   def index
     @popular_tracks = Track.order("cached_plays DESC").limit(10)
     @new_tracks = Track.order("created_at DESC").limit(10)
@@ -20,8 +22,6 @@ class TracksController < ApplicationController
   end
 
   def search
-    puts "HHHH"
-    puts params[:p]
     unless params[:q].blank?
       @q = params[:q]
 
@@ -43,11 +43,26 @@ class TracksController < ApplicationController
     if @track
       @track.play
       @tracks_popular = Track.where(:tag_id => @track.tag.id).order('cached_plays DESC').limit(7)
-      @tracks_rnd = Track.order("RANDOM()").limit(7)
+      @tracks_rnd = Track.where(:tag_id => @track.tag.id).order("RANDOM()").limit(1)
+      @tracks_rnd += Track.order("RANDOM()").limit(7)
       @tracks = (@tracks_popular + @tracks_rnd).shuffle
     else
       redirect_to root_path
     end
+  end
+
+  def toggle_like
+    @track = Track.find_by_id(params[:id])
+    state = @track.toggle_like(current_user)
+
+    render :json => {:state => state}
+  end
+
+  def toggle_dislike
+    @track = Track.find_by_id(params[:id])
+    state = @track.toggle_dislike(current_user)
+
+    render :json => {:state => state}
   end
 
   def channel

@@ -7,7 +7,12 @@ Turnchannelfm::Application.routes.draw do
 
   devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
 
-  resources :tracks
+  resources :tracks do
+    member do
+      post :toggle_like
+      post :toggle_dislike
+    end
+  end
 
   match '/discover' => 'tracks#discover'
   match '/discover/:tag' => 'tracks#discover'

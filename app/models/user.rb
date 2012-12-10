@@ -10,6 +10,12 @@ class User < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation, :remember_me
   attr_accessible :name, :play_history, :provider, :uid, :avatar
 
+  has_many :track_likes
+  has_many :liked_tracks, :through => :track_likes
+
+  has_many :track_dislikes
+  has_many :disliked_tracks, :through => :track_dislikes
+
   def downcase_email
     self.email.downcase!
   end

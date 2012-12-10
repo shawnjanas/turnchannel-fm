@@ -1,5 +1,16 @@
 .guide-bar
-  %h4 Did you like this track?
+  %h5 Did you like this track?
+  .vote
+    - upvote = ''
+    - upvote = 'selected' if current_user && TrackLike.find_by_user_id_and_track_id(current_user.id, @track.id)
+    #upvote{:href => "/tracks/#{@track.id}/toggle_like", :title => "Upvote this track!", :class => upvote}
+      %span#like-num= @track.track_likes.size
+      %i.icon-thumbs-up.icon-white
+    - downvote = ''
+    - downvote = 'selected' if current_user && TrackDislike.find_by_user_id_and_track_id(current_user.id, @track.id)
+    #downvote{:href => "/tracks/#{@track.id}/toggle_dislike", :title => "Downvote this track!", :class => downvote}
+      %span#dislike-num= @track.track_dislikes.size
+      %i.icon-thumbs-down.icon-white
   .social#social-fb
     .fb-like{:'data-href'=>"#{request.protocol}#{request.host_with_port}#{request.fullpath}", :'data-send'=>"false", :'data-layout'=>"box_count", :'data-width'=>"450", :'data-show-faces'=>"false"}
   .social#social-tw

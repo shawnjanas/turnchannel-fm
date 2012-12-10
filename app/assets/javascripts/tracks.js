@@ -225,6 +225,80 @@ $(document).ready(function() {
     }
   });
 
+  $('#upvote').click(function() {
+    var btn = $(this);
+    var href = $(this).attr('href');
+
+    $.post(href, function(d) {
+      if(d.state == 1) {  // Selected
+        btn.addClass('selected');
+        likes = parseInt(btn.find('#like-num').html());
+        likes += 1;
+        btn.find('#like-num').html(likes);
+      } else if(d.state == 2) {
+        btn.addClass('selected');
+        likes = parseInt(btn.find('#like-num').html());
+        likes += 1;
+        btn.find('#like-num').html(likes);
+
+        btn = $('#downvote');
+        btn.removeClass('selected');
+        dislikes = parseInt(btn.find('#dislike-num').html());
+        dislikes -= 1;
+        btn.find('#dislike-num').html(dislikes);
+      } else {
+        btn.removeClass('selected');
+        likes = parseInt(btn.find('#like-num').html());
+        likes -= 1;
+        btn.find('#like-num').html(likes);
+      }
+    }).error(function(e) {
+      if(e.status == 401) {
+        //$('.register-btn').click();
+        $('#sign-in-modal').modal('show');
+      } else {
+        alert('An unexpected error has occured. Please try again...');
+      }
+    });
+  });
+
+  $('#downvote').click(function() {
+    var btn = $(this);
+    var href = $(this).attr('href');
+
+    $.post(href, function(d) {
+      if(d.state == 1) {  // Selected
+        btn.addClass('selected');
+        dislikes = parseInt(btn.find('#dislike-num').html());
+        dislikes += 1;
+        btn.find('#dislike-num').html(dislikes);
+      } else if(d.state == 2) {
+        btn.addClass('selected');
+        dislikes = parseInt(btn.find('#dislike-num').html());
+        dislikes += 1;
+        btn.find('#dislike-num').html(dislikes);
+
+        btn = $('#upvote');
+        btn.removeClass('selected');
+        likes = parseInt(btn.find('#like-num').html());
+        likes -= 1;
+        btn.find('#like-num').html(likes);
+      } else {
+        btn.removeClass('selected');
+        dislikes = parseInt(btn.find('#dislike-num').html());
+        dislikes -= 1;
+        btn.find('#dislike-num').html(dislikes);
+      }
+    }).error(function(e) {
+      if(e.status == 401) {
+        //$('.register-btn').click();
+        $('#sign-in-modal').modal('show');
+      } else {
+        alert('An unexpected error has occured. Please try again...');
+      }
+    });
+  });
+
   if(track_actions) {
     mixpanel.track_links('.featured-tracks-container .featured-track-item a', 'featured track click');
     mixpanel.track_links('.featured-tracks-container .featured-track-main a', 'featured track main click');
@@ -234,7 +308,7 @@ $(document).ready(function() {
     mixpanel.track_links('.top10-track-item a', 'top10 track click');
     mixpanel.track_links('.related-track-item a', 'related track click');
     mixpanel.track_links('.search-track-item a', 'search track click');
-    mixpanel.track_links('.register-btn', 'register button click');
+    //mixpanel.track_links('.register-btn', 'register button click');
   }
 
   function to_time(time) {
