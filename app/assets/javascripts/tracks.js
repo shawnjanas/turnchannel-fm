@@ -308,7 +308,9 @@ $(document).ready(function() {
     mixpanel.track_links('.top10-track-item a', 'top10 track click');
     mixpanel.track_links('.related-track-item a', 'related track click');
     mixpanel.track_links('.search-track-item a', 'search track click');
-    //mixpanel.track_links('.register-btn', 'register button click');
+    mixpanel.track_links('.register-btn', 'register button click');
+    mixpanel.track_links('#upvote', 'upvote btn click');
+    mixpanel.track_links('#downvote', 'downvote btn click');
   }
 
   function to_time(time) {
