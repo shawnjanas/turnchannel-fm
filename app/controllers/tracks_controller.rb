@@ -4,8 +4,8 @@ class TracksController < ApplicationController
   def index
     @popular_tracks = Track.order("cached_plays DESC").limit(10)
     @new_tracks = Track.order("created_at DESC").limit(10)
-    #@featured_tracks = Track.order("created_at DESC").limit(8)
-    @featured_tracks = [Track.find_by_id(3041), Track.find_by_id(2991), Track.find_by_id(2821), Track.find_by_id(2759), Track.find_by_id(2842), Track.find_by_id(2992), Track.find_by_id(3050), Track.find_by_id(2970)]
+    @featured_tracks = Track.order("created_at DESC").limit(8)
+    #@featured_tracks = [Track.find_by_id(3041), Track.find_by_id(2991), Track.find_by_id(2821), Track.find_by_id(2759), Track.find_by_id(2842), Track.find_by_id(2992), Track.find_by_id(3050), Track.find_by_id(2970)]
   end
 
   def discover
@@ -38,16 +38,18 @@ class TracksController < ApplicationController
   # GET /tracks/1
   # GET /tracks/1.json
   def show
-    @track = Track.find_by_permalink(params[:id])
+    @track = Track.find_by_id(params[:id])
 
-    if @track
-      @track.play
-      @tracks_popular = Track.where(:tag_id => @track.tag.id).order('cached_plays DESC').limit(7)
-      @tracks_rnd = Track.where(:tag_id => @track.tag.id).order("RANDOM()").limit(1)
-      @tracks_rnd += Track.order("RANDOM()").limit(7)
-      @tracks = (@tracks_popular + @tracks_rnd).shuffle
-    else
+    #if @track
+    #  @track.play
+    #  @tracks_popular = Track.where(:tag_id => @track.tag.id).order('cached_plays DESC').limit(7)
+    #  @tracks_rnd = Track.where(:tag_id => @track.tag.id).order("RANDOM()").limit(1)
+    #  @tracks_rnd += Track.order("RANDOM()").limit(7)
+    #  @tracks = (@tracks_popular + @tracks_rnd).shuffle
+    unless @track
       redirect_to root_path
+    else
+      render :layout => false
     end
   end
 

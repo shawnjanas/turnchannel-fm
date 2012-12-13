@@ -1,25 +1,34 @@
 %header
-  .navbar.navbar-inverse.navbar-fixed-top
-    .navbar-inner
-      .container
-        #topbar
-          %a.brand{:href => root_url} TURNCHANNEL
-          .search-bar
-            .input-append
-              %form#global-search{:method => 'post', :action => '/tracks/search/'}
-                %input{:class=>"span2", :id=>"global-search-field", :type=>"text", :value => (@q || '')}
-                %span{:class=>"add-on"}
-                  %i.icon-search
-          %ul.nav#topbar-nav
-            %li= link_to 'Discover', '/discover', :class => 'topbar-link'
-          .sign-in
-            - if user_signed_in?
-              .dropdown
-                %a{:class=>"dropdown-toggle", :id=>"drop4", :role=>"button", :'data-toggle'=>"dropdown", :href=>"#"}
-                  = current_user.name
-                  %b.caret
-                %ul{:id=>"menu1", :class=>"dropdown-menu", :role=>"menu", :'aria-labelledby'=>"drop4"}
-                  %li
-                    = link_to 'Sign Out', destroy_user_session_path, :method => :delete, :tabindex => '-1', :target => '_blank'
-            - else
-              %a.register-btn.btn.btn-primary{:href => user_omniauth_authorize_path(:facebook), :target => '_blank'} Login
+  .navbar-fixed-top
+    #board-header-area
+      /- @genres.each do |genre|
+      %ul.flat-list
+        - (0..9).to_a.each do |i|
+          %li
+            %span.separator= '-'
+            = link_to 'Dubstep', '#'
+    #main-header-area
+      %h1= link_to 'TurnChannel.FM', '#'
+      #player-bar
+        .controls
+          .pre.control#player-pre= "◄◄"
+          .play.control#player-play= "►"
+          .pause.control#player-pause= "▌▌"
+          .next.control#player-next= "►►"
+        .track
+          .title Raise your fist
+          .artist Excision
+          #player-controls
+            #player-seekbar
+              %span#player-elapsed.control 00:00
+              #player-seek.control
+                #player-progress-bar
+                  #player-progress-bar-meter
+              %span#player-duration.control 00:00
+            /#player-volume-control.control
+            /  #player-volume-up
+            /    %i.icon-volume-up.icon-zoom.icon-white
+            /  #player-volume-off
+            /    %i.icon-volume-off.icon-zoom.icon-white
+/#player
+/  = @new_tracks.first.f_artist

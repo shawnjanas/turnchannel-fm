@@ -76,54 +76,64 @@ $(document).ready(function() {
   });
 
   var track_id = $('.player').attr('track-id');
-  if(typeof track_id === 'undefined') return false;
+  //if(typeof track_id === 'undefined') return false;
 
   var player = undefined;
   var loading = true;
   var loaded = false;
 
-  SC.initialize({
-    client_id: 'e3216af75bcd70ee4e5d91a6b9f1d302'
-  });
-  SC.get("/tracks/"+track_id, function(track, error) {
-    if(error && error.message == '404 - Not Found') {
-      var href = $('.player').attr('next-track');
-      window.location = href;
-    } else {
-      SC.stream("/tracks/"+track_id, {
-        autoPlay: true,
-        useHTML5Audio: true,
-        ontimedcomments: this._ontimedcomments,
-        onplay: this._onplay,
-        onerror: this._onerror,
-        onfinish: function() {
-          var href = $('.player').attr('next-track');
+  track_id = 68200892;
+
+  function play() {
+    SC.initialize({
+      client_id: 'e3216af75bcd70ee4e5d91a6b9f1d302'
+    });
+    SC.get("/tracks/"+track_id, function(track, error) {
+      if(error && error.message == '404 - Not Found') {
+        var href = $('.player').attr('next-track');
+        window.location = href;
+      } else {
+        SC.stream("/tracks/"+track_id, {
+          autoPlay: true,
+          useHTML5Audio: true,
+          ontimedcomments: this._ontimedcomments,
+          onplay: this._onplay,
+          onerror: this._onerror,
+          onfinish: function() {
+            var href = $('.player').attr('next-track');
+
+            if(track_actions) {
+              mixpanel.track("track finished", {
+                "elapsed": $('#player-elapsed').html(),
+                "duration": $('#player-duration').html()
+              }, function() {
+                window.location = href;
+              });
+            } else {
+              window.location = href;
+            }
+          }
+        }, function(s) {
+          player = s;
+          player.setVolume(50);
+
+          loading = false;
+          loaded = true;
+
+          $('#player-pause').show();
+          $('#player-play').hide();
 
           if(track_actions) {
-            mixpanel.track("track finished", {
-              "elapsed": $('#player-elapsed').html(),
+            mixpanel.track("play track", {
               "duration": $('#player-duration').html()
-            }, function() {
-              window.location = href;
             });
-          } else {
-            window.location = href;
           }
-        }
-      }, function(s) {
-        player = s;
-        player.setVolume(50);
+        });
+      }
+    });
+  }
 
-        loading = false;
-        loaded = true;
-        if(track_actions) {
-          mixpanel.track("play track", {
-            "duration": $('#player-duration').html()
-          });
-        }
-      });
-    }
-  });
+  play();
 
   setInterval(function() {
     if(loading || !loaded) return false;
@@ -143,12 +153,42 @@ $(document).ready(function() {
   }, 500);
 
   // Event Listeners
+
+  $('.track').click(function() {
+    var id = $(this).attr('track-id');
+    var t_id = $(this).attr('track-remote-id');
+    var title = $(this).attr('title');
+    var artist = $(this).attr('artist');
+
+    track_id = t_id;
+
+    $('#player-bar .track .title').html(title);
+    $('#player-bar .track .artist').html(artist);
+
+    $('.left-bar .track.selected').removeClass('selected');
+    $(this).addClass('selected');
+
+    player.stop();
+    player = undefined;
+
+    loading = true;
+    loaded = false;
+
+    play();
+
+    $.ajax('/tracks/'+id, {
+      'dataType': 'html'
+    }).done(function(html) {
+      $('#main-content').html(html);
+    });
+  });
+
   $('#player-play').click(function() {
     if(loading) return false;
 
     player.play();
 
-    $('#player-pause').css('display', 'inline-block');
+    $('#player-pause').show();
     $('#player-play').hide();
 
     if(track_actions) {
@@ -164,7 +204,7 @@ $(document).ready(function() {
 
     player.pause();
 
-    $('#player-play').css('display', 'inline-block');
+    $('#player-play').show();
     $('#player-pause').hide();
 
     if(track_actions) {
