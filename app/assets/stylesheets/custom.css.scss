@@ -857,16 +857,16 @@ header {
   }
 }
 .player-title {
-  height: 36px;
+  height: 72px;
   text-shadow: .1em .1em .2em #333;
   overflow: hidden;
 }
 .player-avatar {
 
 }
-.player-footer {
+.player-header {
   position: absolute;
-  bottom: 0;
+  top: 0;
   left: 0;
 
   width: 481px;
@@ -879,12 +879,33 @@ header {
   background: rgb(0, 0, 0);
   background: rgba(0, 0, 0, 0.8);
   h2 {
+    text-align: center;
     color: white;
     font-size: 24px;
     line-height: 36px;
+    margin: 0;
     span {
       font-weight: lighter;
     }
+  }
+}
+.player-footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+
+  width: 481px;
+  height: 45px;
+
+  padding: 10px 20px;
+
+  color: #f8f8f8;
+
+  background: rgb(0, 0, 0);
+  background: rgba(0, 0, 0, 0.8);
+  #player-pause {
+    font-size: 32px;
+    color: white;
   }
 
 }
