@@ -11,6 +11,180 @@ body {
   background: #FFF;
 }
 
+.genre-bar {
+  width: 100px;
+  position: fixed;
+  top: 81px;
+  left: 0;
+  bottom: 50px;
+  background: #f8f8f8;
+  border-right: #DDD solid 1px;
+  .genre-item {
+    background: #222;
+    margin: 0;
+    float: left;
+    width: 200px;
+    h4 {
+      color: #fff;
+      margin: 5px;
+      font-size: 14px;
+    }
+  }
+}
+.left-bar {
+  width: 500px;
+  position: fixed;
+  top: 81px;
+  left: 100px;
+  bottom: 50px;
+  background: #f8f8f8;
+  border-right: #DDD solid 1px;
+  .playing-track {
+    float: left;
+    .playing-track-header {
+      background: #222;
+      margin: 0;
+      float: left;
+      width: 500px;
+      h4 {
+        color: #fff;
+        margin: 5px;
+      }
+    }
+    .playing-track-image {
+      float: left;
+      width: 300px;
+      height: 300px;
+    }
+    .playing-artist-image {
+      float: left;
+      width: 200px;
+    }
+  }
+  .playing-history {
+    float: left;
+    .playing-history-header {
+      background: #222;
+      margin: 0;
+      float: left;
+      width: 500px;
+      h4 {
+        color: #fff;
+        margin: 5px;
+      }
+    }
+  }
+}
+
+.chat-container {
+  position: fixed;
+  top: 81px;
+  left: 600px;
+  right: 0;
+  bottom: 0;
+  margin: 10px;
+}
+
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 30px;
+  background: #222;
+  height: 50px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#main-player {
+  background: #333 url(/assets/low_contrast_linen.png) repeat;
+  border-bottom: #222;
+  height: 200px;
+  padding: 20px;
+  img {
+    width: 200px;
+    height: 200px;
+    float: left;
+  }
+  #player-bar {
+    float: left;
+    width: 500px;
+    color: #FFF;
+    margin-top: 65px;
+    .controls {
+      float: left;
+      margin-top: 9px;
+      .pre {
+        float: left;
+        margin-left: 10px;
+        font-size: 20px;
+        letter-spacing: -6px;
+      }
+      .play {
+        float: left;
+        margin-left: 20px;
+        font-size: 42px;
+      }
+      .pause {
+        display: none;
+        float: left;
+        margin-left: 20px;
+        font-size: 28px;
+      }
+      .next {
+        float: left;
+        margin-left: 5px;
+        font-size: 20px;
+        letter-spacing: -6px;
+      }
+      .control {
+        text-shadow: 0 1px 3px rgba(0, 0, 0, .4), 0 0 30px rgba(0, 0, 0, .075);
+      }
+    }
+    .track {
+      float: left;
+      width: 300px;
+      margin-top: 5px;
+      margin-left: 20px;
+      .title {
+        font-size: 14px;
+        font-weight: bold;
+        text-shadow: 0 1px 3px rgba(0, 0, 0, .4), 0 0 30px rgba(0, 0, 0, .075);
+      }
+      .artist {
+        font-size: 12px;
+        text-shadow: 0 1px 3px rgba(0, 0, 0, .4), 0 0 30px rgba(0, 0, 0, .075);
+      }
+    }
+    #player-controls {
+      
+    }
+  }
+}
+
 #main-content {
   position: fixed;
   top: 98px;
@@ -108,60 +282,6 @@ body {
       }
     }
   }
-  #player-bar {
-    position: absolute;
-    left: 50%;
-    width: 500px;
-    .controls {
-      float: left;
-      margin-top: 9px;
-      .pre {
-        float: left;
-        margin-left: 10px;
-        font-size: 20px;
-        letter-spacing: -6px;
-      }
-      .play {
-        float: left;
-        margin-left: 20px;
-        font-size: 42px;
-      }
-      .pause {
-        display: none;
-        float: left;
-        margin-left: 20px;
-        font-size: 28px;
-      }
-      .next {
-        float: left;
-        margin-left: 5px;
-        font-size: 20px;
-        letter-spacing: -6px;
-      }
-      .control {
-        text-shadow: 0 1px 3px rgba(0, 0, 0, .4), 0 0 30px rgba(0, 0, 0, .075);
-      }
-    }
-    .track {
-      float: left;
-      width: 300px;
-      text-align: center;
-      margin-top: 5px;
-      margin-left: 20px;
-      .title {
-        font-size: 14px;
-        font-weight: bold;
-        text-shadow: 0 1px 3px rgba(0, 0, 0, .4), 0 0 30px rgba(0, 0, 0, .075);
-      }
-      .artist {
-        font-size: 12px;
-        text-shadow: 0 1px 3px rgba(0, 0, 0, .4), 0 0 30px rgba(0, 0, 0, .075);
-      }
-    }
-    #player-controls {
-      
-    }
-  }
 }
 
 /*.left-nav {
@@ -228,124 +348,6 @@ body {
 }
 .stream-fourth {
   left: 903px;
-}
-.left-bar {
-  width: 300px;
-  position: fixed;
-  top: 98px;
-  left: 0;
-  bottom: 0;
-  z-index: 9;
-  background: #f8f8f8;
-  border-right: #DDD solid 1px;
-  .tracks-container {
-    width: 300px;
-    float: left;
-    img {
-      float: left;
-    }
-    .tracks-heading {
-      background: #333;
-      height: 30px;
-      padding: 5px 0 0 10px;
-      color: white;
-    }
-    .track-items {
-      overflow-y: scroll;
-      overflow-x: hidden;
-      position: absolute;
-      top: 35px;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      .track-item {
-        position: relative;
-        padding: 10px;
-        height: 40px;
-        border-bottom: #FFF solid 1px;
-        &:hover {
-          cursor: pointer;
-        }
-        &.selected {
-          background: #ddd;
-        }
-        .voting {
-          float: left;
-          color: #999;
-          text-align: center;
-          margin-top: 10px;
-          margin-right: 10px;
-          width: 20px;
-          .upvote {
-            
-          }
-          .vote {
-
-          }
-          .downvote {
-
-          }
-        }
-        img {
-          width: 40px;
-          height: 40px;
-        }
-        .track-item-details {
-          width: 188px;
-          float: left;
-          padding-left: 10px;
-          &.track-item-number-10 {
-            width: 166px;
-          }
-          h4 {
-            min-height: 18px;
-            max-height: 36px;
-            overflow: hidden;
-          }
-          .track-item-title, .track-item-artist {
-            min-height: 18px;
-            max-height: 18px;
-            overflow: hidden;
-            color: #333;
-            &.hover {
-              color: #1C62B9;
-            }
-          }
-          .track-item-title {
-            font-weight: bold;
-          }
-          .track-item-artist {
-
-          }
-        }
-        .track-item-number {
-          font-size: 40px;
-          line-height: 40px;
-          float: left;
-          width: 20px;
-          color: #fff;
-          text-shadow: 0 0 3px #BBB;
-        }
-        .track-play {
-          display:none;
-          position: absolute;
-          left: 0;
-          top: 0;
-          margin: 19px 0 0 49px;
-          width: 18px;
-          height: 18px;
-          -webkit-border-radius: 9px;
-          -moz-border-radius: 9px;
-          border-radius: 9px;
-          background: black;
-          border: white solid 2px;
-          i {
-            margin: 1px 0 0 3px;
-          }
-        }
-      }
-    }
-  }
 }
 
 
@@ -1500,30 +1502,6 @@ header {
   }
 }
 
-footer {
-  float: left;
-  width: 100%;
-  background: #333;
-  color: white;
-  height: 50px;
-  border-top: #000 solid 1px;
-  .title {
-    margin-top: 15px;
-    float: left;
-    font-size: 16px;
-  }
-  .social-connect {
-    float: right;
-    margin-top: 10px;
-    .social {
-      float: left;
-      padding-left: 10px;
-    }
-    #social-fb {
-      padding-top: 5px;
-    }
-  }
-}
 
 .no-border-radius {
   -webkit-border-radius: 0;

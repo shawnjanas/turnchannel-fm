@@ -7,55 +7,79 @@
 /    Artists
 /    %li Popular
 /    %li Recent
-.main-container
-  #options-header-area
-    /- @genres.each do |genre|
-    %ul.flat-list
-      %li
-        = link_to 'Tracks', '#'
-      %li
-        %span.separator= '-'
-        = link_to 'Releases', '#'
-      %li
-        %span.separator= '-'
-        = link_to 'Artists', '#'
-      %li
-        %span.separator= '-'
-        = link_to 'Playlists', '#'
-  .left-bar
-    .tracks-container
-      .tracks-heading
-        /%ul
-        Hot -
-        Contraversial -
-        New - 
-        Saved
-      .track-items
-        - @popular_tracks.each do |track|
-          %article.track-item.track{:'track-id' => track.id, :'track-remote-id' => track.sc_id, :artist => track.f_artist, :title => track.f_title}
-            /%a{:href => track_url(track.permalink)}
-            .voting
-              /.upvote
-              /  Up
-              .vote
-                23
-              /.downvote
-              /  Down
-            = image_tag track.artwork_url
-            .track-item-details
-              .track-item-title= track.f_title
-              .track-item-artist= track.f_artist
-            .track-play
-              %i.icon-play.icon-white
-  #main-content
+- @track = Track.last
+.genre-bar
+  .genre-item
+    %h4 House
+  .genre-item
+    %h4 Dubstep
+  .genre-item
+    %h4 DrumNBass
+.left-bar
+  .playing-track
+    .playing-track-header
+      %h4 Currently Playing...
+    .playing-track-image
+      = image_tag @track.artwork_url.gsub('large','t300x300')
+    .playing-title
+      %h4 Excision - Raise Your Fist
+    .playing-artist-image
+      = image_tag 'http://geo-media.beatport.com/image/629022.jpg'
+  .playing-history
+    .playing-history-header
+      %h4 Recently played
+.chat-container
+  %p shawnjanas: this was pretty wicked man
+  %p shawnjanas: this was pretty wicked man
+  %p shawnjanas: this was pretty wicked man
+  %p shawnjanas: this was pretty wicked man
+  %p shawnjanas: this was pretty wicked man
+  %p shawnjanas: this was pretty wicked man
+  %p shawnjanas: this was pretty wicked man
+  %p shawnjanas: this was pretty wicked man
+  %p shawnjanas: this was pretty wicked man
+  %p shawnjanas: this was pretty wicked man
+  %p shawnjanas: this was pretty wicked man
+  %p shawnjanas: this was pretty wicked man
+  %p shawnjanas: this was pretty wicked man
+  %p shawnjanas: this was pretty wicked man
+  %p shawnjanas: this was pretty wicked man
+  %p shawnjanas: this was pretty wicked man
+  %p shawnjanas: this was pretty wicked man
+  %p shawnjanas: this was pretty wicked man
+  %p shawnjanas: this was pretty wicked man
+  %p shawnjanas: this was pretty wicked man
+  %p shawnjanas: this was pretty wicked man
+  %p shawnjanas: this was pretty wicked man
+  %p shawnjanas: this was pretty wicked man
+  %p shawnjanas: this was pretty wicked man
+  %p shawnjanas: this was pretty wicked man
+  /#main-player
+  /  = image_tag @track.artwork_url.gsub('large','t300x300')
+  /  #player-bar
+  /    .controls
+  /      /.pre.control#player-pre= "◄◄"
+  /      .play.control#player-play= "►"
+  /      .pause.control#player-pause= "▌▌"
+  /      /.next.control#player-next= "►►"
+  /    .track
+  /      now playing...
+  /      #track-title excision - raise your fist
+  /      #player-controls
+  /        #player-seekbar
+  /          %span#player-elapsed.control 00:00
+  /          #player-seek.control
+  /            #player-progress-bar
+  /              #player-progress-bar-meter
+  /          %span#player-duration.control 00:00
   /#main-content
   /  .main-heading
-  /    %h4 Popular
+  /    %h4 popular
   /  #main-wrapper
 
   /.tracks-container
   /  .tracks-heading
-  /    /%h4 New on TurnChannel
+  /    /%h4 new on turnchannel
   /  .track-items
   /    - @new_tracks.each_with_index do |track, i|
   /      - i += 1

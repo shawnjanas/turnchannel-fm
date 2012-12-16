@@ -1,5 +1,7 @@
 %header
   .navbar-fixed-top
+    #main-header-area
+      %h1= link_to 'TurnChannel.FM', '#'
     #board-header-area
       /- @genres.each do |genre|
       %ul.flat-list
@@ -7,28 +9,5 @@
           %li
             %span.separator= '-'
             = link_to 'Dubstep', '#'
-    #main-header-area
-      %h1= link_to 'TurnChannel.FM', '#'
-      #player-bar
-        .controls
-          .pre.control#player-pre= "◄◄"
-          .play.control#player-play= "►"
-          .pause.control#player-pause= "▌▌"
-          .next.control#player-next= "►►"
-        .track
-          .title Raise your fist
-          .artist Excision
-          #player-controls
-            #player-seekbar
-              %span#player-elapsed.control 00:00
-              #player-seek.control
-                #player-progress-bar
-                  #player-progress-bar-meter
-              %span#player-duration.control 00:00
-            /#player-volume-control.control
-            /  #player-volume-up
-            /    %i.icon-volume-up.icon-zoom.icon-white
-            /  #player-volume-off
-            /    %i.icon-volume-off.icon-zoom.icon-white
 /#player
 /  = @new_tracks.first.f_artist
