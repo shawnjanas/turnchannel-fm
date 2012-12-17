@@ -16,8 +16,10 @@
   .social#social-tw
     %a{:href=>"https://twitter.com/share", :class=>"twitter-share-button", :'data-via'=>"TurnChannel", :'data-hashtags'=>"turnchannel", :'data-dnt'=>"true", :'data-text'=>"This #{@track.tag.name} track is sick! #{@track.f_full_title}", :'data-count' => 'vertical'} Tweet
 
-.player.container-bg{:'track-id' => @track.sc_id, :'next-track' => track_url(@tracks_rnd.first.permalink)}
+.player{:'track-id' => @track.sc_id, :'next-track' => track_url(@tracks_rnd.first.permalink)}
   .player-wrapper
+    .player-genre-bar
+      %h4= @track.tag.name
     = image_tag @track.artwork_url.gsub('large','t500x500')
     .player-header
       .player-title
@@ -55,6 +57,26 @@
             %i.icon-volume-up.icon-zoom.icon-white
           #player-volume-off
             %i.icon-volume-off.icon-zoom.icon-white
+  .player-queue
+    .top10-tracks-container
+      .top10-tracks-heading
+        %h4 Play Queue
+      .top10-track-items
+        - @tracks[0..9].each_with_index do |track, i|
+          %article.top10-track-item.track
+            %a{:href => track_url(track.permalink)}
+              = image_tag track.artwork_url
+              - if (i+1) == 10
+                .top10-track-item-details.track-item-number-10
+                  .track-item-title= track.f_title
+                  .track-item-artist= track.f_artist
+              - else
+                .top10-track-item-details
+                  .track-item-title= track.f_title
+                  .track-item-artist= track.f_artist
+              .track-item-number= (i+1)
+              .track-play
+                %i.icon-play.icon-white
   .player-description
     = raw @track.description.gsub("\n", '<br/>')
   .player-comments

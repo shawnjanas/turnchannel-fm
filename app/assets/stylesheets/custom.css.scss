@@ -756,7 +756,7 @@ header {
   float:left;
 
   color: #f8f8f8;
-  width: 520px;
+  width: 820px;
 }
 .player-container {
   width: 960px;
@@ -846,14 +846,111 @@ header {
   position: relative;
 
   float: left;
-  width: 519px;
-  height: 519px;
-
-  border: #DDD solid 1px;
+  width: 521px;
+  height: 521px;
 
   img {
     width: 521px;
     height: 521px;
+  }
+}
+.player-genre-bar {
+  background: #222;
+  height: 35px;
+  padding: 5px 0 0 10px;
+  border-right: #333 solid 1px;
+  h4 {
+    color: white;
+  }
+}
+.player-queue {
+  background: #222;
+  color: #fff;
+  height: 521px;
+  float:left;
+  width: 299px;
+  .top10-tracks-container {
+    background: #DDD;
+    border: none;
+    img {
+      float: left;
+    }
+    .top10-tracks-heading {
+      background: #222;
+      height: 35px;
+      padding: 5px 0 0 10px;
+      h4 {
+        color: white;
+      }
+    }
+    .top10-track-items {
+      height: 480px;
+      overflow: scroll;
+      border-bottom: #AAA 1px solid;
+      .top10-track-item {
+        position: relative;
+        padding: 10px;
+        height: 40px;
+        border-bottom: #FFF solid 1px;
+        img {
+          width: 40px;
+          height: 40px;
+        }
+        .top10-track-item-details {
+          width: 209px;
+          float: left;
+          padding-left: 10px;
+          &.track-item-number-10 {
+            width: 187px;
+          }
+          h4 {
+            min-height: 18px;
+            max-height: 36px;
+            overflow: hidden;
+          }
+          .track-item-title, .track-item-artist {
+            min-height: 18px;
+            max-height: 18px;
+            overflow: hidden;
+            color: #333;
+            &.hover {
+              color: #1C62B9;
+            }
+          }
+          .track-item-title {
+            font-weight: bold;
+          }
+          .track-item-artist {
+
+          }
+        }
+        .track-item-number {
+          font-size: 40px;
+          line-height: 40px;
+          float: left;
+          width: 20px;
+          color: #fff;
+          text-shadow: 0 0 3px #BBB;
+        }
+        .track-play {
+          display:none;
+          position: absolute;
+          left: 0;
+          top: 0;
+          margin: 19px 0 0 19px;
+          width: 18px;
+          height: 18px;
+          -webkit-border-radius: 9px;
+          -moz-border-radius: 9px;
+          border-radius: 9px;
+          background: black;
+          border: white solid 2px;
+          i {
+            margin: 1px 0 0 3px;
+          }
+        }
+      }
+    }
   }
 }
 .player-avatar {
@@ -861,7 +958,7 @@ header {
 }
 .player-header {
   position: absolute;
-  top: 0;
+  top: 40px;
   left: 0;
 
   padding: 10px 20px;
