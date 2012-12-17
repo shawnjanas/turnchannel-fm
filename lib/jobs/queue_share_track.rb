@@ -28,9 +28,12 @@ class QueueShareTrack
         message = "Now this is aggressive... Like if you think so."
       end
 
+      p_ids = ['506ba3061b81f6513c00001e']
+      p_ids = ['506ba34c1b81f6393c00001a', '506ba3061b81f6513c00001e'] if Random.rand(10) < 3
+
       HTTParty.post 'https://api.bufferapp.com/1/updates/create.json?access_token=1/6538074d7e3ff8fe02a8d458c3071390', :body => {
         :text => "#{message} http://www.turnchannel.com/tracks/#{track.permalink}",
-        :profile_ids => ['506ba34c1b81f6393c00001a', '506ba3061b81f6513c00001e'],
+        :profile_ids => p_ids,
         :now => true,
         :shorten => false,
       }
@@ -53,7 +56,7 @@ class QueueShareTrack
 
       message += "Hey man. Your track was featured on TurnChannel. Just thought we would let you know."
       HTTParty.post 'https://api.bufferapp.com/1/updates/create.json?access_token=1/6538074d7e3ff8fe02a8d458c3071390', :body => {
-        :text => "#{message} http://www.turnchannel.com/tracks/#{track.permalink}",
+        :text => "#{message} http://turnchannel.com/tracks/#{track.permalink}",
         :profile_ids => ['506ba3061b81f6513c00001e'], # Only Twitter
         :now => true,
         :shorten => false,
