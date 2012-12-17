@@ -366,9 +366,11 @@ header {
   }
 }
 .related-tracks-container {
-  float:left;
+  position: fixed;
+  left: 50%;
   width: 300px;
-  margin: 10px 0 20px 4px;
+  margin: 10px 0 20px 200px;
+  background: #fff;
   img {
     float: left;
   }
@@ -856,11 +858,6 @@ header {
     height: 521px;
   }
 }
-.player-title {
-  height: 72px;
-  text-shadow: .1em .1em .2em #333;
-  overflow: hidden;
-}
 .player-avatar {
 
 }
@@ -869,20 +866,26 @@ header {
   top: 0;
   left: 0;
 
-  width: 481px;
+  width: 441px;
   height: 90px;
 
   padding: 10px 20px;
+  margin: 20px;
+
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.8);
 
   color: #f8f8f8;
 
   background: rgb(0, 0, 0);
   background: rgba(0, 0, 0, 0.8);
-  h2 {
-    text-align: center;
+  border-radius: 5px;
+
+  h1 {
     color: white;
-    font-size: 24px;
-    line-height: 36px;
+    font-size: 36px;
+    line-height: 42px;
+    font-weight: bold;
+
     margin: 0;
     span {
       font-weight: lighter;
@@ -894,20 +897,23 @@ header {
   bottom: 0;
   left: 0;
 
-  width: 481px;
+  width: 441px;
   height: 45px;
 
   padding: 10px 20px;
+  margin: 20px;
 
   color: #f8f8f8;
 
   background: rgb(0, 0, 0);
   background: rgba(0, 0, 0, 0.8);
+
+  border-radius: 5px;
+
   #player-pause {
     font-size: 32px;
     color: white;
   }
-
 }
 .player-artist {
   font-size: 32px;

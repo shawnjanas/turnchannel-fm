@@ -1,5 +1,5 @@
 .guide-bar
-  %h5 Boards
+  %h5 Stations
   %ul
     %li House
     %li Dubstep
@@ -26,16 +26,9 @@
     = image_tag @track.artwork_url.gsub('large','t500x500')
     .player-header
       .player-title
-        %h2= @track.f_title
-        %h2
-          %span= @track.f_artist
-      #player-controls
-        #player-seekbar
-          %span#player-elapsed.control 00:00
-          #player-seek.control
-            #player-progress-bar
-              #player-progress-bar-meter
-          %span#player-duration.control 00:00
+        %h1
+          = @track.f_artist
+          %span= @track.f_title
         /#player-volume-control.control
         /  #player-volume-up
         /    %i.icon-volume-up.icon-zoom.icon-white
@@ -46,8 +39,15 @@
         %i.icon-pause.icon-zoom.icon-white
       #player-pause
         ▶
+      #player-controls
+        #player-seekbar
+          %span#player-elapsed.control 00:00
+          #player-seek.control
+            #player-progress-bar
+              #player-progress-bar-meter
+          %span#player-duration.control 00:00
   .related-track-items
-    - @tracks.each do |track|
+    - @tracks[1..-1].each do |track|
       %article.related-track-item.track
         %a{:href => track_url(track.permalink)}
           = image_tag track.artwork_url
