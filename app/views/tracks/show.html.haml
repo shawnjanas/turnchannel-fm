@@ -1,25 +1,42 @@
 .guide-bar
-  %h5 Did you like this track?
-  .vote
-    - upvote = ''
-    - upvote = 'selected' if current_user && TrackLike.find_by_user_id_and_track_id(current_user.id, @track.id)
-    #upvote{:href => "/tracks/#{@track.id}/toggle_like", :title => "Upvote this track!", :class => upvote}
-      %span#like-num= @track.track_likes.size
-      %i.icon-thumbs-up.icon-white
-    - downvote = ''
-    - downvote = 'selected' if current_user && TrackDislike.find_by_user_id_and_track_id(current_user.id, @track.id)
-    #downvote{:href => "/tracks/#{@track.id}/toggle_dislike", :title => "Downvote this track!", :class => downvote}
-      %span#dislike-num= @track.track_dislikes.size
-      %i.icon-thumbs-down.icon-white
-  .social#social-fb
-    .fb-like{:'data-href'=>"#{request.protocol}#{request.host_with_port}#{request.fullpath}", :'data-send'=>"false", :'data-layout'=>"box_count", :'data-width'=>"450", :'data-show-faces'=>"false"}
-  .social#social-tw
-    %a{:href=>"https://twitter.com/share", :class=>"twitter-share-button", :'data-via'=>"TurnChannel", :'data-hashtags'=>"turnchannel", :'data-dnt'=>"true", :'data-text'=>"This #{@track.tag.name} track is sick! #{@track.f_full_title}", :'data-count' => 'vertical'} Tweet
+  .guide
+    %h5 Play me some...
+    %ul
+      - @tags.each do |tag|
+        - selected = ''
+        - selected = 'selected' if tag.id == @track.tag.id
+        %a{:href => "/discover/#{tag.name}"}
+          %li{:class => selected}
+            = tag.name.camelize
+  /.share-track
+  /  %h5 Did you like this track?
+  /  .vote
+  /    - upvote = ''
+  /    - upvote = 'selected' if current_user && TrackLike.find_by_user_id_and_track_id(current_user.id, @track.id)
+  /    #upvote{:href => "/tracks/#{@track.id}/toggle_like", :title => "Upvote this track!", :class => upvote}
+  /      %span#like-num= @track.track_likes.size
+  /      %i.icon-thumbs-up.icon-white
+  /    - downvote = ''
+  /    - downvote = 'selected' if current_user && TrackDislike.find_by_user_id_and_track_id(current_user.id, @track.id)
+  /    #downvote{:href => "/tracks/#{@track.id}/toggle_dislike", :title => "Downvote this track!", :class => downvote}
+  /      %span#dislike-num= @track.track_dislikes.size
+  /      %i.icon-thumbs-down.icon-white
+  /  .social#social-fb
+  /    .fb-like{:'data-href'=>"#{request.protocol}#{request.host_with_port}#{request.fullpath}", :'data-send'=>"false", :'data-layout'=>"box_count", :'data-width'=>"450", :'data-show-faces'=>"false"}
+  /  .social#social-tw
+  /    %a{:href=>"https://twitter.com/share", :class=>"twitter-share-button", :'data-via'=>"TurnChannel", :'data-hashtags'=>"turnchannel", :'data-dnt'=>"true", :'data-text'=>"This #{@track.tag.name} track is sick! #{@track.f_full_title}", :'data-count' => 'vertical'} Tweet
+  .share-turnchannel
+    %h5 Help spread the word
+    .social-connect
+      .social#social-tw
+        %a{:href=>"https://twitter.com/TurnChannel", :class=>"twitter-follow-button", :'data-show-count'=>"false", :'data-dnt'=>"true"} Follow @TurnChannel
+      .social#social-fb
+        .fb-like{:'data-href'=>"http://www.facebook.com/TurnChannel", :'data-send'=>"false", :'data-layout'=>"button_count", :'data-width'=>"450", :'data-show-faces'=>"false"}
 
-.player{:'track-id' => @track.sc_id, :'next-track' => track_url(@tracks_rnd.first.permalink)}
+.player{:'track-id' => @track.sc_id, :'next-track' => track_url(@next_track)}
   .player-wrapper
     .player-genre-bar
-      %h4= @track.tag.name
+      %h4= @track.tag.name.camelize
     = image_tag @track.artwork_url.gsub('large','t500x500')
     .player-header
       .player-title
@@ -35,7 +52,7 @@
         #player-pause.icon-fade
           %span ▌▌
         #player-step-forward.icon-fade
-          %a{:href => track_url(@tracks_rnd.first.permalink), :title => 'Next Track'}
+          %a{:href => track_url(@next_track), :title => 'Next Track'}
             ►►
         .pull-right
           %a{:href => @track.sc_url, :title => 'Source', :target => '_blank'}
@@ -62,8 +79,10 @@
       .top10-tracks-heading
         %h4 Play Queue
       .top10-track-items
-        - @tracks[0..9].each_with_index do |track, i|
-          %article.top10-track-item.track
+        - @play_queue.each_with_index do |track, i|
+          - selected = ''
+          - selected = 'selected' if track.id == @track.id
+          %article{:class => "top10-track-item track #{selected}"}
             %a{:href => track_url(track.permalink)}
               = image_tag track.artwork_url
               - if (i+1) == 10
@@ -75,14 +94,16 @@
                   .track-item-title= track.f_title
                   .track-item-artist= track.f_artist
               .track-item-number= (i+1)
-              .track-play
+              .track-play{:class=>selected}
                 %i.icon-play.icon-white
+.player-meta.container-bg
   .player-description
     = raw @track.description.gsub("\n", '<br/>')
   .player-comments
     .fb-comments-wrapper
       .fb-comments{:'data-href'=>"#{request.protocol}#{request.host_with_port}#{request.fullpath}", :'data-num-posts'=>"5", :'data-width'=>"500", :'data-colorscheme'=>"white"}
 .related-tracks-container
+  %h4 Related Tracks
   .related-track-items
     - @tracks.each do |track|
       %article.related-track-item.track

@@ -3,10 +3,14 @@ $(document).ready(function() {
 
   $('.track').hover(function() {
     $(this).find('.track-item-title').addClass('hover');
-    $(this).find('.track-play').show();
+    if($(this).find('.track-play.selected').length == 0) {
+      $(this).find('.track-play').show();
+    }
   }, function() {
     $(this).find('.track-item-title').removeClass('hover');
-    $(this).find('.track-play').hide();
+    if($(this).find('.track-play.selected').length == 0) {
+      $(this).find('.track-play').hide();
+    }
   });
 
   $('#global-search').submit(function(e) {
@@ -309,6 +313,9 @@ $(document).ready(function() {
     mixpanel.track_links('.related-track-item a', 'related track click');
     mixpanel.track_links('.search-track-item a', 'search track click');
     mixpanel.track_links('.register-btn', 'register button click');
+    mixpanel.track_links('#player-step-forward', 'next track click');
+    mixpanel.track_links('.player-queue a', 'player queue track click');
+    mixpanel.track_links('.guide-bar a', 'guide bar genre click');
     //mixpanel.track_links('#upvote', 'upvote btn click');
     //mixpanel.track_links('#downvote', 'downvote btn click');
   }

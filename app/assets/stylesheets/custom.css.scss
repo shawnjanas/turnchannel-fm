@@ -310,7 +310,30 @@ header {
 .guide-bar {
   float: left;
   width: 175px;
-  margin-top: 10px;
+  margin-top: 20px;
+  .guide {
+    margin-bottom: 10px;
+    ul {
+      list-style: none;
+      margin:0;
+      a {
+        color: #222;
+        li {
+          list-style: none;
+          margin:0;
+          padding: 2px 2px 2px 5px;
+          &:hover, &.selected {
+            background: #222;
+            color: #fff;
+
+          }
+        }
+        &:hover {
+          text-decoration: none;
+        }
+      }
+    }
+  }
   .vote {
     float:left;
     color: #fff;
@@ -357,11 +380,11 @@ header {
   .social {
     float: left;
     &#social-fb {
-      width: 50px;
+      width: 150px;
     }
     &#social-tw {
-      width: 50px;
-      margin-left: 10px;
+      width: 150px;
+      margin-bottom: 10px;
     }
   }
 }
@@ -371,6 +394,9 @@ header {
   margin: 10px 0 20px 4px;
   img {
     float: left;
+  }
+  h4 {
+    margin-left: 10px;
   }
   .related-tracks-heading {
     background: #333;
@@ -459,7 +485,7 @@ header {
       position: relative;
       padding: 10px;
       height: 40px;
-      border-bottom: #FFF solid 1px;
+      border-bottom: #DDD solid 1px;
       img {
         width: 40px;
         height: 40px;
@@ -757,6 +783,7 @@ header {
 
   color: #f8f8f8;
   width: 820px;
+  margin-top: 10px;
 }
 .player-container {
   width: 960px;
@@ -841,13 +868,23 @@ header {
     }
   }
 }
+.player-meta {
+  float: left;
+  width: 520px;
+  margin-left: 175px;
+  margin-top: 0;
+}
 .player-wrapper {
   overflow: hidden;
   position: relative;
 
   float: left;
   width: 521px;
-  height: 521px;
+  height: 561px;
+
+  box-shadow: 0 1px 3px rgba(34, 25, 25, 0.4);
+  -moz-box-shadow: 0 1px 2px rgba(34, 25, 25, 0.4);
+  -webkit-box-shadow: 0 1px 3px rgba(34, 25, 25, 0.4);
 
   img {
     width: 521px;
@@ -884,7 +921,7 @@ header {
       }
     }
     .top10-track-items {
-      height: 480px;
+      height: 520px;
       overflow: scroll;
       border-bottom: #AAA 1px solid;
       .top10-track-item {
@@ -892,6 +929,12 @@ header {
         padding: 10px;
         height: 40px;
         border-bottom: #FFF solid 1px;
+        &.selected {
+          background: #EEE;
+        }
+        &:hover {
+          background: #EFEFEF;
+        }
         img {
           width: 40px;
           height: 40px;
@@ -934,6 +977,9 @@ header {
         }
         .track-play {
           display:none;
+          &.selected {
+            display:block;
+          }
           position: absolute;
           left: 0;
           top: 0;
