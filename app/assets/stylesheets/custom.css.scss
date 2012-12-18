@@ -922,7 +922,7 @@ header {
     }
     .top10-track-items {
       height: 520px;
-      overflow: scroll;
+      overflow: hidden;
       border-bottom: #AAA 1px solid;
       .top10-track-item {
         position: relative;

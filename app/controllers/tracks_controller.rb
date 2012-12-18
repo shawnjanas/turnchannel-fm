@@ -6,6 +6,7 @@ class TracksController < ApplicationController
     @new_tracks = Track.order("created_at DESC").limit(10)
     #@featured_tracks = Track.order("created_at DESC").limit(8)
     @featured_tracks = [Track.find_by_id(3041), Track.find_by_id(2991), Track.find_by_id(2821), Track.find_by_id(2759), Track.find_by_id(2842), Track.find_by_id(2992), Track.find_by_id(3050), Track.find_by_id(2970)]
+    session[:auto_play] = true
   end
 
   def discover
@@ -18,10 +19,14 @@ class TracksController < ApplicationController
       @track = Track.order("RANDOM()").limit(1).first
     end
 
+    session[:auto_play] = true
+
     redirect_to track_url(@track.permalink)
   end
 
   def search
+    session[:auto_play] = true
+
     unless params[:q].blank?
       @q = params[:q]
 
@@ -53,11 +58,11 @@ class TracksController < ApplicationController
         @play_queue = session[:play_queue].map { |id| records[id].first }
 
         unless @play_queue.include? @track
-          @play_queue = [@track] + Track.where(:tag_id => @track.tag.id).order("RANDOM()").limit(9)
+          @play_queue = [@track] + Track.where(:tag_id => @track.tag.id).order("RANDOM()").limit(7)
           session[:play_queue] = @play_queue.map{|z|z.id}
         end
       else
-        @play_queue = [@track] + Track.where(:tag_id => @track.tag.id).order("RANDOM()").limit(9)
+        @play_queue = [@track] + Track.where(:tag_id => @track.tag.id).order("RANDOM()").limit(7)
         session[:play_queue] = @play_queue.map{|z|z.id}
       end
 
@@ -68,6 +73,10 @@ class TracksController < ApplicationController
       else
         @next_track = @tracks_rnd.first.permalink
       end
+
+      @auto_play = 'false'
+      @auto_play = 'true' if session[:auto_play]
+      session[:auto_play] = true
     else
       redirect_to root_path
     end

@@ -81,6 +81,15 @@ $(document).ready(function() {
 
   var track_id = $('.player').attr('track-id');
   if(typeof track_id === 'undefined') return false;
+  var auto_play = $('.player').attr('auto-play') == 'true' || false;
+
+  if(auto_play) {
+    $('#player-pause').css('display', 'inline-block');
+    $('#player-play').hide();
+  } else {
+    $('#player-play').css('display', 'inline-block');
+    $('#player-pause').hide();
+  }
 
   var player = undefined;
   var loading = true;
@@ -95,7 +104,7 @@ $(document).ready(function() {
       window.location = href;
     } else {
       SC.stream("/tracks/"+track_id, {
-        autoPlay: true,
+        autoPlay: auto_play,
         useHTML5Audio: true,
         ontimedcomments: this._ontimedcomments,
         onplay: this._onplay,

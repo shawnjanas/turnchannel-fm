@@ -33,7 +33,7 @@
       .social#social-fb
         .fb-like{:'data-href'=>"http://www.facebook.com/TurnChannel", :'data-send'=>"false", :'data-layout'=>"button_count", :'data-width'=>"450", :'data-show-faces'=>"false"}
 
-.player{:'track-id' => @track.sc_id, :'next-track' => track_url(@next_track)}
+.player{:'track-id' => @track.sc_id, :'next-track' => track_url(@next_track), :'auto-play' => @auto_play}
   .player-wrapper
     .player-genre-bar
       %h4= @track.tag.name.camelize
@@ -85,14 +85,9 @@
           %article{:class => "top10-track-item track #{selected}"}
             %a{:href => track_url(track.permalink)}
               = image_tag track.artwork_url
-              - if (i+1) == 10
-                .top10-track-item-details.track-item-number-10
-                  .track-item-title= track.f_title
-                  .track-item-artist= track.f_artist
-              - else
-                .top10-track-item-details
-                  .track-item-title= track.f_title
-                  .track-item-artist= track.f_artist
+              .top10-track-item-details
+                .track-item-title= track.f_title
+                .track-item-artist= track.f_artist
               .track-item-number= (i+1)
               .track-play{:class=>selected}
                 %i.icon-play.icon-white
