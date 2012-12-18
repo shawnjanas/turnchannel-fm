@@ -318,7 +318,7 @@ $(document).ready(function() {
     mixpanel.track_links('.discover-track-item a', 'discover genre click');
     mixpanel.track_links('.topbar-link', 'discover click');
     mixpanel.track_links('.new-track-item a', 'new track click');
-    mixpanel.track_links('.top10-track-item a', 'top10 track click');
+    mixpanel.track_links('.right-bar .top10-track-item a', 'top10 track click');
     mixpanel.track_links('.related-track-item a', 'related track click');
     mixpanel.track_links('.search-track-item a', 'search track click');
     mixpanel.track_links('.register-btn', 'register button click');
