@@ -1,5 +1,5 @@
 class Track < ActiveRecord::Base
-  attr_accessible :title, :full_title, :plays, :cached_plays, :sc_url, :sc_id, :artwork_url, :purchase_url, :description, :duration, :label_name, :artist, :genre_id, :created_at, :user_id, :tag_id, :searchable_metadata
+  attr_accessible :source, :title, :full_title, :plays, :cached_plays, :sc_url, :sc_id, :artwork_url, :purchase_url, :description, :duration, :label_name, :artist, :genre_id, :created_at, :user_id, :tag_id, :searchable_metadata, :raw_data, :published
 
   has_permalink :full_title
 
@@ -16,25 +16,67 @@ class Track < ActiveRecord::Base
 
   before_save :parse_title
 
-  def self.build(user_id, tag, track_hash)
+  def self.build(user_id, source, tag, track_hash)
+    puts 'Suppp'
+
     if track_hash
-      if track_hash.stream_url && track_hash.artwork_url
-        track = Track.create(
-          :full_title => track_hash.title,
-          :sc_url => track_hash.permalink_url,
-          :sc_id => track_hash.id,
-          :artwork_url => track_hash.artwork_url,
-          :purchase_url => track_hash.purchase_url,
-          :description => track_hash.description,
-          :duration => track_hash.duration,
+      if source == 'sc'
+        if track_hash.stream_url && track_hash.artwork_url
+          track = Track.create(
+            :source => source,
+            :full_title => track_hash.title,
+            :sc_url => track_hash.permalink_url,
+            :sc_id => track_hash.id,
+            :artwork_url => track_hash.artwork_url,
+            :purchase_url => track_hash.purchase_url,
+            :description => track_hash.description,
+            :duration => track_hash.duration,
+            :plays => 0,
+            :cached_plays => 0,
+            :user_id => user_id,
+            :tag_id => tag.id,
+            :raw_data => track_hash.to_json,
+            :published => true
+          )
+        end
+      elsif source == 'bp'
+        puts 'Made it!!!!'
+        track = Track.new(
+          :source => source,
+          :full_title => "#{track_hash['artists'][0]['name']} - #{track_hash['name']} #{track_hash['mixName']}",
+          :title => track_hash['title'],
+          :artist => track_hash['artists'][0]['name'],
+          :sc_url => nil,
+          :sc_id => nil,
+          :artwork_url => track_hash['images']['large'],
+          :purchase_url => "http://www.beatport.com/track/#{track_hash['slug']}/#{track_hash['id']}",
+          :description => nil,
+          :duration => self.parse_time(track_hash['length']) * 1000,
           :plays => 0,
           :cached_plays => 0,
           :user_id => user_id,
-          :tag_id => tag.id
+          :tag_id => tag.id,
+          :raw_data => track_hash.to_json,
+          :published => false
         )
+        track.find_soundcloud_track!
+        track.save
+        puts track.errors.inspect
       end
     else
       throw :invalid_track
+    end
+  end
+
+  def self.parse_time(time)
+    time_a = time.split(':')
+
+    if time_a.size == 3
+      time_a[0].to_i * 60 * 60 + time_a[1].to_i * 60 + time_a[2].to_i
+    elsif time_a.size == 2
+      time_a[0].to_i * 60 + time_a[1].to_i
+    else
+      time
     end
   end
 
@@ -45,12 +87,14 @@ class Track < ActiveRecord::Base
   end
 
   def parse_title
-    title, *rest = self.full_title.split(/ by /)
+    if self.source == 'sc'
+      title, *rest = self.full_title.split(/ by /)
 
-    self.title = title
-    _rest = rest.join(' by ')
-    self.artist = _rest.split(/ - /).first
-    self.full_title = self.full_title.downcase
+      self.title = title
+      _rest = rest.join(' by ')
+      self.artist = _rest.split(/ - /).first
+      self.full_title = self.full_title.downcase
+    end
   end
 
   def f_full_title
@@ -118,6 +162,25 @@ class Track < ActiveRecord::Base
           end
         end
       end
+    end
+
+    nil
+  end
+
+  def find_soundcloud_track!
+    title = self.full_title
+
+    puts title
+
+    client = Soundcloud.new(:client_id => 'e3216af75bcd70ee4e5d91a6b9f1d302')
+    track = client.get('/tracks', :q => title, :'duration[from]' => self.duration-5000, :'duration[to]' => self.duration+5000).first
+
+    puts track.inspect
+    unless track.blank?
+      self.sc_url = track.permalink_url
+      self.sc_id = track.id
+      self.description = track.description
+      self.save
     end
 
     nil

@@ -4,12 +4,12 @@ class QueueNewTracks
   def self.perform
     user = User.find_by_id(1)
 
-    Forum.all.each do |forum|
+    Forum.where(:source => 'sc').each do |forum|
       tracks = QueueNewTracks.fetch_tracks(user, forum)
 
       tracks.reverse.each_with_index do |track, i|
-        track_obj = user.submit_track(forum.tag, track)
-        Resque.enqueue(QueueShareTrack, track_obj.id) if i == 0 && Rails.env.production?
+        track_obj = user.submit_track('sc', forum.tag, track)
+        Resque.enqueue(QueueShareTrack, track_obj.id) if Rails.env.production?
       end
 
       forum.last_fetch = Time.now

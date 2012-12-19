@@ -20,7 +20,7 @@ class User < ActiveRecord::Base
     self.email.downcase!
   end
 
-  def submit_track(tag, sc_url)
+  def submit_track(source, tag, sc_url)
     track = nil
 
     client = Soundcloud.new(:client_id => 'e3216af75bcd70ee4e5d91a6b9f1d302')
@@ -31,7 +31,7 @@ class User < ActiveRecord::Base
       track = sc_url
     end
 
-    Track.build(self.id, tag, track)
+    Track.build(self.id, source, tag, track)
   end
 
   def self.find_for_facebook_oauth(auth, signed_in_resource=nil)
