@@ -68,7 +68,7 @@ class TracksController < ApplicationController
 
       ti = @play_queue.index(@track) + 1
 
-      if ti < 10
+      if ti < 8
         @next_track = @play_queue[ti]
       else
         @next_track = @tracks_rnd.first.permalink
