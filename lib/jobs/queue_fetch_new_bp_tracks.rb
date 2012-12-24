@@ -8,18 +8,14 @@ class QueueFetchNewBpTracks
 
     Forum.where(:source => 'bp').each do |forum|
       client = BeatPortClient.new
-      tracks = client.most_popular(forum.remote_id)
+      tracks = client.most_popular(forum.remote_id, :per_page => 40)
 
       tracks.each_with_index do |track, i|
         track_obj = user.submit_track('bp', forum.tag, track)
-        #Resque.enqueue(QueueShareTrack, track_obj.id) if Rails.env.production?
-
-        break if i == 10
       end
 
       forum.last_fetch = Time.now
       forum.save
-      break
     end
   end
 end

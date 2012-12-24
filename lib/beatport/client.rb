@@ -22,6 +22,7 @@ class BeatPortClient
 
   def query(url)
     res = HTTParty.get(URI.escape("http://api.beatport.com#{url}"))
+    puts res.parsed_response
     res.parsed_response if res.parsed_response
   end
 end

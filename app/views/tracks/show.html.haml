@@ -93,7 +93,7 @@
                 %i.icon-play.icon-white
 .player-meta.container-bg
   .player-description
-    = raw @track.description.gsub("\n", '<br/>')
+    = raw @track.description.gsub("\n", '<br/>') if @track.description
   .player-comments
     .fb-comments-wrapper
       .fb-comments{:'data-href'=>"#{request.protocol}#{request.host_with_port}#{request.fullpath}", :'data-num-posts'=>"5", :'data-width'=>"500", :'data-colorscheme'=>"white"}

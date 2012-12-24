@@ -12,13 +12,11 @@ class Track < ActiveRecord::Base
   has_many :track_dislikes
   has_many :disliked_users, :through => :track_dislikes
 
-  validates :sc_url, :presence => true, :uniqueness => true
+  #validates :sc_url
 
   before_save :parse_title
 
   def self.build(user_id, source, tag, track_hash)
-    puts 'Suppp'
-
     if track_hash
       if source == 'sc'
         if track_hash.stream_url && track_hash.artwork_url
@@ -40,15 +38,14 @@ class Track < ActiveRecord::Base
           )
         end
       elsif source == 'bp'
-        puts 'Made it!!!!'
         track = Track.new(
           :source => source,
           :full_title => "#{track_hash['artists'][0]['name']} - #{track_hash['name']} #{track_hash['mixName']}",
-          :title => track_hash['title'],
+          :title => track_hash['name'],
           :artist => track_hash['artists'][0]['name'],
           :sc_url => nil,
           :sc_id => nil,
-          :artwork_url => track_hash['images']['large'],
+          :artwork_url => track_hash['images']['large']['url'],
           :purchase_url => "http://www.beatport.com/track/#{track_hash['slug']}/#{track_hash['id']}",
           :description => nil,
           :duration => self.parse_time(track_hash['length']) * 1000,
@@ -59,7 +56,7 @@ class Track < ActiveRecord::Base
           :raw_data => track_hash.to_json,
           :published => false
         )
-        track.find_soundcloud_track!
+        #track.find_soundcloud_track!
         track.save
         puts track.errors.inspect
       end
@@ -168,19 +165,49 @@ class Track < ActiveRecord::Base
   end
 
   def find_soundcloud_track!
-    title = self.full_title
+    title = self.title
+    artist = self.artist
 
-    puts title
+    full_title = self.full_title
 
     client = Soundcloud.new(:client_id => 'e3216af75bcd70ee4e5d91a6b9f1d302')
-    track = client.get('/tracks', :q => title, :'duration[from]' => self.duration-5000, :'duration[to]' => self.duration+5000).first
+    tracks = client.get('/tracks', :q => title, :'duration[from]' => self.duration-5000, :'duration[to]' => self.duration+5000)
 
-    puts track.inspect
-    unless track.blank?
-      self.sc_url = track.permalink_url
-      self.sc_id = track.id
-      self.description = track.description
-      self.save
+    tracks.each do |track|
+      puts 'track'
+      puts full_title
+
+      valid = true
+      track_title = track.title.downcase
+
+      puts track_title
+
+      puts "T: #{title}"
+      title.downcase.split(' ').each do |token|
+        unless track_title.include? token
+          valid = false
+          puts token
+        end
+      end
+
+      puts "A: #{artist}"
+      artist.downcase.split(' ').each do |token|
+        unless track_title.include? token
+          valid = false
+          puts token
+        end
+      end
+
+      puts valid
+
+      if valid
+        self.sc_url = track.permalink_url
+        self.sc_id = track.id
+        self.description = track.description || ''
+        self.save
+
+        break
+      end
     end
 
     nil
