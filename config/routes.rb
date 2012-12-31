@@ -1,7 +1,7 @@
 Turnchannelfm::Application.routes.draw do
   ActiveAdmin.routes(self)
 
-  mount Resque::Server.new, :at => "/resque"
+  mount Resque::Server.new, :at => "/resque" unless ENV['RAILS_ENV'] == 'test'
 
   devise_for :admin_users, ActiveAdmin::Devise.config
 

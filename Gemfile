@@ -9,6 +9,9 @@ gem 'redis'
 gem 'resque', "~> 1.22.0"
 gem 'resque-scheduler'
 
+gem 'mongoid', '3.0.0'
+gem 'bson_ext'
+
 gem 'soundcloud'
 gem 'youtube_it'
 
@@ -24,6 +27,7 @@ gem 'has_permalink'
 
 group :development, :test do
   gem 'rspec-rails', '2.9.0'
+  gem 'factory_girl'
 end
 
 # Gems used only for assets and not required
@@ -37,6 +41,12 @@ group :assets do
   # gem 'therubyracer', :platforms => :ruby
 
   gem 'uglifier', '>= 1.0.3'
+end
+
+group :test do
+  gem 'rspec-rails', '2.9.0'
+  gem "factory_girl_rails", "~> 4.0"
+  gem "mocha"
 end
 
 gem 'haml-rails'

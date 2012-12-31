@@ -1,5 +1,5 @@
 class Track < ActiveRecord::Base
-  attr_accessible :title, :full_title, :plays, :cached_plays, :sc_url, :sc_id, :artwork_url, :purchase_url, :description, :duration, :label_name, :artist, :genre_id, :created_at, :user_id, :tag_id, :searchable_metadata
+  attr_accessible :title, :full_title, :plays, :daily_plays, :weekly_plays, :sc_url, :sc_id, :artwork_url, :purchase_url, :description, :duration, :label_name, :artist, :genre_id, :created_at, :user_id, :tag_id, :searchable_metadata
 
   has_permalink :full_title
 
@@ -38,9 +38,28 @@ class Track < ActiveRecord::Base
     end
   end
 
-  def play
-    self.plays = self.plays + 1
-    self.cached_plays = self.cached_plays + 1
+  def play!(user, ip_address)
+    return false if ip_address.blank?
+
+    user_id = nil
+    unless user.blank?
+      user_id = user.id
+      user.play_track(self)
+    end
+
+    Play.create(:track_id => self.id, :user_id => user_id, :date => Time.now.to_i, :ip_address => ip_address)
+  end
+
+  def update_plays!(play)
+    client = Resque.redis
+    client.lpush("track:#{self.id}:hourly_plays", play.plays)
+    client.ltrim("track:#{self.id}:hourly_plays", 0, 167)
+
+    hourly_plays = client.lrange("track:#{self.id}:hourly_plays", 0, -1)
+
+    self.plays += play.plays
+    self.daily_plays = hourly_plays[0..23].inject(:+)
+    self.weekly_plays = hourly_plays.inject(:+)
     self.save
   end
 

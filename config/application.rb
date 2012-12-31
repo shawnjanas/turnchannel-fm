@@ -34,6 +34,11 @@ module Turnchannelfm
     # config.i18n.default_locale = :de
 
     # Configure the default encoding used in templates for Ruby 1.9.
+
+    config.generators do |g|
+      g.orm :active_record
+    end
+
     config.encoding = "utf-8"
 
     config.autoload_paths += Dir["#{config.root}/lib/**/"]

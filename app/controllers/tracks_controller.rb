@@ -47,7 +47,8 @@ class TracksController < ApplicationController
     @tags = Tag.all
 
     if @track
-      @track.play
+      @track.play!(current_user, request.remote_ip)
+
       @tracks_popular = Track.where(:tag_id => @track.tag.id).order('cached_plays DESC').limit(7)
       @tracks_rnd = Track.where(:tag_id => @track.tag.id).order("RANDOM()").limit(1)
       @tracks_rnd += Track.order("RANDOM()").limit(7)

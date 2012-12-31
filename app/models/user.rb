@@ -34,6 +34,13 @@ class User < ActiveRecord::Base
     Track.build(self.id, tag, track)
   end
 
+  def play_track(track)
+    return unless track.instance_of? Track
+
+    client = Resque.redis
+    client.lpush("user:#{self.id}:play_history", track.id)
+  end
+
   def self.find_for_facebook_oauth(auth, signed_in_resource=nil)
     user = User.where(:provider => auth.provider, :uid => auth.uid).first
     unless user
