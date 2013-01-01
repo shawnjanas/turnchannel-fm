@@ -3,3 +3,8 @@ queue_new_tracks:
   class: QueueNewTracks
   args:
   description: "Checks for new tracks"
+queue_sc_top_40:
+  cron: "0 0 * * 0" # every Monday at midnight
+  class: QueueScTop40
+  args:
+  description: "Updates top 40 sc tracks"
