@@ -18,24 +18,25 @@ class Track < ActiveRecord::Base
 
   def self.build(user_id, tag, track_hash)
     if track_hash
-      if track_hash.stream_url && track_hash.artwork_url
-        track = Track.create(
-          :full_title => track_hash.title,
-          :sc_url => track_hash.permalink_url,
-          :sc_id => track_hash.id,
-          :artwork_url => track_hash.artwork_url,
-          :purchase_url => track_hash.purchase_url,
-          :description => track_hash.description,
-          :duration => track_hash.duration,
-          :plays => 0,
-          :cached_plays => 0,
-          :user_id => user_id,
-          :tag_id => tag.id
-        )
+      unless (track = Track.find_by_sc_url(track_hash.permalink_url))
+        if track_hash.stream_url && track_hash.artwork_url
+          track = Track.create(
+            :full_title => track_hash.title,
+            :sc_url => track_hash.permalink_url,
+            :sc_id => track_hash.id,
+            :artwork_url => track_hash.artwork_url,
+            :purchase_url => track_hash.purchase_url,
+            :description => track_hash.description,
+            :duration => track_hash.duration,
+            :plays => 0,
+            :cached_plays => 0,
+            :user_id => user_id,
+            :tag_id => tag.id
+          )
+        end
       end
-    else
-      throw :invalid_track
     end
+    track
   end
 
   def play

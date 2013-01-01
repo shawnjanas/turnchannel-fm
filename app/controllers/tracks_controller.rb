@@ -46,23 +46,22 @@ class TracksController < ApplicationController
     @track = Track.find_by_permalink(params[:id])
     @tags = Tag.all
 
+    redis = Resque.redis
+
     if @track
       @track.play
-      @tracks_popular = Track.where(:tag_id => @track.tag.id).order('cached_plays DESC').limit(7)
-      @tracks_rnd = Track.where(:tag_id => @track.tag.id).order("RANDOM()").limit(1)
-      @tracks_rnd += Track.order("RANDOM()").limit(7)
-      @tracks = (@tracks_popular + @tracks_rnd).shuffle
+      @tracks = Track.order("RANDOM()").limit(15)
 
       unless session[:play_queue].blank?
         records = Track.find(session[:play_queue]).group_by(&:id)
         @play_queue = session[:play_queue].map { |id| records[id].first }
 
         unless @play_queue.include? @track
-          @play_queue = [@track] + Track.where(:tag_id => @track.tag.id).order("RANDOM()").limit(7)
+          @play_queue = [@track] + Track.find(redis.lrange("tag:#{@track.tag.name}:top40",0,-1)).shuffle[0..6]
           session[:play_queue] = @play_queue.map{|z|z.id}
         end
       else
-        @play_queue = [@track] + Track.where(:tag_id => @track.tag.id).order("RANDOM()").limit(7)
+        @play_queue = [@track] + Track.find(redis.lrange("tag:#{@track.tag.name}:top40",0,-1)).shuffle[0..6]
         session[:play_queue] = @play_queue.map{|z|z.id}
       end
 
@@ -71,7 +70,7 @@ class TracksController < ApplicationController
       if ti < 8
         @next_track = @play_queue[ti]
       else
-        @next_track = @tracks_rnd.first.permalink
+        @next_track = @tracks.first.permalink
       end
 
       @auto_play = 'false'

@@ -3,37 +3,44 @@ class QueueShareTrack
 
   def self.perform(track_id)
     if (track = Track.find_by_id(track_id))
-      i = Random.rand(11)
-      if i == 0
-        message = "I don't know about you but this track is sick. Like if you agree!"
-      elsif i == 1
-        message = "So who went partying last night?"
-      elsif i == 2
-        message = "BOOOOOOMMM!!!"
-      elsif i == 3
-        message = "Turn it up?!?!?"
-      elsif i == 4
-        message = "BRAND NEW, what do you think?"
-      elsif i == 5
-        message = "Those who danced were thought to be quite insane by those who could not hear the music. Agree?"
-      elsif i == 6
-        message = "Unreal! Like if you agree."
-      elsif i == 7
-        message = "That feeling when discover your new favorite song. Is this it?"
-      elsif i == 8
-        message = "HUGE drop!!! You think so?"
-      elsif i == 9
-        message = "Who was the last DJ you saw live?"
-      elsif i == 10
-        message = "Now this is aggressive... Like if you think so."
+      if Random.rand(10) < 3
+        i = Random.rand(11)
+        if i == 0
+          message = "I don't know about you but this track is sick. Like if you agree!"
+        elsif i == 1
+          message = "So who went partying last night?"
+        elsif i == 2
+          message = "BOOOOOOMMM!!!"
+        elsif i == 3
+          message = "Turn it up?!?!?"
+        elsif i == 4
+          message = "BRAND NEW, what do you think?"
+        elsif i == 5
+          message = "Those who danced were thought to be quite insane by those who could not hear the music. Agree?"
+        elsif i == 6
+          message = "Unreal! Like if you agree."
+        elsif i == 7
+          message = "That feeling when discover your new favorite song. Is this it?"
+        elsif i == 8
+          message = "HUGE drop!!! You think so?"
+        elsif i == 9
+          message = "Who was the last DJ you saw live?"
+        elsif i == 10
+          message = "Now this is aggressive... Like if you think so."
+        end
+
+        HTTParty.post 'https://api.bufferapp.com/1/updates/create.json?access_token=1/6538074d7e3ff8fe02a8d458c3071390', :body => {
+          :text => "#{message} http://www.turnchannel.com/tracks/#{track.permalink}",
+          :profile_ids => ['506ba34c1b81f6393c00001a'],
+          :now => true,
+          :shorten => false,
+        }
       end
 
-      p_ids = ['506ba3061b81f6513c00001e']
-      p_ids = ['506ba34c1b81f6393c00001a', '506ba3061b81f6513c00001e'] if Random.rand(10) < 3
-
+      message = "Check out #{track.f_artist}'s new track \"#{track.f_title}\""
       HTTParty.post 'https://api.bufferapp.com/1/updates/create.json?access_token=1/6538074d7e3ff8fe02a8d458c3071390', :body => {
         :text => "#{message} http://www.turnchannel.com/tracks/#{track.permalink}",
-        :profile_ids => p_ids,
+        :profile_ids => ['506ba3061b81f6513c00001e'],
         :now => true,
         :shorten => false,
       }

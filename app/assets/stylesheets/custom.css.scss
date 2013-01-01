@@ -1110,10 +1110,14 @@ header {
 }
 #player-step-forward {
   margin: 0 5px;
+  width: 60px;
   a {
     margin: 0;
     letter-spacing: -15px;
     font-size: 30px;
+    span {
+      margin-left: 15px;
+    }
     &:hover {
       text-decoration: none;
       color: #AAA;

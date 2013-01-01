@@ -131,7 +131,7 @@ $(document).ready(function() {
         loaded = true;
         if(track_actions) {
           mixpanel.track("play track", {
-            "duration": $('#player-duration').html()
+            "genre": $('.player-genre-bar').find('h4').html()
           });
         }
       });
