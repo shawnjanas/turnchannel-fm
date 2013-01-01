@@ -56,6 +56,8 @@
             ►►
             %span l
         .pull-right
+          %a#save-track{:href => '#', :title => 'Save track'}
+            Save
           %a{:href => @track.sc_url, :title => 'Source', :target => '_blank'}
             SoundCloud
           %a{:href => "/discover/#{@track.tag.name}"}

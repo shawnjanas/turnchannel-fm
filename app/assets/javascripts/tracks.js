@@ -325,6 +325,7 @@ $(document).ready(function() {
     mixpanel.track_links('#player-step-forward', 'next track click');
     mixpanel.track_links('.player-queue a', 'player queue track click');
     mixpanel.track_links('.guide-bar a', 'guide bar genre click');
+    mixpanel.track_links('#save-track', 'save track click');
     //mixpanel.track_links('#upvote', 'upvote btn click');
     //mixpanel.track_links('#downvote', 'downvote btn click');
   }
