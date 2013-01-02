@@ -48,9 +48,9 @@ class TracksController < ApplicationController
 
     redis = Resque.redis
 
-    if @track
-      @track.play
+    unless @track.blank?
       @tracks = Track.order("RANDOM()").limit(15)
+      @track.play
 
       unless session[:play_queue].blank?
         records = Track.find(session[:play_queue]).group_by(&:id)
@@ -70,7 +70,7 @@ class TracksController < ApplicationController
       if ti < 8
         @next_track = @play_queue[ti]
       else
-        @next_track = @tracks.first.permalink
+        @next_track = Track.find(redis.lrange("tag:#{@track.tag.name}:top40",0,-1)).shuffle.first.permalink
       end
 
       @auto_play = 'false'

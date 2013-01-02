@@ -322,7 +322,7 @@ $(document).ready(function() {
     mixpanel.track_links('.related-track-item a', 'related track click');
     mixpanel.track_links('.search-track-item a', 'search track click');
     mixpanel.track_links('.register-btn', 'register button click');
-    mixpanel.track_links('#player-step-forward', 'next track click');
+    mixpanel.track_links('#player-step-forward a', 'next track click');
     mixpanel.track_links('.player-queue a', 'player queue track click');
     mixpanel.track_links('.guide-bar a', 'guide bar genre click');
     mixpanel.track_links('#save-track', 'save track click');
