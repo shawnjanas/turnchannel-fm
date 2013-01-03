@@ -57,11 +57,11 @@ class TracksController < ApplicationController
         @play_queue = session[:play_queue].map { |id| records[id].first }
 
         unless @play_queue.include? @track
-          @play_queue = [@track] + Track.find(redis.lrange("tag:#{@track.tag.name}:top40",0,-1)).shuffle[0..6]
+          @play_queue = [@track] + Track.find(redis.lrange("tag:#{@track.tag.name}:top40",0,-1)).shuffle[0..9]
           session[:play_queue] = @play_queue.map{|z|z.id}
         end
       else
-        @play_queue = [@track] + Track.find(redis.lrange("tag:#{@track.tag.name}:top40",0,-1)).shuffle[0..6]
+        @play_queue = [@track] + Track.find(redis.lrange("tag:#{@track.tag.name}:top40",0,-1)).shuffle[0..9]
         session[:play_queue] = @play_queue.map{|z|z.id}
       end
 

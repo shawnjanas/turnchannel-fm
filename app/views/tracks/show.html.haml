@@ -81,7 +81,7 @@
     .top10-tracks-container
       .top10-tracks-heading
         %h4 Play Queue
-      .top10-track-items
+      .top10-track-items.scroll-pane
         - @play_queue.each_with_index do |track, i|
           - selected = ''
           - selected = 'selected' if track.id == @track.id
@@ -91,7 +91,6 @@
               .top10-track-item-details
                 .track-item-title= track.f_title
                 .track-item-artist= track.f_artist
-              .track-item-number= (i+1)
               .track-play{:class=>selected}
                 %i.icon-play.icon-white
 .player-meta.container-bg

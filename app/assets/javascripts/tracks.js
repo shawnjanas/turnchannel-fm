@@ -312,6 +312,8 @@ $(document).ready(function() {
     });
   });
 
+  $('.scroll-pane').jScrollPane();
+
   if(track_actions) {
     mixpanel.track_links('.featured-tracks-container .featured-track-item a', 'featured track click');
     mixpanel.track_links('.featured-tracks-container .featured-track-main a', 'featured track main click');
