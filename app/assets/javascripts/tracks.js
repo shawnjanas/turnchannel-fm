@@ -314,6 +314,75 @@ $(document).ready(function() {
 
   $('.scroll-pane').jScrollPane();
 
+  /* Play Queue search */
+  $('#queue-search-field').bind("keyup input paste", function() {
+    var query = $(this).val();
+
+    if(query == '')
+      return false;
+
+    SC.get("/playlists.json?q="+query, {limit: 1}, function(res){
+      var tracks = res[0].tracks;
+
+      if(tracks.length > 0) {
+        var html = '';
+        for(var i = 0; i < tracks.length; i++) {
+          var track = tracks[i];
+          html += '<article class="top10-track-item track" track-id="'+track.id+'"><a href="#"><img src="'+track.artwork_url+'"><div class="top10-track-item-details"><div class="track-item-title">'+track.title+'</div><div class="track-item-artist"></div></div><div class="track-play"><i class="icon-play icon-white"></i></div></a></article>';
+        }
+        $('.player-queue .top10-track-items .jspPane').html(html);
+        $('.scroll-pane').jScrollPane();
+      }
+    });
+  });
+
+  $('.track').live('click', function() {
+    var track_id = $(this).attr('track-id');
+
+    player.pause();
+    player = null;
+
+    SC.get("/tracks/"+track_id, function(track, error) {
+      if(error && error.message == '404 - Not Found') {
+        var href = $('.player').attr('next-track');
+        window.location = href;
+      } else {
+        SC.stream("/tracks/"+track_id, {
+          autoPlay: auto_play,
+          useHTML5Audio: true,
+          ontimedcomments: this._ontimedcomments,
+          onplay: this._onplay,
+          onerror: this._onerror,
+          onfinish: function() {
+            var href = $('.player').attr('next-track');
+
+            if(track_actions) {
+              mixpanel.track("track finished", {
+                "elapsed": $('#player-elapsed').html(),
+                "duration": $('#player-duration').html()
+              }, function() {
+                window.location = href;
+              });
+            } else {
+              window.location = href;
+            }
+          }
+        }, function(s) {
+          player = s;
+          player.setVolume(50);
+
+          loading = false;
+          loaded = true;
+          if(track_actions) {
+            mixpanel.track("play track", {
+              "genre": $('.player-genre-bar').find('h4').html()
+            });
+          }
+        });
+      }
+    });
+  });
+
   if(track_actions) {
     mixpanel.track_links('.featured-tracks-container .featured-track-item a', 'featured track click');
     mixpanel.track_links('.featured-tracks-container .featured-track-main a', 'featured track main click');

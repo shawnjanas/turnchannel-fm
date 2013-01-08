@@ -81,6 +81,13 @@
     .top10-tracks-container
       .top10-tracks-heading
         %h4 Play Queue
+      .play-queue-search
+        .search-bar
+          .input-append
+            %form#queue-search
+              %input{:class=>"span2", :id=>"queue-search-field", :type=>"text", :value => 'Dubstep'}
+              %span{:class=>"add-on"}
+                %i.icon-search
       .top10-track-items.scroll-pane
         - @play_queue.each_with_index do |track, i|
           - selected = ''

@@ -920,6 +920,13 @@ header {
   height: 521px;
   float:left;
   width: 299px;
+  #queue-search {
+    margin: 0;
+    padding: 5px 5px 0 5px;
+    input {
+      width: 250px;
+    }
+  }
   .top10-tracks-container {
     background: #DDD;
     border: none;
@@ -935,7 +942,7 @@ header {
       }
     }
     .top10-track-items {
-      height: 520px;
+      height: 480px;
       overflow: hidden;
       border-bottom: #AAA 1px solid;
       .top10-track-item {
