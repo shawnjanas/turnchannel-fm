@@ -238,70 +238,27 @@ $(document).ready(function() {
     }
   });
 
-  $('#upvote').click(function() {
+  $('#save-track').click(function(e) {
     var btn = $(this);
     var href = $(this).attr('href');
 
-    $.post(href, function(d) {
-      if(d.state == 1) {  // Selected
-        btn.addClass('selected');
-        likes = parseInt(btn.find('#like-num').html());
-        likes += 1;
-        btn.find('#like-num').html(likes);
-      } else if(d.state == 2) {
-        btn.addClass('selected');
-        likes = parseInt(btn.find('#like-num').html());
-        likes += 1;
-        btn.find('#like-num').html(likes);
-
-        btn = $('#downvote');
-        btn.removeClass('selected');
-        dislikes = parseInt(btn.find('#dislike-num').html());
-        dislikes -= 1;
-        btn.find('#dislike-num').html(dislikes);
-      } else {
-        btn.removeClass('selected');
-        likes = parseInt(btn.find('#like-num').html());
-        likes -= 1;
-        btn.find('#like-num').html(likes);
-      }
-    }).error(function(e) {
-      if(e.status == 401) {
-        //$('.register-btn').click();
-        $('#sign-in-modal').modal('show');
-      } else {
-        alert('An unexpected error has occured. Please try again...');
-      }
-    });
-  });
-
-  $('#downvote').click(function() {
-    var btn = $(this);
-    var href = $(this).attr('href');
+    e.preventDefault();
 
     $.post(href, function(d) {
       if(d.state == 1) {  // Selected
-        btn.addClass('selected');
-        dislikes = parseInt(btn.find('#dislike-num').html());
-        dislikes += 1;
-        btn.find('#dislike-num').html(dislikes);
-      } else if(d.state == 2) {
-        btn.addClass('selected');
-        dislikes = parseInt(btn.find('#dislike-num').html());
-        dislikes += 1;
-        btn.find('#dislike-num').html(dislikes);
+        btn.html('<i class="icon-star icon-white"/> Unsave');
 
-        btn = $('#upvote');
-        btn.removeClass('selected');
-        likes = parseInt(btn.find('#like-num').html());
-        likes -= 1;
-        btn.find('#like-num').html(likes);
+        if(track_actions) {
+          mixpanel.track("save track click");
+        }
       } else {
-        btn.removeClass('selected');
-        dislikes = parseInt(btn.find('#dislike-num').html());
-        dislikes -= 1;
-        btn.find('#dislike-num').html(dislikes);
+        btn.html('<i class="icon-star-empty icon-white"/> Saved');
+
+        if(track_actions) {
+          mixpanel.track("unsave track click");
+        }
       }
+
     }).error(function(e) {
       if(e.status == 401) {
         //$('.register-btn').click();
@@ -326,8 +283,8 @@ $(document).ready(function() {
     mixpanel.track_links('.register-btn', 'register button click');
     mixpanel.track_links('#player-step-forward a', 'next track click');
     mixpanel.track_links('.player-queue a', 'player queue track click');
-    mixpanel.track_links('.guide-bar a', 'guide bar genre click');
-    mixpanel.track_links('#save-track', 'save track click');
+    mixpanel.track_links('#discover-guide a', 'genre guide bar click');
+    mixpanel.track_links('#favorites-guide a', 'saved tracks guide bar click');
     //mixpanel.track_links('#upvote', 'upvote btn click');
     //mixpanel.track_links('#downvote', 'downvote btn click');
   }

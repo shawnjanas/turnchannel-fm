@@ -1,13 +1,34 @@
 .guide-bar
   .guide
-    %h5 Play me some...
-    %ul
-      - @tags.each do |tag|
-        - selected = ''
-        - selected = 'selected' if tag.id == @track.tag.id
-        %a{:href => "/discover/#{tag.name}"}
-          %li{:class => selected}
-            = tag.name.camelize
+    - if current_user.blank?
+      .guide-container
+        %h5 Discover the best EDM
+        %a.register-btn.btn.btn-primary{:href => user_omniauth_authorize_path(:facebook), :target => '_blank'} Register
+    - else
+      .guide-container
+        .profile
+          = image_tag current_user.avatar
+          .name
+            = current_user.name
+      .guide-container#favorites-guide
+        %h5 Favorites
+        %ul
+          %a{:href => "/saved"}
+            - selected = ''
+            - selected = 'selected' unless session[:type].blank?
+            %li{:class => selected}
+              %i.icon-star
+              Saved Tracks
+    .guide-container#discover-guide
+      %h5 Play me some...
+      %ul
+        - @tags.each do |tag|
+          - selected = ''
+          - selected = 'selected' if tag.id == @track.tag.id && session[:type].blank?
+          %a{:href => "/discover/#{tag.name}"}
+            %li{:class => selected}
+              %i.icon-headphones
+              = tag.name.camelize
   /.share-track
   /  %h5 Did you like this track?
   /  .vote
@@ -36,7 +57,10 @@
 .player{:'track-id' => @track.sc_id, :'next-track' => track_url(@next_track), :'auto-play' => @auto_play}
   .player-wrapper
     .player-genre-bar
-      %h4= @track.tag.name.camelize
+      - if session[:type].blank?
+        %h4= @track.tag.name.camelize
+      - else
+        %h4= session[:type].camelize
     = image_tag @track.artwork_url.gsub('large','t500x500')
     .player-header
       .player-title
@@ -56,8 +80,14 @@
             ►►
             %span l
         .pull-right
-          %a#save-track{:href => '#', :title => 'Save track'}
-            Save
+          - if @track_saved
+            %a#save-track{:href => toggle_save_track_url(@track.id), :title => 'Unsave track'}
+              %i.icon-star.icon-white
+              Unsave
+          - else
+            %a#save-track{:href => toggle_save_track_url(@track.id), :title => 'Save track'}
+              %i.icon-star-empty.icon-white
+              Save
           %a{:href => @track.sc_url, :title => 'Source', :target => '_blank'}
             SoundCloud
           %a{:href => "/discover/#{@track.tag.name}"}

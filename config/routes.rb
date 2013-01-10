@@ -9,8 +9,7 @@ Turnchannelfm::Application.routes.draw do
 
   resources :tracks do
     member do
-      post :toggle_like
-      post :toggle_dislike
+      post :toggle_save
     end
   end
 
@@ -18,6 +17,9 @@ Turnchannelfm::Application.routes.draw do
   match '/discover/:tag' => 'tracks#discover'
   match '/tracks/search/:q' => 'tracks#search'
   match '/tracks/search' => 'tracks#search'
+
+  match '/saved' => 'tracks#saved'
+  match '/playing_history' => 'tracks#playing_history'
 
   match '/a' => "tracks#index"
 

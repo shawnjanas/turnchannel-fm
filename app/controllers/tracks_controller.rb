@@ -1,5 +1,6 @@
 class TracksController < ApplicationController
-  before_filter :authenticate_user!, :only => [:toggle_like, :toggle_dislike]
+  before_filter :authenticate_user!, :only => [:toggle_save]
+  before_filter :manage_session, :except => [:show, :channel, :toggle_save]
 
   def index
     @popular_tracks = Track.order("cached_plays DESC").limit(10)
@@ -19,9 +20,24 @@ class TracksController < ApplicationController
       @track = Track.order("RANDOM()").limit(1).first
     end
 
-    session[:auto_play] = true
-
+    session[:type] = nil
     redirect_to track_url(@track.permalink)
+  end
+
+  def saved
+    unless current_user.blank?
+      @play_queue = current_user.fav_tracks.reverse
+
+      if @play_queue.size > 0
+        session[:type] = 'saved tracks'
+        session[:play_queue] = @play_queue.map{|z|z.id}
+        redirect_to track_url(@play_queue.first.permalink)
+      else
+        redirect_to '/discover/dubstep'
+      end
+    else
+      redirect_to root_url
+    end
   end
 
   def search
@@ -50,6 +66,8 @@ class TracksController < ApplicationController
 
     unless @track.blank?
       @tracks = Track.order("RANDOM()").limit(15)
+      @track_saved = false
+      @track_saved = Favorite.find_by_track_id_and_user_id(@track.id, current_user.id) unless current_user.blank?
       @track.play
 
       unless session[:play_queue].blank?
@@ -59,6 +77,7 @@ class TracksController < ApplicationController
         unless @play_queue.include? @track
           @play_queue = [@track] + Track.find(redis.lrange("tag:#{@track.tag.name}:top40",0,-1)).shuffle[0..9]
           session[:play_queue] = @play_queue.map{|z|z.id}
+          session[:type] = nil
         end
       else
         @play_queue = [@track] + Track.find(redis.lrange("tag:#{@track.tag.name}:top40",0,-1)).shuffle[0..9]
@@ -67,7 +86,7 @@ class TracksController < ApplicationController
 
       ti = @play_queue.index(@track) + 1
 
-      if ti < 8
+      if ti < @play_queue.size
         @next_track = @play_queue[ti]
       else
         @next_track = Track.find(redis.lrange("tag:#{@track.tag.name}:top40",0,-1)).shuffle.first.permalink
@@ -81,16 +100,9 @@ class TracksController < ApplicationController
     end
   end
 
-  def toggle_like
+  def toggle_save
     @track = Track.find_by_id(params[:id])
-    state = @track.toggle_like(current_user)
-
-    render :json => {:state => state}
-  end
-
-  def toggle_dislike
-    @track = Track.find_by_id(params[:id])
-    state = @track.toggle_dislike(current_user)
+    state = @track.toggle_save(current_user)
 
     render :json => {:state => state}
   end
@@ -101,6 +113,10 @@ class TracksController < ApplicationController
     response.headers["Cache-Control"] = "max-age=#{cache_expire.to_i}"
     response.headers["Expires"] = (Time.now + cache_expire).strftime("%d %m %Y %H:%I:%S %Z")
     render :layout => false, :inline => "<script src='//connect.facebook.net/en_US/all.js#xfbml=1&appId=242371292554988'></script>"
+  end
+
+  def manage_session
+    session[:auto_play] = true
   end
 
   # GET /tracks/new

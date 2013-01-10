@@ -327,6 +327,21 @@ header {
   margin-top: 20px;
   .guide {
     margin-bottom: 10px;
+    .guide-container {
+      margin-bottom: 10px;
+    }
+    .profile {
+      height: 50px;
+      width: 175px;
+      img {
+        float: left;
+      }
+      .name {
+        float: left;
+        padding-top: 15px;
+        padding-left: 5px;
+      }
+    }
     ul {
       list-style: none;
       margin:0;
@@ -337,9 +352,7 @@ header {
           margin:0;
           padding: 2px 2px 2px 5px;
           &:hover, &.selected {
-            background: #222;
-            color: #fff;
-
+            background: #DDD;
           }
         }
         &:hover {
@@ -388,8 +401,9 @@ header {
   }
   h5 {
     color: #BF0265;
+    font-size: 12px;
     margin-top: 0;
-    margin-bottom: 10px;
+    margin-bottom: 0;
   }
   .social {
     float: left;

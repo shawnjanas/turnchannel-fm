@@ -6,11 +6,8 @@ class Track < ActiveRecord::Base
   belongs_to :tag
   belongs_to :user
 
-  has_many :track_likes
-  has_many :liked_users, :through => :track_likes
-
-  has_many :track_dislikes
-  has_many :disliked_users, :through => :track_dislikes
+  has_many :favorites
+  has_many :users_fav, :through => :favorites, :source => :user
 
   validates :sc_url, :presence => true, :uniqueness => true
 
@@ -74,35 +71,13 @@ class Track < ActiveRecord::Base
     end
   end
 
-  def toggle_like(user)
-    if (track_like = TrackLike.find_by_user_id_and_track_id(user.id, self.id))
-      track_like.destroy
+  def toggle_save(user)
+    if (track_save = Favorite.find_by_user_id_and_track_id(user.id, self.id))
+      track_save.destroy
       0
     else
-      TrackLike.create(:user_id => user.id, :track_id => self.id)
-
-      if (track_dislike = TrackDislike.find_by_user_id_and_track_id(user.id, self.id))
-        track_dislike.destroy
-        2
-      else
-        1
-      end
-    end
-  end
-
-  def toggle_dislike(user)
-    if (track_dislike = TrackDislike.find_by_user_id_and_track_id(user.id, self.id))
-      track_dislike.destroy
-      0
-    else
-      TrackDislike.create(:user_id => user.id, :track_id => self.id)
-
-      if (track_like = TrackLike.find_by_user_id_and_track_id(user.id, self.id))
-        track_like.destroy
-        2
-      else
-        1
-      end
+      Favorite.create(:user_id => user.id, :track_id => self.id)
+      1
     end
   end
 
