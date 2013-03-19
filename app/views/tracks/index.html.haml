@@ -1,26 +1,47 @@
-.container-with-right-bar
-  .featured-tracks-container
-    .featured-tracks-heading
-      %h4 Featured on TurnChannel
-    .featured-track-navmain
-      - @featured_tracks[0..3].each_with_index do |track, i|
-        .featured-track-item{:id => "featured-track-#{i}"}
-          %a{:href => track_url(track.permalink)}
-            = image_tag track.artwork_url.gsub('large','t500x500')
-    .featured-track-main
-      %a{:href => track_url(@featured_tracks.first.permalink)}
-        = image_tag @featured_tracks.first.artwork_url.gsub('large','t500x500')
-    .featured-track-sub
-      - @featured_tracks[4..7].each_with_index do |track, i|
-        - i = i + 4
-        .featured-track-item{:id => "featured-track-#{i}"}
-          %a{:href => track_url(track.permalink)}
-            = image_tag track.artwork_url.gsub('large','t500x500')
+.guide-bar
+  .guide
+    - if current_user.blank?
+      .guide-container
+        %h5 Discover the best EDM
+        %a.register-btn.btn.btn-primary{:href => user_omniauth_authorize_path(:facebook), :target => '_blank'} Register
+    - else
+      .guide-container
+        .profile
+          = image_tag current_user.avatar
+          .name
+            = current_user.name
+      .guide-container#favorites-guide
+        %h5 Favorites
+        %ul
+          %a{:href => "/saved"}
+            - selected = ''
+            - selected = 'selected' unless session[:type].blank?
+            %li{:class => selected}
+              %i.icon-star
+              Saved Tracks
+    .guide-container#discover-guide
+      %h5 Play me some...
+      %ul
+        - @tags.each do |tag|
+          %a{:href => "/discover/#{tag.name}"}
+            %li
+              %i.icon-headphones
+              = tag.name.camelize
+  .share-turnchannel
+    %h5 Help spread the word
+    .social-connect
+      .social#social-tw
+        %a{:href=>"https://twitter.com/TurnChannel", :class=>"twitter-follow-button", :'data-show-count'=>"false", :'data-dnt'=>"true"} Follow @TurnChannel
+      .social#social-fb
+        .fb-like{:'data-href'=>"http://www.facebook.com/TurnChannel", :'data-send'=>"false", :'data-layout'=>"button_count", :'data-width'=>"450", :'data-show-faces'=>"false"}
+
+
+.player
   .new-tracks-container
     .new-tracks-heading
       %h4 New on TurnChannel
     .new-track-items
-      - @new_tracks.each do |track|
+      - @tracks.each do |track|
         %article.new-track-item.track
           %a{:href => track_url(track.permalink)}
             = image_tag track.artwork_url
@@ -31,36 +52,3 @@
               %i.icon-play.icon-white
             .genre
               %span.label.label-inverse= track.tag.name
-.right-bar
-  .discover-tracks-container
-    .discover-tracks-heading
-      %h4 Play me some...
-    .discover-track-items
-      .discover-track-item
-        %a{:href => '/discover/house'}
-          %span House
-      .discover-track-item
-        %a{:href => '/discover/dubstep'}
-          %span Dubstep
-      .discover-track-item
-        %a{:href => '/discover/dnb'}
-          %span DrumNBass
-  .top10-tracks-container
-    .top10-tracks-heading
-      %h4 TurnChannel Top 10
-    .top10-track-items
-      - @popular_tracks.each_with_index do |track, i|
-        %article.top10-track-item.track
-          %a{:href => track_url(track.permalink)}
-            = image_tag track.artwork_url
-            - if (i+1) == 10
-              .top10-track-item-details.track-item-number-10
-                .track-item-title= track.f_title
-                .track-item-artist= track.f_artist
-            - else
-              .top10-track-item-details
-                .track-item-title= track.f_title
-                .track-item-artist= track.f_artist
-            .track-item-number= (i+1)
-            .track-play
-              %i.icon-play.icon-white
