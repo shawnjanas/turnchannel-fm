@@ -74,11 +74,11 @@ class TracksController < ApplicationController
         @play_queue = session[:play_queue].map { |id| records[id].first }
 
         unless @play_queue.include? @track
-          @play_queue = [@track] + Track.where(:tag_id => @track.tag.id).where("id > ?", @track.id).limit(14)
+          @play_queue = [@track] + Track.where(:tag_id => @track.tag.id).where("id < ?", @track.id).limit(14)
           session[:play_queue] = @play_queue.map{|z|z.id}
         end
       else
-        @play_queue = [@track] + Track.where(:tag_id => @track.tag.id).where("id > ?", @track.id).limit(14)
+        @play_queue = [@track] + Track.where(:tag_id => @track.tag.id).where("id < ?", @track.id).limit(14)
         session[:play_queue] = @play_queue.map{|z|z.id}
       end
 
