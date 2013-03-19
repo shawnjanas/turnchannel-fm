@@ -3,8 +3,10 @@ class TracksController < ApplicationController
   before_filter :manage_session, :except => [:show, :channel, :toggle_save]
 
   def index
+    @tags = Tag.all
+
     @popular_tracks = Track.order("cached_plays DESC").limit(10)
-    @new_tracks = Track.order("created_at DESC").limit(10)
+    @new_tracks = Track.order("created_at DESC").limit(70)
     #@featured_tracks = Track.order("created_at DESC").limit(8)
     @featured_tracks = [Track.find_by_id(3041), Track.find_by_id(2991), Track.find_by_id(2821), Track.find_by_id(2759), Track.find_by_id(2842), Track.find_by_id(2992), Track.find_by_id(3050), Track.find_by_id(2970)]
     session[:auto_play] = true

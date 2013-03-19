@@ -250,8 +250,8 @@ header {
   }
 }
 .new-tracks-container {
-  width: 600px;
-  height: 355px;
+  width: 837px;
+  float: left;
   border: #DDD solid 1px;
   margin-top: 20px;
   img {
@@ -1413,4 +1413,12 @@ footer {
 .icon-zoom {
   zoom: 150%;
   -moz-transform: scale(1.5);
+}
+
+
+
+.home-feed {
+  float:left;
+
+  width: 820px;
 }
