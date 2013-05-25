@@ -266,6 +266,12 @@ header {
     }
   }
   .new-track-items {
+    float: left;
+    background: #fff;
+    h4 {
+      color: #666;
+      padding: 10px 0 0 10px;
+    }
     .new-track-item {
       width: 108px;
       height: 144px;

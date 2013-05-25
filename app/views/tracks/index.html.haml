@@ -40,7 +40,11 @@
     .new-tracks-heading
       %h4 New on TurnChannel
     .new-track-items
+      - date = nil
       - @new_tracks.each do |track|
+        - if date != track.created_at.to_date
+          - date = track.created_at.to_date
+          %h4= date.to_time.strftime("%A, %b %-d, %Y")
         %article.new-track-item.track
           %a{:href => track_url(track.permalink)}
             = image_tag track.artwork_url
