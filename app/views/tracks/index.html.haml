@@ -46,7 +46,7 @@
           - date = track.created_at.to_date
           %h4= date.to_time.strftime("%A, %b %-d, %Y")
         %article.new-track-item.track
-          %a{:href => track_url(track.permalink)}
+          %a{:href => track_url(track.permalink), :target => '_blank'}
             = image_tag track.artwork_url
             .new-track-description
               .track-item-title= track.f_title
