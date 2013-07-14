@@ -10,7 +10,7 @@
           .seek
       .info
         .artist
-          = image_tag @track.artwork_url.gsub('large','t500x500'), :class => 'avatar'
+          = image_tag @track.user.avatar, :class => 'avatar'
           //= image_tag @track.user.avatar, :class => 'avatar'
           %h2= @track.user.name
         %h1

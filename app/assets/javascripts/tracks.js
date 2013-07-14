@@ -61,6 +61,8 @@ function init() {
 
     $('.seek').css('width', seek_width+'%');
   }, 500);
+
+  mixpanel.track_links('.uploaded-by-turnchannel a', 'Track Upload Track Click');
 }
 
 
