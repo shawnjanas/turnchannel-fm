@@ -95,6 +95,7 @@ class TracksController < ApplicationController
       @auto_play = 'false'
       @auto_play = 'true' if session[:auto_play]
       session[:auto_play] = true
+      render :layout => false;
     else
       redirect_to root_path
     end

@@ -1,3 +1,100 @@
-// Place all the styles related to the tracks controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+body {
+  font-family: "Verse Sans", Helvetica, Arial, sans-serif;
+}
+.share-page {
+  margin: 0 auto;
+  background: #F1F1EC;
+
+  .card {
+    position: absolute;
+    top: 50%;
+    margin-top: -335px;
+    left: 50%;
+    margin-left: -495px;
+    padding: 23px 12px;
+    width: 958px;
+    height: 600px;
+    .track-containerr {
+      position: absolute;
+      z-index: 999;
+      img {
+        background: #000;
+        width: 600px;
+        height: 600px;
+      }
+      .progress-bar {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 600px;
+        height: 10px;
+        background: rgba(0, 0, 0, 0.3);
+        cursor: hand;
+        cursor: pointer;
+        .seek {
+          width: 0%;
+          background-color: #5BB75B;
+          height: 10px;
+        }
+      }
+    }
+    .info {
+      float: left;
+      width: 300px;
+      margin: 0 0 0 580px;
+      text-align: center;
+      border-radius: 10px;
+      border: #ddd solid 1px;
+      padding: 0 19px 0 40px;
+      height: 598px;
+      background: #fff;
+      .artist {
+        border-bottom: #ddd solid 1px;
+        .avatar {
+          margin-top: 40px;
+          width: 50px;
+          height: 50px;
+        }
+        h2 {
+          color: #333;
+          font-weight: 600;
+          font-size: 24px;
+          padding: 0;
+          margin: 10px 0 40px 0;
+          -webkit-font-smoothing: antialiased;
+        }
+      }
+      h1 {
+        width: 300px;
+        height: 276px;
+        display: table;
+        font-size: 31px;
+        color: #333;
+        font-weight: 400;
+        border-bottom: 1px solid #DDD;
+        -webkit-font-smoothing: antialiased;
+        .inner {
+          display: table-cell;
+          vertical-align: middle;
+          width: 300px;
+          p {
+            display: block;
+            word-wrap: break-word;
+            width: 300px;
+          }
+        }
+      }
+    }
+    .uploaded-by-turnchannel {
+      h3 {
+        font-size: 14px;
+        font-weight: normal;
+        span {
+          color: #5bb75b;
+          font-size: 16px;
+          font-weight: bold;
+        }
+      }
+    }
+  }
+}

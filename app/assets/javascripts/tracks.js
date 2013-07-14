@@ -1,3 +1,71 @@
+var player;
+
+$(document).ready(function() {
+  var track_id = $('.track-containerr').attr('track-id');
+  loadPlayer(track_id, function(p) {
+    player = p;
+    init();
+  });
+});
+
+function loadPlayer(track_id, callback) {
+  SC.initialize({
+    client_id: 'e3216af75bcd70ee4e5d91a6b9f1d302'
+  });
+  SC.get("/tracks/"+track_id, function(track, error) {
+    if(error && error.message == '404 - Not Found') {
+      alert("Track not found!");
+    } else {
+      SC.stream("/tracks/"+track_id, {
+        autoPlay: true,
+        useHTML5Audio: true,
+        ontimedcomments: this._ontimedcomments,
+        onplay: this._onplay,
+        onerror: this._onerror,
+        onfinish: function() {
+          player.setPosition(0);
+          plaer.play();
+        }
+      }, callback);
+    }
+  });
+}
+
+function init() {
+
+  $('.track-containerr img').click(function() {
+    player.paused ? player.play() : player.pause();
+  });
+
+  // Handle progress bar click
+  $('.progress-bar').click(function(e) {
+    var x = e.offsetX;
+    var width = $(this).width();
+    var pos = x/width;
+
+    console.log(pos * player.durationEstimate);
+    console.log(player.durationEstimate);
+    console.log(player);
+
+    player.setPosition(pos * player.durationEstimate);
+  });
+
+  // Update seek bar
+  setInterval(function() {
+    // Elapsed time
+    var position = player.position;
+    var duration_est = player.durationEstimate;
+
+    var loaded_ratio = position / duration_est;
+    var seek_width = loaded_ratio * 100;
+
+    $('.seek').css('width', seek_width+'%');
+  }, 500);
+}
+
+
+
+
 $(document).ready(function() {
   var track_actions = true;
 

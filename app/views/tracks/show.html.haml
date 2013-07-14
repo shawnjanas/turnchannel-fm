@@ -1,149 +1,23 @@
-.guide-bar
-  .guide
-    - if current_user.blank?
-      .guide-container
-        %h5 Discover the best EDM
-        %a.register-btn.btn.btn-primary{:href => user_omniauth_authorize_path(:facebook), :target => '_blank'} Register
-    - else
-      .guide-container
-        .profile
-          = image_tag current_user.avatar
-          .name
-            = current_user.name
-      .guide-container#favorites-guide
-        %h5 Favorites
-        %ul
-          %a{:href => "/saved"}
-            - selected = ''
-            - selected = 'selected' unless session[:type].blank?
-            %li{:class => selected}
-              %i.icon-star
-              Saved Tracks
-    .guide-container#discover-guide
-      %h5 Play me some...
-      %ul
-        - @tags.each do |tag|
-          - selected = ''
-          - selected = 'selected' if tag.id == @track.tag.id && session[:type].blank?
-          %a{:href => "/discover/#{tag.name}"}
-            %li{:class => selected}
-              %i.icon-headphones
-              = tag.name.camelize
-  /.share-track
-  /  %h5 Did you like this track?
-  /  .vote
-  /    - upvote = ''
-  /    - upvote = 'selected' if current_user && TrackLike.find_by_user_id_and_track_id(current_user.id, @track.id)
-  /    #upvote{:href => "/tracks/#{@track.id}/toggle_like", :title => "Upvote this track!", :class => upvote}
-  /      %span#like-num= @track.track_likes.size
-  /      %i.icon-thumbs-up.icon-white
-  /    - downvote = ''
-  /    - downvote = 'selected' if current_user && TrackDislike.find_by_user_id_and_track_id(current_user.id, @track.id)
-  /    #downvote{:href => "/tracks/#{@track.id}/toggle_dislike", :title => "Downvote this track!", :class => downvote}
-  /      %span#dislike-num= @track.track_dislikes.size
-  /      %i.icon-thumbs-down.icon-white
-  /  .social#social-fb
-  /    .fb-like{:'data-href'=>"#{request.protocol}#{request.host_with_port}#{request.fullpath}", :'data-send'=>"false", :'data-layout'=>"box_count", :'data-width'=>"450", :'data-show-faces'=>"false"}
-  /  .social#social-tw
-  /    %a{:href=>"https://twitter.com/share", :class=>"twitter-share-button", :'data-via'=>"TurnChannel", :'data-hashtags'=>"turnchannel", :'data-dnt'=>"true", :'data-text'=>"This #{@track.tag.name} track is sick! #{@track.f_full_title}", :'data-count' => 'vertical'} Tweet
-  .share-turnchannel
-    %h5 Help spread the word
-    .social-connect
-      .social#social-tw
-        %a{:href=>"https://twitter.com/TurnChannel", :class=>"twitter-follow-button", :'data-show-count'=>"false", :'data-dnt'=>"true"} Follow @TurnChannel
-      .social#social-fb
-        .fb-like{:'data-href'=>"http://www.facebook.com/TurnChannel", :'data-send'=>"false", :'data-layout'=>"button_count", :'data-width'=>"450", :'data-show-faces'=>"false"}
-
-.player{:'track-id' => @track.sc_id, :'next-track' => track_url(@next_track), :'auto-play' => @auto_play}
-  .player-wrapper
-    .player-genre-bar
-      - if session[:type].blank?
-        %h4= @track.tag.name.camelize
-      - else
-        %h4= session[:type].camelize
-    = image_tag @track.artwork_url.gsub('large','t500x500')
-    .player-header
-      .player-title
+!!!
+%html{:lang => 'en'}
+  %head
+    = render :partial => 'layouts/head'
+  %body.share-page
+    .card
+      .track-containerr{:'track-id' => @track.sc_id}
+        = image_tag @track.artwork_url.gsub('large','t500x500')
+        .progress-bar
+          .seek
+      .info
+        .artist
+          = image_tag @track.artwork_url.gsub('large','t500x500'), :class => 'avatar'
+          //= image_tag @track.user.avatar, :class => 'avatar'
+          %h2= @track.user.name
         %h1
-          = @track.f_title
-          %span
-            by
-            = @track.f_artist
-    .player-footer
-      .player-details
-        #player-play.icon-fade
-          ►
-        #player-pause.icon-fade
-          %span ▌▌
-        #player-step-forward.icon-fade
-          %a{:href => track_url(@next_track), :title => 'Next Track'}
-            ►►
-            %span l
-        .pull-right
-          - if @track_saved
-            %a#save-track{:href => toggle_save_track_url(@track.id), :title => 'Unsave track'}
-              %i.icon-star.icon-white
-              Unsave
-          - else
-            %a#save-track{:href => toggle_save_track_url(@track.id), :title => 'Save track'}
-              %i.icon-star-empty.icon-white
-              Save
-          %a{:href => @track.sc_url, :title => 'Source', :target => '_blank'}
-            SoundCloud
-          %a{:href => "/discover/#{@track.tag.name}"}
-            %span.label.label-inverse= @track.tag.name
-          ►
-          = @track.cached_plays
-          plays
-      #player-controls
-        #player-seekbar
-          %span#player-elapsed.control 00:00
-          #player-seek.control
-            #player-progress-bar
-              #player-progress-bar-meter
-          %span#player-duration.control 00:00
-        #player-volume-control.control
-          #player-volume-up
-            %i.icon-volume-up.icon-zoom.icon-white
-          #player-volume-off
-            %i.icon-volume-off.icon-zoom.icon-white
-  .player-queue
-    .top10-tracks-container
-      .top10-tracks-heading
-        %h4 Play Queue
-      .top10-track-items.scroll-pane
-        - @play_queue.each_with_index do |track, i|
-          - selected = ''
-          - selected = 'selected' if track.id == @track.id
-          %article{:class => "top10-track-item track #{selected}"}
-            %a{:href => track_url(track.permalink)}
-              = image_tag track.artwork_url
-              .top10-track-item-details
-                .track-item-title= track.f_title
-                .track-item-artist= track.f_artist
-              .track-play{:class=>selected}
-                %i.icon-play.icon-white
-.player-meta.container-bg
-  .player-description
-    = raw @track.description.gsub("\n", '<br/>')
-  .player-comments
-    .fb-comments-wrapper
-      .fb-comments{:'data-href'=>"#{request.protocol}#{request.host_with_port}#{request.fullpath}", :'data-num-posts'=>"5", :'data-width'=>"500", :'data-colorscheme'=>"white"}
-.related-tracks-container
-  %h4 Related Tracks
-  .related-track-items
-    - @tracks.each do |track|
-      %article.related-track-item.track
-        %a{:href => track_url(track.permalink)}
-          = image_tag track.artwork_url
-          .related-track-description
-            .track-item-title= track.f_title
-            .track-item-artist= "by #{track.f_artist}"
-            .genre
-              %span.label.label-inverse= track.tag.name
-            .plays
-              %i.icon-play
-              = track.cached_plays
-              plays
-          .track-play
-            %i.icon-play.icon-white
+          .inner
+            %p= @track.f_title
+        .uploaded-by-turnchannel
+          %h3
+            Uploaded via
+            %span TurnChannel
+          %a.btn.btn-large.btn-block.btn-success{:href => '/', :target => '_blank'} Upload Track
