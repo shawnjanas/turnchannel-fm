@@ -66,35 +66,8 @@ class TracksController < ApplicationController
 
     if @track
       @track.play
-      @tracks_popular = Track.where(:tag_id => @track.tag.id).order('cached_plays DESC').limit(7)
-      @tracks_rnd = Track.where(:tag_id => @track.tag.id).order("RANDOM()").limit(1)
-      @tracks_rnd += Track.order("RANDOM()").limit(7)
-      @tracks = (@tracks_popular + @tracks_rnd).shuffle
+      @next_track = Track.where(:tag_id => @track.tag.id).where("id < ?", @track.id).order("id DESC").limit(1).first
 
-      unless session[:play_queue].blank?
-        records = Track.find(session[:play_queue]).group_by(&:id)
-        @play_queue = session[:play_queue].map { |id| records[id].first }
-
-        unless @play_queue.include? @track
-          @play_queue = [@track] + Track.where(:tag_id => @track.tag.id).where("id < ?", @track.id).order("id DESC").limit(14)
-          session[:play_queue] = @play_queue.map{|z|z.id}
-        end
-      else
-        @play_queue = [@track] + Track.where(:tag_id => @track.tag.id).where("id < ?", @track.id).order("id DESC").limit(14)
-        session[:play_queue] = @play_queue.map{|z|z.id}
-      end
-
-      ti = @play_queue.index(@track) + 1
-
-      if ti < 15
-        @next_track = @play_queue[ti]
-      else
-        @next_track = @tracks_rnd.first.permalink
-      end
-
-      @auto_play = 'false'
-      @auto_play = 'true' if session[:auto_play]
-      session[:auto_play] = true
       render :layout => false;
     else
       redirect_to root_path

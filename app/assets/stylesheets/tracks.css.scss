@@ -54,6 +54,7 @@ body {
           margin-top: 40px;
           width: 50px;
           height: 50px;
+          border-radius: 5px;
         }
         h2 {
           color: #333;
@@ -66,7 +67,7 @@ body {
       }
       h1 {
         width: 300px;
-        height: 276px;
+        height: 286px;
         display: table;
         font-size: 31px;
         color: #333;
@@ -85,14 +86,40 @@ body {
         }
       }
     }
-    .uploaded-by-turnchannel {
-      h3 {
-        font-size: 14px;
-        font-weight: normal;
-        span {
-          color: #5bb75b;
-          font-size: 16px;
-          font-weight: bold;
+    .next-track {
+      &:hover {
+        color: #666;
+      }
+      float: left;
+      margin-top: 10px;
+      color: #333;
+      img {
+        float: left;
+        width: 80px;
+        height: 80px;
+        margin-right: 20px;
+      }
+      h2 {
+        text-align: left;
+        float: left;
+        width: 200px;
+        height: 80px;
+        display: table;
+        font-size: 22px;
+        font-weight: 400;
+        line-height: 25px;
+        -webkit-font-smoothing: antialiased;
+        .inner {
+          display: table-cell;
+          vertical-align: middle;
+          width: 200px;
+          p {
+            display: block;
+            word-wrap: break-word;
+            width: 200px;
+            height: 50px;
+            overflow: hidden;
+          }
         }
       }
     }

@@ -2,6 +2,9 @@ var player;
 
 $(document).ready(function() {
   var track_id = $('.track-containerr').attr('track-id');
+  if(track_id === undefined) {
+    return;
+  }
   loadPlayer(track_id, function(p) {
     player = p;
     init();
@@ -23,8 +26,8 @@ function loadPlayer(track_id, callback) {
         onplay: this._onplay,
         onerror: this._onerror,
         onfinish: function() {
-          player.setPosition(0);
-          plaer.play();
+          var href = $('.next-track').attr('href');
+          window.location = href;
         }
       }, callback);
     }

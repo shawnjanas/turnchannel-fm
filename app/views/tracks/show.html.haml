@@ -11,13 +11,12 @@
       .info
         .artist
           = image_tag @track.user.avatar, :class => 'avatar'
-          //= image_tag @track.user.avatar, :class => 'avatar'
           %h2= @track.user.name
         %h1
           .inner
-            %p= @track.f_title
-        .uploaded-by-turnchannel
-          %h3
-            Uploaded via
-            %span TurnChannel
-          %a.btn.btn-large.btn-block.btn-success{:href => '/', :target => '_blank'} Upload Track
+            %p= @track.full_title
+        %a.next-track{:href => track_url(@next_track.permalink)}
+          = image_tag @next_track.artwork_url
+          %h2
+            .inner
+              %p= @next_track.full_title
