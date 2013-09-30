@@ -21,6 +21,8 @@ body {
         background: #000;
         width: 600px;
         height: 600px;
+        cursor: pointer;
+        cursor: hand;
       }
       .progress-bar {
         position: absolute;
@@ -28,9 +30,10 @@ body {
         left: 0;
         width: 600px;
         height: 10px;
-        background: rgba(0, 0, 0, 0.3);
-        cursor: hand;
+        border-top: #000 1px solid;
+        background: rgba(0, 0, 0, 0.5);
         cursor: pointer;
+        cursor: hand;
         .seek {
           width: 0%;
           background-color: #5BB75B;
